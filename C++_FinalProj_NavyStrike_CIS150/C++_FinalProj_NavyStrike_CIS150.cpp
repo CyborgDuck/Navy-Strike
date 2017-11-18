@@ -61,6 +61,7 @@ void destroyer();
 //void cruiser();
 //void battleship();
 //void carrier();
+//void sound();
 
 int main()
 {
@@ -714,7 +715,15 @@ void displayBlank(char board[][11])
 		cout << darkgrey << setw(5) << "|";
 		for (int s = 0; s < COLUMNS; s++)
 		{
-			cout << setw(5) << cyan << board[i][s] << setw(5) << darkgrey << "|";
+			//if else added by Tristan to make our X equal red.
+			if (board[i][s] == 'X')
+			{
+				cout << setw(5) << red << board[i][s] << setw(5) << darkgrey << "|";
+			}
+			else
+			{
+				cout << setw(5) << cyan << board[i][s] << setw(5) << darkgrey << "|";
+			}
 		}
 		if (i != ROWS - 1)
 		{
@@ -957,7 +966,7 @@ void refresh(int &spaceOneNum, char board[][11], char shipsPlaced[][11], int &sp
 
 		for (int cols = 0; cols < COLUMNS; cols++)
 		{
-			
+			//initial ship placement idea by Tristan
 			//board[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 
@@ -1199,8 +1208,15 @@ void refresh(int &spaceOneNum, char board[][11], char shipsPlaced[][11], int &sp
 
 }
 
-
+//Erik
 void destroyer()
+{
+
+
+}
+
+//chuck
+void sound()
 {
 
 
