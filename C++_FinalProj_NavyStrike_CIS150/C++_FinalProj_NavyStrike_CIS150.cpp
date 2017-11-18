@@ -81,6 +81,7 @@ int main()
 		//need to make a function to place the ship in a random location on the board.
 		cout << "Look forward to this feature in a new update! We require an A.I. to hire, know any around?" << endl;
 		
+
 		//Sleep(3000);
 		//and back to intro(); until we decide to tackle that	
 		//system("cls");
