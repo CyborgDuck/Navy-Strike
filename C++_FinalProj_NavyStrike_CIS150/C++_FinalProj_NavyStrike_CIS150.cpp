@@ -4,6 +4,8 @@
 /*DESCRIPTION: Final Project - Naval Strike a game based off of Battleship.  */
 //VERSION: 2017
 
+#define _WIN32_WINNT 0x0500 //Must have defined before Windows.h (Citation given on line 69)
+
 #include "stdafx.h"    // Precompiled Header
 #include <iostream>    // Standard input output ease of use on std::
 #include <stdio.h>     // Instead of using cin.getline you can use cin.gets(),parameter is stdio.h
@@ -12,6 +14,7 @@
 #include <iomanip>     // setw(x) and others for output formating
 #include "fstream"     // For opening up files. like .txt  // we may need this for the ascii art, it could be infinitely easier.
 #include <Windows.h>   // To use Sleep
+#include <Ctime>       // To use the random number generator for onePlayer.
 using namespace std;
 
 //Code found from cplusplus.com: SOURCE: http://www.cplusplus.com/forum/beginner/105484/ ; User: Giblit
@@ -65,6 +68,12 @@ void destroyer();
 
 int main()
 {
+	//Used to set window size for our command prompt. Found at http://www.cplusplus.com/forum/beginner/1481/
+	HWND console = GetConsoleWindow();
+	RECT r;
+	GetWindowRect(console, &r);
+	//MoveWindow(console, r.left, r.top, 800, 800, TRUE);
+
 
 	//Variables
 	int players;
