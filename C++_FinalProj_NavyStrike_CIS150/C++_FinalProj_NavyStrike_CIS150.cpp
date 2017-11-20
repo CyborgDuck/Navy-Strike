@@ -4,7 +4,7 @@
 /*DESCRIPTION: Final Project - Naval Strike a game based off of Battleship.  */
 //VERSION: 2017
 
-#define _WIN32_WINNT 0x0500 //Must have defined before Windows.h (Citation given on line 69)
+#define _WIN32_WINNT 0x0500 //Must have defined before Windows.h (Citation given on line 71)
 
 #include "stdafx.h"    // Precompiled Header
 #include <iostream>    // Standard input output ease of use on std::
