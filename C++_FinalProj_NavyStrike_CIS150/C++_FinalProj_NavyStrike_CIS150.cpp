@@ -53,6 +53,7 @@ void firstCoordTwo(char, int&, bool&, string[], int&, char[][11], char[][11]); /
 void secCoord(int&, bool&, char[][11]);
 void refresh(int&, char[][11], char[][11], int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 void displayBlank(char[][11]);
+void displayMiss();
 
 //movement positions.
 void setPos(int&, int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, char[][11]);
@@ -1069,17 +1070,20 @@ void sound()
 				 */
 
 
+void displayMiss() //Still unable to get displayed properly in command window
+{
+	/*system("cls");
+	//when shot was missed trigger this
+	//green?
+	cout << " __   _____  _   _   __  __ ___ ____ ____  _____ ____  " << endl;
+    cout << " \ \ / / _ \| | | | |  \/  |_ _/ ___/ ___|| ____|  _ \ " << endl;
+    cout << "  \ V / | | | | | | | |\/| || |\___ \___ \|  _| | | | |" << endl;
+	cout << "   | || |_| | |_| | | |  | || | ___) |__) | |___| |_| |" << endl;
+    cout << "   |_| \___/ \___/  |_|  |_|___|____/____/|_____|____/ " << endl;
+    */                                        
+		//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
+}
 
-/* when shot was missed trigger this
-green?
-  __  __ ___ ____ ____  _ 
- |  \\/  |_ _/ ___/ ___|| |
- | |\\/| || |\\___ \\___ \\| |
- | |  | || | ___) |__) |_|
- |_|  |_|___|____/____/(_)
- //Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
-
-*/
 
 
 /*
@@ -1100,7 +1104,7 @@ red on the flames, green on text
 
 */
 
-//=====================TRIISTAN'S FUUNCTIONS=========================================
+//=====================TRISTAN'S FUNCTIONS=========================================
 void onePlayer()
 {
 	srand(time(NULL));
@@ -1110,10 +1114,10 @@ void onePlayer()
 	const int size = 11;
 
 	char spaceOne = ' '; //letter that player enters for coordinate 1
-	int spaceTwo = 0; //Number that player enters for coordinate 2
+	int spaceTwo = 0;    //Number that player enters for coordinate 2
 	int spaceOneNum = 0; //Number conversion between char and int for spaceOne
-	int random;
-	int maxNum = 10;
+	int random;          //variable that determines which board the user uses
+	int maxNum = 10;     //Setting the random number not to exceed 10
 
 	bool validInput = false; //Making sure their guess stays within bounds of the board
 	
@@ -1155,55 +1159,60 @@ void onePlayer()
 
 	char boardThree[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
 								{ 'A',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'C',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'D',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'F',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'G',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'I',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+								{ 'B',  '0' , '0' , '0' , '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' },
+								{ 'C',  '0' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+								{ 'D',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' },
+								{ 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+								{ 'F',  'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' },
+								{ 'G',  'X' , '0' , 'X' , 'X' , 'X' , '0' , '0' , '0' , 'X' , '0' },
+								{ 'H',  'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' },
+								{ 'I',  'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' },
 								{ 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
 
 	char boardFour[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-							   { 'A',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							   { 'A',  '0' , 'X' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' },
 							   { 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'C',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'D',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'F',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'G',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							   { 'C',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , '0' },
+							   { 'D',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , '0' },
+							   { 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							   { 'F',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , '0' },
+							   { 'G',  '0' , '0' , '0' , 'X' , 'X' , 'X' , '0' , 'X' , '0' , '0' },
+							   { 'H',  '0' , '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' },
 							   { 'I',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
+							   { 'J',  'X' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
 
 	char boardFive[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-							   { 'A',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'C',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'D',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'F',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							   { 'A',  '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , 'X' , '0' },
+							   { 'B',  '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , 'X' , '0' },
+							   { 'C',  '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , 'X' , '0' },
+							   { 'D',  '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , '0' },
+							   { 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							   { 'F',  '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , '0' },
 							   { 'G',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
 							   { 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'I',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
+							   { 'I',  '0' , '0' , '0' , '0' , '0' , 'X' , 'X' , 'X' , 'X' , '0' },
+							   { 'J',  '0' , 'X' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' } };
 
 	char boardSix[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-							  { 'A',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'C',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'D',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'F',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'G',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							  { 'A',  '0' , '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' , '0' , 'X' },
+							  { 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' },
+							  { 'C',  '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , 'X' },
+							  { 'D',  '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , 'X' },
+							  { 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							  { 'F',  'X' , 'X' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , 'X' },
+							  { 'G',  '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , '0' },
 							  { 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
 							  { 'I',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
+							  { 'J',  'X' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
 
 	char boardSeven[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
 								{ 'A',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'C',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'D',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'F',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'G',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+								{ 'B',  '0' , '0' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' },
+								{ 'C',  '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' },
+								{ 'D',  '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' },
+								{ 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+								{ 'F',  '0' , '0' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' },
+								{ 'G',  '0' , '0' , 'X' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' },
 								{ 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
 								{ 'I',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
 								{ 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
@@ -1211,115 +1220,193 @@ void onePlayer()
 	char boardEight[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
 								{ 'A',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
 								{ 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'C',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'D',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'F',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'G',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'I',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
+								{ 'C',  '0' , 'X' , 'X' , '0' , '0' , '0' , 'X' , 'X' , 'X' , 'X' },
+								{ 'D',  '0' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+								{ 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+								{ 'F',  '0' , 'X' , 'X' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' },
+								{ 'G',  '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' },
+								{ 'H',  '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' },
+								{ 'I',  '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' },
+								{ 'J',  '0' , '0' , 'X' , 'X' , '0' , '0' , 'X' , '0' , '0' , '0' } };
 
 	char boardNine[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-							   { 'A',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							   { 'A',  '0' , '0' , '0' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' },
 							   { 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'C',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'D',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'F',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							   { 'C',  'X' , '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' },
+							   { 'D',  'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							   { 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							   { 'F',  'X' , '0' , 'X' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' },
 							   { 'G',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
 							   { 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'I',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							   { 'I',  '0' , '0' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' },
 							   { 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
 
 	char boardTen[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-							  { 'A',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							  { 'A',  'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' }, // 2, 3, 5 
 							  { 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
 							  { 'C',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
 							  { 'D',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'F',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							  { 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
+							  { 'F',  '0' , '0' , 'X' , 'X' , 'X' , '0' , 'X' , 'X' , 'X' , 'X' },
 							  { 'G',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
 							  { 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
 							  { 'I',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
 							  { 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
 
-	//do
-	//{
-	random = 1; //(rand() % maxNum); 
-				//} while (random == 0);
+	do
+	{
+	random = (rand() % maxNum); 
+	} while (random == 0);
+
+	cout << "Your board number is: " << random << "." << endl << endl;
+	system("pause");
 
 	if (random == 1)
 	{
-		//*********************THIS IS WHERE YOU'RE EDITING*****************************
-		firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-		secCoord(spaceTwo, promptCheck, blank);
-		blank[spaceOneNum][spaceTwo] = boardOne[spaceOneNum][spaceTwo];
-		displayBlank(blank);
+		for (int count = 0; count < 30; count++)
+		{
+			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+			secCoord(spaceTwo, promptCheck, blank);
+			blank[spaceOneNum][spaceTwo] = boardOne[spaceOneNum][spaceTwo];
+		//	if (blank[spaceOneNum][spaceTwo] == '0')     }
+		//	{											 } STILL CANNOT GET ASCII ART 
+		//		displayMiss();							 }    TO DISPLAY PROPERLY
+		//		system("pause");						 }
+		//	}
+			system("cls");
+			displayBlank(blank);
+		}
+		cout << white << "=====================================" << endl;
+		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+		cout << white << "=====================================" << endl;
+
 	}
 
 	else if (random == 2)
 	{
-		for (int rows = 0; rows < size; rows++)
+		for (int count = 0; count < 30; count++)
 		{
-			for (int cols = 0; cols < size; cols++)
-			{
-				blank[rows][cols] = boardOne[rows][cols];
-			}
+			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+			secCoord(spaceTwo, promptCheck, blank);
+			blank[spaceOneNum][spaceTwo] = boardTwo[spaceOneNum][spaceTwo];
+			system("cls");
+			displayBlank(blank);
 		}
-		for (int rows = 0; rows < size; rows++)
-		{
-			cout << darkgrey << setw(5) << "|";
-			for (int cols = 0; cols < size; cols++)
-			{
-				if (boardTwo[rows][cols] == 'X')
-				{
-					cout << setw(5) << red << boardTwo[rows][cols] << setw(5) << darkgrey << "|";
-				}
-				else
-				{
-					cout << setw(5) << cyan << boardTwo[rows][cols] << setw(5) << darkgrey << "|";
-				}
-			}
-			if (rows != size - 1)
-			{
-				cout << endl << setw(115) << between << endl;
-			}
-			else
-			{
-				cout << endl;
-			}
-		}
-		cout << setw(115) << darkgrey << div << endl;
+		cout << white << "=====================================" << endl;
+		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+		cout << white << "=====================================" << endl;
 	}
 	else if (random == 3)
 	{
-
+		for (int count = 0; count < 30; count++)
+		{
+			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+			secCoord(spaceTwo, promptCheck, blank);
+			blank[spaceOneNum][spaceTwo] = boardThree[spaceOneNum][spaceTwo];
+			system("cls");
+			displayBlank(blank);
+		}
+		cout << white << "=====================================" << endl;
+		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+		cout << white << "=====================================" << endl;
 	}
 	else if (random == 4)
 	{
-
+		for (int count = 0; count < 30; count++)
+		{
+			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+			secCoord(spaceTwo, promptCheck, blank);
+			blank[spaceOneNum][spaceTwo] = boardFour[spaceOneNum][spaceTwo];
+			system("cls");
+			displayBlank(blank);
+		}
+		cout << white << "=====================================" << endl;
+		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+		cout << white << "=====================================" << endl;
 	}
 	else if (random == 5)
 	{
-
+		for (int count = 0; count < 30; count++)
+		{
+			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+			secCoord(spaceTwo, promptCheck, blank);
+			blank[spaceOneNum][spaceTwo] = boardFive[spaceOneNum][spaceTwo];
+			system("cls");
+			displayBlank(blank);
+		}
+		cout << white << "=====================================" << endl;
+		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+		cout << white << "=====================================" << endl;
 	}
 	else if (random == 6)
 	{
-
+		for (int count = 0; count < 30; count++)
+		{
+			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+			secCoord(spaceTwo, promptCheck, blank);
+			blank[spaceOneNum][spaceTwo] = boardSix[spaceOneNum][spaceTwo];
+			system("cls");
+			displayBlank(blank);
+		}
+		cout << white << "=====================================" << endl;
+		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+		cout << white << "=====================================" << endl;
 	}
 	else if (random == 7)
 	{
-
+		for (int count = 0; count < 30; count++)
+		{
+			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+			secCoord(spaceTwo, promptCheck, blank);
+			blank[spaceOneNum][spaceTwo] = boardSeven[spaceOneNum][spaceTwo];
+			system("cls");
+			displayBlank(blank);
+		}
+		cout << white << "=====================================" << endl;
+		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+		cout << white << "=====================================" << endl;
 	}
 	else if (random == 8)
 	{
-
+		for (int count = 0; count < 30; count++)
+		{
+			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+			secCoord(spaceTwo, promptCheck, blank);
+			blank[spaceOneNum][spaceTwo] = boardEight[spaceOneNum][spaceTwo];
+			system("cls");
+			displayBlank(blank);
+		}
+		cout << white << "=====================================" << endl;
+		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+		cout << white << "=====================================" << endl;
 	}
 	else if (random == 9)
 	{
-
+		for (int count = 0; count < 30; count++)
+		{
+			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+			secCoord(spaceTwo, promptCheck, blank);
+			blank[spaceOneNum][spaceTwo] = boardNine[spaceOneNum][spaceTwo];
+			system("cls");
+			displayBlank(blank);
+		}
+		cout << white << "=====================================" << endl;
+		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+		cout << white << "=====================================" << endl;
 	}
 	else if (random == 10)
 	{
-
+		for (int count = 0; count < 30; count++)
+		{
+			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+			secCoord(spaceTwo, promptCheck, blank);
+			blank[spaceOneNum][spaceTwo] = boardTen[spaceOneNum][spaceTwo];
+			system("cls");
+			displayBlank(blank);
+		}
+		cout << white << "=====================================" << endl;
+		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+		cout << white << "=====================================" << endl;
 	}
 
 }
