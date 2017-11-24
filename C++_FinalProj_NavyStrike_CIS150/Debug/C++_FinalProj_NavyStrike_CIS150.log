@@ -1,3 +1,7 @@
 ﻿  C++_FinalProj_NavyStrike_CIS150.cpp
-  C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\jacka\Desktop\Do not move\FinalProj_CIS150_NavyStrike\navy-strike\Debug\C++_FinalProj_NavyStrike_CIS150.exe
-  C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\jacka\Desktop\Do not move\FinalProj_CIS150_NavyStrike\navy-strike\Debug\C++_FinalProj_NavyStrike_CIS150.pdb (Partial PDB)
+d:\program files (x86)\visual studio projects\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(7): warning C4603: '_WIN32_WINNT': macro is not defined or definition is different after precompiled header use
+  d:\program files (x86)\visual studio projects\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(7): note: Add macro to precompiled header instead of defining here
+  d:\program files (x86)\visual studio projects\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(9): note: use of precompiled header
+d:\program files (x86)\visual studio projects\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(1110): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  C++_FinalProj_NavyStrike_CIS150.vcxproj -> D:\Program Files (x86)\Visual Studio Projects\navy-strike\Debug\C++_FinalProj_NavyStrike_CIS150.exe
+  C++_FinalProj_NavyStrike_CIS150.vcxproj -> D:\Program Files (x86)\Visual Studio Projects\navy-strike\Debug\C++_FinalProj_NavyStrike_CIS150.pdb (Partial PDB)
