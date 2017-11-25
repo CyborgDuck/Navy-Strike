@@ -1,6 +1,7 @@
 //AUTHOR(s): Erik English, Chuck, and Tristan
 //eMails: erik.m.english@gmail.com \ eenglish13820@my.monroe.edu, tludwig33344@my.monroeccc.edu, ccurtis2@my.monroeccc.edu
 //DATE: 11/11/17
+
 /*DESCRIPTION: Final Project - Naval Strike a game based off of Battleship.  */
 //VERSION: 2017
 
@@ -15,6 +16,7 @@
 #include "fstream"     // For opening up files. like .txt  // we may need this for the ascii art, it could be infinitely easier.
 #include <Windows.h>   // To use Sleep
 #include <Ctime>       // To use the random number generator for onePlayer.
+//#include <sstream>	   // to convert a string to a integer to raise its ascii value and then change it back to a string. 'a' ++ now == 'b' https://www.youtube.com/watch?v=LM6EDIKS5Pk
 using namespace std;
 
 //Code found from cplusplus.com: SOURCE: http://www.cplusplus.com/forum/beginner/105484/ ; User: Giblit
@@ -48,25 +50,29 @@ int intro();
 
 void onePlayer();
 void TwoPlayer();
-void firstCoordOne(char, int&, char[][11], bool&);
-void firstCoordTwo(char, int&, bool&, string[], int&, char[][11], char[][11]); //Needed to change this to "firstCoordTwo" because you use more variables than Single Player
-void secCoord(int&, bool&, char[][11]);
-void refresh(int&, char[][11], char[][11], int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
-void displayBlank(char[][11]);
-void displayMiss();
+void firstCoordOne(string, int&, string[][11], bool&);
+void firstCoordTwo(string, int&, bool&, string[], int&, string[][11], string[][11]); //Needed to change this to "firstCoordTwo" because you use more variables than Single Player
+void secCoord(int&, bool&, string[][11], string[], int&);
+void secCoordOne(int&, bool&, string[][11]);
+void refresh(int&, string[][11], string[][11], int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
+void displayBlank(string[][11]);
+void displayMiss(int);
 
 //movement positions.
-void setPos(int&, int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, char[][11]);
+void setPos(int&, int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, string[][11], string[], bool&);
 void up(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 void down(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 void left(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 void right(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 
-void destroyer();
-//void submarine();
-//void cruiser();
-//void battleship();
-//void carrier();
+void destroyerHP(int&, int&, int&, int&, string[][11], string&);
+void submarineHP();
+void cruiserHP();
+void battleshipHP();
+void carrierHP();
+
+void shipDestroyed();
+
 //void sound();
 
 int main()
@@ -84,8 +90,8 @@ int main()
 
 	//Functions
 	//players = intro();  //currently to test deeper code comment this out, set players = 2;
-	//players = 2; //comment this out on release. and uncomment players = intro();
-	players = 1; //comment this out on release and uncomment players = 2 or players = intro();
+	players = 2; //comment this out on release. and uncomment players = intro();
+	//players = 1; //comment this out on release and uncomment players = 2 or players = intro();
 
 	//board_intilization(); //board intilization will go into the functions OnePlayer(), TwoPlayer() // board intilization is completely replaced with, displayBlank.
 	
@@ -410,7 +416,7 @@ void TwoPlayer()
 	
 	string userDirectionalInput;
 
-	char spaceOne = ' '; //letter that player enters for coordinate 1
+	string spaceOne = " "; //letter that player enters for coordinate 1
 	int spaceTwo = 0; //Number that player enters for coordinate 2
 	int spaceOneNum = 0; //Number conversion between char and int for spaceOne
 
@@ -468,31 +474,44 @@ void TwoPlayer()
 	string shipName[ships] = { "Destroyer","Submarine","Cruiser","Battleship","Carrier" };
 	int shipsLeft = ships;
 
-	char board[ROWS][COLUMNS] = {	{ ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0'  },
-									{ 'A',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-									{ 'B',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-									{ 'C',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-									{ 'D',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-									{ 'E',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-									{ 'F',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-									{ 'G',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-									{ 'H',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-									{ 'I',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-									{ 'J',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' } };
+	string board[ROWS][COLUMNS] = {	{ " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10"  },
+									{ "A",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "B",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "C",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "D",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "E",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "F",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "G",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "H",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "I",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "J",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" } };
 
 	//could these boards be their own function to use repeatedly? pretty sure we will need a third board.
 	
-	char shipsPlaced[ROWS][COLUMNS] = {		{ ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0'  },
-											{ 'A',  'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' },
-											{ 'B',  'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' },
-											{ 'C',  'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' },
-											{ 'D',  'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' },
-											{ 'E',  'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' },
-											{ 'F',  'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' },
-											{ 'G',  'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' },
-											{ 'H',  'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' },
-											{ 'I',  'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' },
-											{ 'J',  'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' } };
+	string shipsPlaced[ROWS][COLUMNS] = {	{ " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+											{ "A",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+											{ "B",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+											{ "C",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+											{ "D",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+											{ "E",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+											{ "F",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+											{ "G",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+											{ "H",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+											{ "I",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+											{ "J",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
+
+
+		string shipHits[ROWS][COLUMNS] = {	{ " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+											{ "A",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
+											{ "B",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
+											{ "C",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
+											{ "D",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
+											{ "E",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
+											{ "F",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
+											{ "G",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
+											{ "H",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
+											{ "I",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
+											{ "J",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" } };
 
 
 
@@ -531,57 +550,62 @@ void TwoPlayer()
 		{
 
 			firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
-			secCoord(spaceTwo, promptCheck, board);
+			secCoord(spaceTwo, promptCheck, board, shipName, count);
+			
 
-
-			setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board);
+			setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck);
 			cout << endl << endl;
 			refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
-			//destroyer(spaceOneNum, spaceTwo); // idea to break this up so that each ship has its own function...
+			//destroyerHP(); // idea to break this up so that each ship has its own function...
 			//if this doesnt work break the if else chain keep the functions within this, 'for loop'.
+
 		}
 		else if (count == 1)
 		{
 			firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
-			secCoord(spaceTwo, promptCheck, board);
+			secCoord(spaceTwo, promptCheck, board, shipName, count);
 
 
-			setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board);
+			setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck);
 			cout << endl << endl;
 			refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
+			//submarineHP();
 
 		}
 		else if (count == 2)
 		{
 			firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
-			secCoord(spaceTwo, promptCheck, board);
+			secCoord(spaceTwo, promptCheck, board, shipName, count);
 
 
-			setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board);
+			setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck);
 			cout << endl << endl;
 			refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
+			//cruiserHP();
 
 		}
 		else if (count == 3)
 		{
 			firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
-			secCoord(spaceTwo, promptCheck, board);
+			secCoord(spaceTwo, promptCheck, board, shipName, count);
 
 
-			setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board);
+			setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck);
 			cout << endl << endl;
 			refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
+			//battleshipHP();
 
 		}
 		else if (count == 4)
 		{
 			firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
-			secCoord(spaceTwo, promptCheck, board);
+			secCoord(spaceTwo, promptCheck, board, shipName, count);
 
 
-			setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board);
+			setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck);
 			cout << endl << endl;
 			refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
+			//carrierHP();
 
 		}
 		//replacing the shipsplaced on to the board making it visible to player one to see where their placed.
@@ -779,7 +803,7 @@ void right(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, int &sub1
 }
 
 
-void refresh(int &spaceOneNum, char board[][11], char shipsPlaced[][11], int &spaceTwo, int &destroy1, int &count, string &userDirectionalInput, int &sub1, int &sub2, int &cruis1, int &cruis2, int &battleship1, int &battleship2, int &battleship3, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &sub, int &cruis, int &battleship, int &carrier, int &destroy)
+void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int &spaceTwo, int &destroy1, int &count, string &userDirectionalInput, int &sub1, int &sub2, int &cruis1, int &cruis2, int &battleship1, int &battleship2, int &battleship3, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &sub, int &cruis, int &battleship, int &carrier, int &destroy)
 {
 	const int ROWS = 11;
 	const int COLUMNS = 11;
@@ -800,25 +824,25 @@ void refresh(int &spaceOneNum, char board[][11], char shipsPlaced[][11], int &sp
 				{
 					board[spaceOneNum][spaceTwo] = shipsPlaced[destroy][spaceTwo];
 					board[destroy1][spaceTwo] = shipsPlaced[destroy1][spaceTwo];
-
+					destroyerHP(destroy, destroy1, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 				{
 					board[spaceOneNum][spaceTwo] = shipsPlaced[destroy][spaceTwo];
 					board[destroy1][spaceTwo] = shipsPlaced[destroy1][spaceTwo];
-
+					destroyerHP(destroy, destroy1, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 				{
 					board[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][destroy];
 					board[spaceOneNum][destroy1] = shipsPlaced[spaceOneNum][destroy1];
-
+					destroyerHP(destroy, destroy1, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 				{
 					board[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][destroy];
 					board[spaceOneNum][destroy1] = shipsPlaced[spaceOneNum][destroy1];
-
+					destroyerHP(destroy, destroy1, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else
 				{
@@ -828,6 +852,7 @@ void refresh(int &spaceOneNum, char board[][11], char shipsPlaced[][11], int &sp
 					cout << setw(65) << "--------------------------" << endl;
 				}
 
+				
 
 			}
 			else if (count == 1) // 1 is the submarine, 3 spots
@@ -1032,11 +1057,178 @@ void refresh(int &spaceOneNum, char board[][11], char shipsPlaced[][11], int &sp
 }
 
 //Erik
-void destroyer()
+void destroyerHP(int &destroy, int &destroy1, int &spaceOneNum, int &spaceTwo, string board[][11], string &userDirectionalInput)
 {
+	int destHP = 2;
 
+	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
+	{
+		if (board[spaceOneNum][spaceTwo] == "X")
+		{
+			destHP = destHP - 1;
+		}
+		else if (board[destroy1][spaceTwo] == "X")
+		{
+			destHP = destHP - 1;
+		}
+
+	}
+	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
+	{
+		if (board[spaceOneNum][spaceTwo] == "X")
+		{
+			destHP = destHP - 1;
+		}
+		else if (board[destroy1][spaceTwo] == "X")
+		{
+			destHP = destHP - 1;
+		}
+
+	}
+	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
+	{
+		if (board[spaceOneNum][spaceTwo] == "X")
+		{
+			destHP = destHP - 1;
+		}
+		else if (board[spaceOneNum][destroy1] == "X")
+		{
+			destHP = destHP - 1;
+		}
+
+	}
+	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
+	{
+		if (board[spaceOneNum][spaceTwo] == "X")
+		{
+			destHP = destHP - 1;
+		}
+		else if (board[spaceOneNum][destroy1] == "X")
+		{
+			destHP = destHP - 1;
+		}
+
+	}
+
+	if (destHP == 0)
+	{
+		
+		shipDestroyed();
+		cout << "You lost your destroyer." << endl;
+		Sleep(1500);
+	}
 
 }
+
+/*void submarineHP()
+{
+	int subHP = 3;
+
+	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
+	{
+
+
+	}
+	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
+	{
+
+
+	}
+	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
+	{
+
+
+	}
+	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
+	{
+
+
+	}
+
+}
+
+void cruiserHP()
+{
+	int cruisHP = 3;
+
+	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
+	{
+
+
+	}
+	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
+	{
+
+
+	}
+	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
+	{
+
+
+	}
+	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
+	{
+
+
+	}
+
+}
+
+void battleshipHP()
+{
+	int battleHP = 4;
+
+	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
+	{
+
+
+	}
+	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
+	{
+
+
+	}
+	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
+	{
+
+
+	}
+	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
+	{
+
+
+	}
+
+}
+
+void carrierHP()
+{
+	int carriHP = 5;
+
+	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
+	{
+
+
+	}
+	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
+	{
+
+
+	}
+	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
+	{
+
+
+	}
+	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
+	{
+
+
+	}
+
+}*/
+
+
 
 //chuck
 void sound()
@@ -1054,34 +1246,42 @@ void sound()
 //up in the command prompt it may be because i missed a backslash
 //game over / you won! with x amount of shots left. time left? or with a total time.
 
-/*ship blows up use this,
- red and orange black/grey
-
-             \\         .  ./
-          \\      .:";'.:.."   /
-                (M^^.^~~:.'").
-          -   (/  .    . . \\ \\)  -
-             ((| :. ~ ^  :. .|))
-          -   (\\- |  \\ /  |  /)  -
-               -\\  \\     /  /-
-                 \\  \\   /  /
-//Made with the help of this site, SOURCE:	 http://www.chris.com/ascii/index.php?art=objects/explosives
-				 
-				 */
-
-
-void displayMiss() //Still unable to get displayed properly in command window
+void shipDestroyed()
 {
-	/*system("cls");
+	system("cls");
+	//ship blows up use this,
+	 //red and orange black/grey
+	cout << endl << endl << endl << endl << endl << endl;
+	cout << setw(82) << "			 \\         .  ./" << endl;
+	cout << setw(82) << " \\      .:; '.:..   / " << endl;
+	cout << setw(82) << " (M^^.^~~:.')." << endl;
+	cout << setw(82) << " -   (/  .    . . \\ \\)  -" << endl;
+	cout << setw(82) << " ((| :. ~ ^  :. .|))" << endl;
+	cout << setw(82) << " -   (\\- |  \\ /  |  /)  -" << endl;
+	cout << setw(82) << " -\\  \\     /  /-" << endl;
+	cout << setw(82) << " \\  \\   /  /" << endl;
+	//Made with the help of this site, SOURCE:	 http://www.chris.com/ascii/index.php?art=objects/explosives
+
+	 // you blew up // you lost your // x ship.				 
+}
+
+void displayMiss(int count) //Still unable to get displayed properly in command window
+{
+	system("cls");
 	//when shot was missed trigger this
 	//green?
-	cout << " __   _____  _   _   __  __ ___ ____ ____  _____ ____  " << endl;
-    cout << " \ \ / / _ \| | | | |  \/  |_ _/ ___/ ___|| ____|  _ \ " << endl;
-    cout << "  \ V / | | | | | | | |\/| || |\___ \___ \|  _| | | | |" << endl;
-	cout << "   | || |_| | |_| | | |  | || | ___) |__) | |___| |_| |" << endl;
-    cout << "   |_| \___/ \___/  |_|  |_|___|____/____/|_____|____/ " << endl;
-    */                                        
+	cout << endl << endl << endl << endl << endl << endl;
+	cout << setw(82) << " __   _____  _   _   __  __ ___ ____ ____  _____ ____  " << endl;
+    cout << setw(82) << " \\ \\ / / _ \\| | | | |  \\/  |_ _/ ___/ ___|| ____|  _ \\ " << endl;
+    cout << setw(82) << "  \\ \V / | | | | | | | |\\/| || |\\___ \\___ \\|  _| | | | |" << endl;
+	cout << setw(82) << "   | || |_| | |_| | | |  | || | ___) |__) | |___| |_| |" << endl;
+    cout << setw(82) << "   |_| \\___/ \\___/  |_|  |_|___|____/____/|_____|____/ " << endl;
+                                           
 		//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
+	count = 29 - count; // change 30 to 'difficulty' and adjust difficulty to amount of shots
+	
+	cout << endl << setw(55) << "You have, " << count << " shots left." << endl;
+	cout << endl << endl << endl << endl;
 }
 
 
@@ -1113,145 +1313,147 @@ void onePlayer()
 	bool promptCheck = false;
 	const int size = 11;
 
-	char spaceOne = ' '; //letter that player enters for coordinate 1
+	string spaceOne = " "; //letter that player enters for coordinate 1
 	int spaceTwo = 0;    //Number that player enters for coordinate 2
 	int spaceOneNum = 0; //Number conversion between char and int for spaceOne
 	int random;          //variable that determines which board the user uses
 	int maxNum = 10;     //Setting the random number not to exceed 10
 
 	bool validInput = false; //Making sure their guess stays within bounds of the board
+
+	//int shotsLeft = 30; see its in 'count'
 	
-	char blank[size][size] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-							   { 'A',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-							   { 'B',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-							   { 'C',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-							   { 'D',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-							   { 'E',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-							   { 'F',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-							   { 'G',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-							   { 'H',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-							   { 'I',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-							   { 'J',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' } };
+	string blank[size][size] = {	{ " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+									{ "A",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "B",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "C",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "D",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "E",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "F",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "G",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "H",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "I",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+									{ "J",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" } };
 
-	char boardOne[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-							  { 'A',  'X' , '0' , '0' , '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' },
-							  { 'B',  'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'C',  '0' , '0' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'D',  '0' , '0' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'E',  '0' , '0' , 'X' , '0' , 'X' , 'X' , 'X' , 'X' , 'X' , '0' },
-							  { 'F',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'G',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'H',  '0' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' },
-							  { 'I',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
+	string boardOne[11][11] = {		{ " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+									{ "A",  "X" , "O" , "O" , "O" , "O" , "X" , "X" , "X" , "O" , "O" },
+									{ "B",  "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "C",  "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "D",  "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "E",  "O" , "O" , "X" , "O" , "X" , "X" , "X" , "X" , "X" , "O" },
+									{ "F",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "G",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "H",  "O" , "X" , "X" , "X" , "X" , "O" , "O" , "O" , "O" , "O" },
+									{ "I",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "J",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
-	char boardTwo[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-							  { 'A',  '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , '0' },
-							  { 'B',  '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , '0' },
-							  { 'C',  '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' }, //C3-5 is a 3-spot ship
-							  { 'D',  '0' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'E',  '0' , 'X' , '0' , '0' , '0' , 'X' , 'X' , 'X' , 'X' , '0' },
-							  { 'F',  '0' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'G',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'I',  '0' , '0' , 'X' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' },
-							  { 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
+	string boardTwo[11][11] = {		{ " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+									{ "A", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
+									{ "B", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
+									{ "C", "O" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "O" , "O" }, //C3-5 is a 3-spot ship
+									{ "D", "O" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "E", "O" , "X" , "O" , "O" , "O" , "X" , "X" , "X" , "X" , "O" },
+									{ "F", "O" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "G", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "I", "O" , "O" , "X" , "X" , "X" , "X" , "X" , "O" , "O" , "O" },
+									{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
-	char boardThree[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-								{ 'A',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'B',  '0' , '0' , '0' , '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' },
-								{ 'C',  '0' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'D',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' },
-								{ 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'F',  'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' },
-								{ 'G',  'X' , '0' , 'X' , 'X' , 'X' , '0' , '0' , '0' , 'X' , '0' },
-								{ 'H',  'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' },
-								{ 'I',  'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' },
-								{ 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
+	string boardThree[11][11] = {	{ " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+									{ "A", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "B", "O" , "O" , "O" , "O" , "O" , "X" , "X" , "X" , "O" , "O" },
+									{ "C", "O" , "X" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "D", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "E", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" },
+									{ "F", "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" },
+									{ "G", "X" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "X" , "O" },
+									{ "H", "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" },
+									{ "I", "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" },
+									{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
-	char boardFour[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-							   { 'A',  '0' , 'X' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' },
-							   { 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'C',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , '0' },
-							   { 'D',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , '0' },
-							   { 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'F',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , '0' },
-							   { 'G',  '0' , '0' , '0' , 'X' , 'X' , 'X' , '0' , 'X' , '0' , '0' },
-							   { 'H',  '0' , '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' },
-							   { 'I',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'J',  'X' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
+	string boardFour[11][11] = {	{ " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+									{ "A", "O" , "X" , "X" , "X" , "X" , "X" , "O" , "O" , "O" , "O" },
+									{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "C", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "D", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" },
+									{ "E", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" },
+									{ "F", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" },
+									{ "G", "O" , "O" , "O" , "X" , "X" , "X" , "O" , "X" , "O" , "O" },
+									{ "H", "O" , "O" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "O" },
+									{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "J", "X" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
-	char boardFive[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-							   { 'A',  '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , 'X' , '0' },
-							   { 'B',  '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , 'X' , '0' },
-							   { 'C',  '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , 'X' , '0' },
-							   { 'D',  '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , '0' },
-							   { 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'F',  '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , '0' },
-							   { 'G',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'I',  '0' , '0' , '0' , '0' , '0' , 'X' , 'X' , 'X' , 'X' , '0' },
-							   { 'J',  '0' , 'X' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' } };
+	string boardFive[11][11] = {	{ " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+									{ "A", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "X" , "O" },
+									{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "X" , "O" },
+									{ "C", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "X" , "O" },
+									{ "D", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "E", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
+									{ "F", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
+									{ "G", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "I", "O" , "O" , "O" , "O" , "O" , "X" , "X" , "X" , "X" , "O" },
+									{ "J", "O" , "X" , "X" , "X" , "X" , "X" , "O" , "O" , "O" , "O" } };
 
-	char boardSix[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-							  { 'A',  '0' , '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' , '0' , 'X' },
-							  { 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , 'X' },
-							  { 'C',  '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , 'X' },
-							  { 'D',  '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , 'X' },
-							  { 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'F',  'X' , 'X' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , 'X' },
-							  { 'G',  '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' , '0' , '0' },
-							  { 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'I',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'J',  'X' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
+	string boardSix[11][11] = {		{ " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+									{ "A", "O" , "O" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "X" },
+									{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" },
+									{ "C", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "X" },
+									{ "D", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "X" },
+									{ "E", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
+									{ "F", "X" , "X" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
+									{ "G", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
+									{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "J", "X" , "X" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
-	char boardSeven[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-								{ 'A',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'B',  '0' , '0' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'C',  '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' },
-								{ 'D',  '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' },
-								{ 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'F',  '0' , '0' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' },
-								{ 'G',  '0' , '0' , 'X' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' },
-								{ 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'I',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
+	string boardSeven[11][11] = {	{ " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+									{ "A", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "B", "O" , "O" , "X" , "X" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "C", "O" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "O" , "O" },
+									{ "D", "O" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "O" , "O" },
+									{ "E", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "F", "O" , "O" , "X" , "X" , "X" , "X" , "O" , "O" , "O" , "O" },
+									{ "G", "O" , "O" , "X" , "X" , "X" , "X" , "X" , "O" , "O" , "O" },
+									{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
-	char boardEight[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-								{ 'A',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'C',  '0' , 'X' , 'X' , '0' , '0' , '0' , 'X' , 'X' , 'X' , 'X' },
-								{ 'D',  '0' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-								{ 'F',  '0' , 'X' , 'X' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' },
-								{ 'G',  '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' },
-								{ 'H',  '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' },
-								{ 'I',  '0' , '0' , '0' , '0' , '0' , '0' , 'X' , '0' , '0' , '0' },
-								{ 'J',  '0' , '0' , 'X' , 'X' , '0' , '0' , 'X' , '0' , '0' , '0' } };
+	string boardEight[11][11] = {	{ " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+									{ "A", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "C", "O" , "X" , "X" , "O" , "O" , "O" , "X" , "X" , "X" , "X" },
+									{ "D", "O" , "X" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "E", "O" , "X" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "F", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" },
+									{ "G", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" },
+									{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" },
+									{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" },
+									{ "J", "O" , "O" , "X" , "X" , "O" , "O" , "X" , "O" , "O" , "O" } };
 
-	char boardNine[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-							   { 'A',  '0' , '0' , '0' , 'X' , 'X' , '0' , '0' , '0' , '0' , '0' },
-							   { 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'C',  'X' , '0' , '0' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' },
-							   { 'D',  'X' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'F',  'X' , '0' , 'X' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' },
-							   { 'G',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							   { 'I',  '0' , '0' , 'X' , 'X' , 'X' , 'X' , '0' , '0' , '0' , '0' },
-							   { 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
+	string boardNine[11][11] = {	{ " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+									{ "A", "O" , "O" , "O" , "X" , "X" , "O" , "O" , "O" , "O" , "O" },
+									{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "C", "X" , "O" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "O" },
+									{ "D", "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "E", "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "F", "O" , "O" , "X" , "X" , "X" , "X" , "X" , "O" , "O" , "O" },
+									{ "G", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "I", "O" , "O" , "X" , "X" , "X" , "X" , "O" , "O" , "O" , "O" },
+									{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
-	char boardTen[11][11] = { { ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0' },
-							  { 'A',  'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' , 'X' }, // 2, 3, 5 
-							  { 'B',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'C',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'D',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'E',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'F',  '0' , '0' , 'X' , 'X' , 'X' , '0' , 'X' , 'X' , 'X' , 'X' },
-							  { 'G',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'H',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'I',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' },
-							  { 'J',  '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' , '0' } };
+	string boardTen[11][11] = {		{ " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+									{ "A", "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" }, // 2, 3, 5 
+									{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "C", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "D", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "E", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "F", "O" , "O" , "X" , "X" , "X" , "O" , "X" , "X" , "X" , "X" },
+									{ "G", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+									{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
 	do
 	{
@@ -1266,13 +1468,15 @@ void onePlayer()
 		for (int count = 0; count < 30; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoord(spaceTwo, promptCheck, blank);
+			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardOne[spaceOneNum][spaceTwo];
-		//	if (blank[spaceOneNum][spaceTwo] == '0')     }
-		//	{											 } STILL CANNOT GET ASCII ART 
-		//		displayMiss();							 }    TO DISPLAY PROPERLY
-		//		system("pause");						 }
-		//	}
+
+			if (blank[spaceOneNum][spaceTwo] == "O")     //}
+			{											// } //STILL CANNOT GET ASCII ART 
+				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+				system("pause");						 //}
+			}
+
 			system("cls");
 			displayBlank(blank);
 		}
@@ -1287,8 +1491,17 @@ void onePlayer()
 		for (int count = 0; count < 30; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoord(spaceTwo, promptCheck, blank);
+			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardTwo[spaceOneNum][spaceTwo];
+
+			if (blank[spaceOneNum][spaceTwo] == "O")     //}
+			{											// } //STILL CANNOT GET ASCII ART 
+				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+				Sleep(1500);
+				//system("pause");						 //}
+			}
+			
+			
 			system("cls");
 			displayBlank(blank);
 		}
@@ -1301,8 +1514,16 @@ void onePlayer()
 		for (int count = 0; count < 30; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoord(spaceTwo, promptCheck, blank);
+			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardThree[spaceOneNum][spaceTwo];
+
+			if (blank[spaceOneNum][spaceTwo] == "O")     //}
+			{											// } //STILL CANNOT GET ASCII ART 
+				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+				system("pause");						 //}
+			}
+			
+			
 			system("cls");
 			displayBlank(blank);
 		}
@@ -1315,8 +1536,16 @@ void onePlayer()
 		for (int count = 0; count < 30; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoord(spaceTwo, promptCheck, blank);
+			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardFour[spaceOneNum][spaceTwo];
+
+			if (blank[spaceOneNum][spaceTwo] == "O")     //}
+			{											// } //STILL CANNOT GET ASCII ART 
+				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+				system("pause");						 //}
+			}
+			
+			
 			system("cls");
 			displayBlank(blank);
 		}
@@ -1329,8 +1558,16 @@ void onePlayer()
 		for (int count = 0; count < 30; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoord(spaceTwo, promptCheck, blank);
+			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardFive[spaceOneNum][spaceTwo];
+
+			if (blank[spaceOneNum][spaceTwo] == "O")     //}
+			{											// } //STILL CANNOT GET ASCII ART 
+				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+				system("pause");						 //}
+			}
+			
+			
 			system("cls");
 			displayBlank(blank);
 		}
@@ -1343,8 +1580,16 @@ void onePlayer()
 		for (int count = 0; count < 30; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoord(spaceTwo, promptCheck, blank);
+			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardSix[spaceOneNum][spaceTwo];
+			
+			if (blank[spaceOneNum][spaceTwo] == "O")     //}
+			{											// } //STILL CANNOT GET ASCII ART 
+				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+				system("pause");						 //}
+			}
+			
+			
 			system("cls");
 			displayBlank(blank);
 		}
@@ -1357,8 +1602,16 @@ void onePlayer()
 		for (int count = 0; count < 30; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoord(spaceTwo, promptCheck, blank);
+			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardSeven[spaceOneNum][spaceTwo];
+			
+			if (blank[spaceOneNum][spaceTwo] == "O")     //}
+			{											// } //STILL CANNOT GET ASCII ART 
+				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+				system("pause");						 //}
+			}
+			
+			
 			system("cls");
 			displayBlank(blank);
 		}
@@ -1371,8 +1624,16 @@ void onePlayer()
 		for (int count = 0; count < 30; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoord(spaceTwo, promptCheck, blank);
+			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardEight[spaceOneNum][spaceTwo];
+			
+			if (blank[spaceOneNum][spaceTwo] == "O")     //}
+			{											// } //STILL CANNOT GET ASCII ART 
+				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+				system("pause");						 //}
+			}
+			
+			
 			system("cls");
 			displayBlank(blank);
 		}
@@ -1385,8 +1646,16 @@ void onePlayer()
 		for (int count = 0; count < 30; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoord(spaceTwo, promptCheck, blank);
+			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardNine[spaceOneNum][spaceTwo];
+			
+			if (blank[spaceOneNum][spaceTwo] == "O")     //}
+			{											// } //STILL CANNOT GET ASCII ART 
+				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+				system("pause");						 //}
+			}
+			
+			
 			system("cls");
 			displayBlank(blank);
 		}
@@ -1399,8 +1668,16 @@ void onePlayer()
 		for (int count = 0; count < 30; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoord(spaceTwo, promptCheck, blank);
+			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardTen[spaceOneNum][spaceTwo];
+			
+			if (blank[spaceOneNum][spaceTwo] == "O")     //}
+			{											// } //STILL CANNOT GET ASCII ART 
+				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+				system("pause");						 //}
+			}
+			
+			
 			system("cls");
 			displayBlank(blank);
 		}
@@ -1411,12 +1688,16 @@ void onePlayer()
 
 }
 
-void firstCoordOne(char spaceOne, int& spaceOneNum, char blank[][11], bool& promptCheck)
+void firstCoordOne(string spaceOne, int& spaceOneNum, string blank[][11], bool& promptCheck)
 {
 	
 	const int ROWS = 11;
-	char letter = 'a';
-	char cLETTER = 'A';
+	string sletter =  "a";
+	string sLETTER = "A";
+	//int letterASCI = 0;
+	//int cLETTERASCI = 0;
+	char letter;
+	char cLETTER;
 
 
 	do
@@ -1425,11 +1706,12 @@ void firstCoordOne(char spaceOne, int& spaceOneNum, char blank[][11], bool& prom
 		system("cls");
 		displayBlank(blank);
 		cout << endl;
-		cout << setw(75) << white << "Using letters A-J, and then a number 1-10, enter your coordinates: ";
+		//cout << setw(75) << white << "Using letters A-J, and then a number 1-10, enter your coordinates: ";
+		cout << setw(75) << white << "Using letters A-J, enter your coordinates: ";
 		cin >> spaceOne;
 
 		//check to see if input is a-j or A-J before sending it on.
-		if ((spaceOne >= 'a' && spaceOne <= 'j') || (spaceOne >= 'A' && spaceOne <= 'J'))
+		if ((spaceOne >= "a" && spaceOne <= "j") || (spaceOne >= "A" && spaceOne <= "J"))
 		{
 			promptCheck = true;
 
@@ -1465,21 +1747,31 @@ void firstCoordOne(char spaceOne, int& spaceOneNum, char blank[][11], bool& prom
 
 	for (int i = 0; i < ROWS; i++) //once a char has been chosen highlight it another color to help the user see the change on the board? cyan > red?
 	{
-		if ((spaceOne == letter) || (spaceOne == cLETTER))
+		if ((spaceOne == sletter) || (spaceOne == sLETTER))
 		{
 			spaceOneNum = (i + 1);
 		}
-		letter++;
-		cLETTER++;
+
+			//new conversion for ++ on the letter.
+			letter = sletter.at(0);
+			letter++;
+			sletter = letter;
+
+			cLETTER = sLETTER.at(0);
+			cLETTER++;
+			sLETTER = cLETTER;
+		
+		
 	}
 }
-void firstCoordTwo(char spaceOne, int &spaceOneNum, bool &promptCheck, string shipName[], int &count, char board[][11], char shipsPlaced[][11])
+void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string shipName[], int &count, string board[][11], string shipsPlaced[][11])
 {
 	//variables
 	const int ROWS = 11;
-	char letter = 'a';
-	char cLETTER = 'A';
-
+	string sletter = "a";
+	string sLETTER = "A";
+	char letter;
+	char cLETTER;
 
 	//===========FOR TWO PLAYER==========================================================================
 	do
@@ -1489,11 +1781,12 @@ void firstCoordTwo(char spaceOne, int &spaceOneNum, bool &promptCheck, string sh
 		displayBlank(board);
 		cout << endl;
 		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
-		cout << setw(75) << white << "Using letters A-J, and then a number 1-10, enter your coordinates: ";
+		//cout << setw(75) << white << "Using letters A-J, and then a number 1-10, enter your coordinates: ";
+		cout << setw(75) << white << "Using letters A-J, enter your coordinates: ";
 		cin >> spaceOne;
 
 		//check to see if input is a-j or A-J before sending it on.
-		if ((spaceOne >= 'a' && spaceOne <= 'j') || (spaceOne >= 'A' && spaceOne <= 'J'))
+		if ((spaceOne >= "a" && spaceOne <= "j") || (spaceOne >= "A" && spaceOne <= "J"))
 		{
 			promptCheck = true;
 
@@ -1529,19 +1822,30 @@ void firstCoordTwo(char spaceOne, int &spaceOneNum, bool &promptCheck, string sh
 
 	for (int i = 0; i < ROWS; i++) //once a char has been chosen highlight it another color to help the user see the change on the board? cyan > red?
 	{
-		if ((spaceOne == letter) || (spaceOne == cLETTER))
+		if ((spaceOne == sletter) || (spaceOne == sLETTER))
 		{
 			spaceOneNum = (i + 1);
 		}
+
+		//new conversion for ++ on the letter.
+		letter = sletter.at(0);
 		letter++;
+		sletter = letter;
+
+		cLETTER = sLETTER.at(0);
 		cLETTER++;
+		sLETTER = cLETTER;
+
+		//old conversion that worked with the char boards.
+		//letter++;
+		//cLETTER++;
 	}
 
 	//cout << spaceOneNum; //testing to see if it counts right.
 
 }
 
-void secCoord(int &spaceTwo, bool &promptCheck, char board[][11])
+void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipName[], int &count)
 {
 
 	promptCheck = false;
@@ -1551,7 +1855,8 @@ void secCoord(int &spaceTwo, bool &promptCheck, char board[][11])
 		//board_intilization(spaceOneNum, spaceTwo);
 		displayBlank(board);
 		cout << endl;
-		cout << setw(60) << white << "Using numbers 1-10, enter your second coordinate: ";
+		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
+		cout << setw(75) << white << "Using numbers 1-10, enter your second coordinate: ";
 		cin >> spaceTwo;
 
 		if (spaceTwo >= 1 && spaceTwo <= 10)
@@ -1580,7 +1885,46 @@ void secCoord(int &spaceTwo, bool &promptCheck, char board[][11])
 
 }
 
-void displayBlank(char board[][11])
+void secCoordOne(int &spaceTwo, bool &promptCheck, string board[][11])
+{
+
+	promptCheck = false;
+	while (!promptCheck)
+	{
+		system("cls");
+		//board_intilization(spaceOneNum, spaceTwo);
+		displayBlank(board);
+		cout << endl;
+		cout << setw(75) << white << "Using numbers 1-10, enter your second coordinate: ";
+		cin >> spaceTwo;
+
+		if (spaceTwo >= 1 && spaceTwo <= 10)
+		{
+			promptCheck = true;
+			spaceTwo = (spaceTwo);
+
+		}
+		else
+		{
+			cout << endl;
+			cout << setw(75) << red << "============================================================" << endl;
+			cout << setw(75) << "This is not a valid input. Try again, using the numbers 1-10." << endl;
+			cout << setw(75) << "============================================================" << endl;
+			//cout << setw(60) << white << "Using numbers 1-10, enter your second coordinate: ";
+			cout << endl;
+			Sleep(1500);
+			system("cls");
+
+		}
+
+	}
+	promptCheck = false;
+
+
+
+}
+
+void displayBlank(string board[][11])
 {
 	//Erik 11/13/17
 	//dragging variables down from, board_intilization(); uncertain when calling the 
@@ -1598,11 +1942,11 @@ void displayBlank(char board[][11])
 		for (int s = 0; s < COLUMNS; s++)
 		{
 			//if else added by Tristan to make our X equal red & 0 equal white.
-			if (board[i][s] == 'X')
+			if (board[i][s] == "X")
 			{
 				cout << setw(5) << red << board[i][s] << setw(5) << darkgrey << "|";
 			}
-			else if (board[i][s] == '0')
+			else if (board[i][s] == "O")
 			{
 				cout << setw(5) << white << board[i][s] << setw(5) << darkgrey << "|";
 			}
@@ -1625,45 +1969,60 @@ void displayBlank(char board[][11])
 
 }
 
-void setPos(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, string &userDirectionalInput, int &sub1, int &sub2, int &cruis1, int &cruis2, int &battleship1, int &battleship2, int &battleship3, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &sub, int &cruis, int &battleship, int &carrier, int &destroy, char board[][11]) // board
+void setPos(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, string &userDirectionalInput, int &sub1, int &sub2, int &cruis1, int &cruis2, int &battleship1, int &battleship2, int &battleship3, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &sub, int &cruis, int &battleship, int &carrier, int &destroy, string board[][11], string shipName[], bool &promptCheck) // board
 {
-	system("cls");
-	displayBlank(board);
-	cout << setw(65) << white << "How would you like to place your ship: (Up, Down, Left or Right) " << endl;
-	cin >> userDirectionalInput;
-	//getline(cin, userDirectionalInput);
-	//system("pause");
-	//get( userDirectionalInput);
+	promptCheck = false;
 
-	//would like to get, wasd, arrow keys or numpad to correspond with this instead of typing in the direction. Erik, 11/15/2017
-
-	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
+	do
 	{
-		up(spaceOneNum, spaceTwo, count, destroy1, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
+		system("cls");
+		displayBlank(board);
+		cout << endl;
+		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
+		cout << setw(75) << white << "How would you like to place your ship: (Up, Down, Left or Right) ";
+		cin >> userDirectionalInput;
+		//getline(cin, userDirectionalInput);
+		//system("pause");
+		//get( userDirectionalInput);
 
-	}
-	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
-	{
-		down(spaceOneNum, spaceTwo, count, destroy1, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
-	}
-	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
-	{
-		left(spaceOneNum, spaceTwo, count, destroy1, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
+		//would like to get, wasd, arrow keys or numpad to correspond with this instead of typing in the direction. Erik, 11/15/2017
 
-	}
-	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
-	{
-		right(spaceOneNum, spaceTwo, count, destroy1, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
+		if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
+		{
+			up(spaceOneNum, spaceTwo, count, destroy1, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
+			promptCheck = true;
+		
+		}
+		else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
+		{
+			down(spaceOneNum, spaceTwo, count, destroy1, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
+			promptCheck = true;
 
-	}
-	else
-	{
-		//need to test if setw is correct still.
-		cout << setw(65) << red << "--------------------------" << endl;
-		cout << setw(65) << "Invalid input. Try again." << endl;
-		cout << setw(65) << "--------------------------" << endl;
-	}
+		}
+		else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
+		{
+			left(spaceOneNum, spaceTwo, count, destroy1, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
+			promptCheck = true;
 
+		}
+		else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
+		{
+			right(spaceOneNum, spaceTwo, count, destroy1, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
+			promptCheck = true;
+
+		}
+		else
+		{
+			//need to test if setw is correct still.
+			system("cls");
+			cout << endl << endl << endl << endl << endl << endl << endl;
+			cout << setw(65) << red << "--------------------------" << endl;
+			cout << setw(65) << "Invalid input. Try again." << endl;
+			cout << setw(65) << "--------------------------" << endl;
+			Sleep(1500);
+		}
+	
+	} while (promptCheck == false);
 
 }
 
