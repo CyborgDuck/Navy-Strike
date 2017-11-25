@@ -17,6 +17,7 @@
 #include <Windows.h>   // To use Sleep
 #include <Ctime>       // To use the random number generator for onePlayer.
 //#include <sstream>	   // to convert a string to a integer to raise its ascii value and then change it back to a string. 'a' ++ now == 'b' https://www.youtube.com/watch?v=LM6EDIKS5Pk
+#include "vector"
 using namespace std;
 
 //Code found from cplusplus.com: SOURCE: http://www.cplusplus.com/forum/beginner/105484/ ; User: Giblit
@@ -44,12 +45,14 @@ ostream& operator<<(ostream &stm, const COLOR &c)
 
 
 //==================Function Prototypes==============
-int intro();
+void intro(int&);
+int mainMenu(); //In order to display the main menu, and not the ENTIRE intro every time, we need the menu part in a different function
 
 //void board_intilization();
 
 void onePlayer();
 void TwoPlayer();
+void Options(int&);
 void firstCoordOne(string, int&, string[][11], bool&);
 void firstCoordTwo(string, int&, bool&, string[], int&, string[][11], string[][11]); //Needed to change this to "firstCoordTwo" because you use more variables than Single Player
 void secCoord(int&, bool&, string[][11], string[], int&);
@@ -57,6 +60,7 @@ void secCoordOne(int&, bool&, string[][11]);
 void refresh(int&, string[][11], string[][11], int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 void displayBlank(string[][11]);
 void displayMiss(int);
+void displayHit(int);
 
 //movement positions.
 void setPos(int&, int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, string[][11], string[], bool&);
@@ -73,7 +77,7 @@ void carrierHP();
 
 void shipDestroyed();
 
-//void sound();
+//void startSound();
 
 int main()
 {
@@ -85,67 +89,26 @@ int main()
 
 
 	//Variables
-	int players;
+	int players; //Player Choice on the main menu
 
 
 	//Functions
-	//players = intro();  //currently to test deeper code comment this out, set players = 2;
-	players = 2; //comment this out on release. and uncomment players = intro();
-	//players = 1; //comment this out on release and uncomment players = 2 or players = intro();
+
+	//intro(players);  //currently to test deeper code comment this out, set players = 2;
+	mainMenu(); //Skip past the intro straight into the main menu;
 
 	//board_intilization(); //board intilization will go into the functions OnePlayer(), TwoPlayer() // board intilization is completely replaced with, displayBlank.
 	
-	if (players == 1)//1 player vs ai.
-	{
-		//need to make a function to place the ship in a random location on the board.
-		//cout << "Look forward to this feature in a new update! We require an A.I. to hire, know any around?" << endl;
-		onePlayer();
-
-		//Sleep(3000);
-		//and back to intro(); until we decide to tackle that	
-		//system("cls");
-		//intro(); // ****game seems to break and default to press any key if going through the intro function more than once?**** why does it do this.
-
-		//OnePlayer();
-
-	}
-	else if (players == 2)//2 players - Primary Focus
-	{
-
-		TwoPlayer(); 
-		// need when the ship is being placed to be across more than one position on the board.
-		//Possible idea, a max amount of shots you can shoot before you lose? could also manipulate in options to unlimited or limited
-
-	}
-	else if (players == 3)//Options
-	{
-
-		cout << "Future development is required here, look forward to changing colors of the game board!" << endl; // colors and board size? we may be able to manipulate sound still looking into it.
-		//Options();
-
-	}
-	else
-	{
-		cout << "How'd you get here? Your not supposed to be here." << endl;
-		
-		
-	}
-
-
 	system("pause");
 	return 0;
 }
 
 //==============================Functions=================
 
-int intro()
+void intro(int &players)
 {
 	//any-key to skip some stuff? possible?
 
-	//variables 
-	bool menuNumber = false;
-	int players = 0;
-	//int v = 0;  // was used for now obsolete color switch.
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -285,8 +248,21 @@ int intro()
 	}
 	Sleep(1500);
 	system("cls");
+	players = mainMenu();
 
+}
+
+int mainMenu()
+{
+	int players = 0;
+	int difficulty = 30; //How many guesses the player has before losing the game
+	bool menuNumber = false;
 	//MENU
+
+	//players = mainMenu();
+	//players = 2; //comment this out on release. and uncomment players = intro();
+	//players = 1; //comment this out on release and uncomment players = 2 or players = intro();
+	//players = 3; //comment this out on release and uncomment players = 2 or players = intro();
 
 	do
 	{
@@ -296,7 +272,7 @@ int intro()
 
 		//cout << setw(68) << cyan << "Welcome to Navy Strike" << endl;
 		cout << white;
-	
+
 		cout << "        _ _ _ ____ _    ____ ____ _  _ ____    ___ ____    _  _ ____ _  _ ____ _       ____ ___ ____ _ _  _ ____ " << endl;
 		cout << "        | | | |___ |    |    |  | |\\/| |___     |  |  |    |\\ | |__| |  | |__| |       [__   |  |__/ | |_/  |___ " << endl;
 		cout << "        |_|_| |___ |___ |___ |__| |  | |___     |  |__|    | \\| |  |  \\/  |  | |___    ___]  |  |  \\ | | \\_ |___ " << endl;
@@ -306,24 +282,24 @@ int intro()
 
 
 		cout << endl << endl << endl << endl << endl;
-		cout << setw(76) << white <<"Choose how you would like to play. \n";
+		cout << setw(76) << white << "Choose how you would like to play. \n";
 		cout << endl << setw(65) << "1. ONE PLAYER \n";
 		cout << setw(66) << "2. TWO PLAYERS \n"; //Only two player will work for the time being, 1 player will require an ai.
 		cout << setw(62) << "3. OPTIONS \n"; //If time allows, come back to try to edit colors.
 
-		
 
 
-		
-		// very sensitive to spaces and tabs do not change.
-		cout << yellow << " . _  .    ." << red << "__ "<< yellow <<" .  .  __,--' " << endl;
-		cout << yellow << "  (_)    ' " << red << "/__\\"<< yellow <<" __,--' " << endl;
-		cout << yellow << "'  .  ' . '" << white << "| " << yellow << "o" << white << "|"<< yellow <<"' " << endl;
-		cout << "          " << white << "["<< brown <<"IIII"<< white <<"]"<< yellow <<"`--.__ " << endl;
-		cout << white <<  "           |  |       "<< yellow <<"`--.__ " << endl;
-		cout << red << "           | :|             "<< yellow <<"`--.__ " << endl;
-		cout << white << "           |  |                   "<< yellow <<"`--.__ " << endl;
-		cout << lightblue << "._,,.-," << darkgrey << ".__." << white <<"'__`" << darkgrey << ".___."<< lightblue <<",.,.-..,_.,.,.,-._..`"<< yellow <<"--"<< lightblue <<".." << yellow << "-" << lightblue << ".,._.,,._,-,..,._..,.,_,,._.,,._,-,..,._..,.,_,,._.,,._,-,..,._..,.,_,,.,, " << endl;
+
+
+											 // very sensitive to spaces and tabs do not change.
+		cout << yellow << " . _  .    ." << red << "__ " << yellow << " .  .  __,--' " << endl;
+		cout << yellow << "  (_)    ' " << red << "/__\\" << yellow << " __,--' " << endl;
+		cout << yellow << "'  .  ' . '" << white << "| " << yellow << "o" << white << "|" << yellow << "' " << endl;
+		cout << "          " << white << "[" << brown << "IIII" << white << "]" << yellow << "`--.__ " << endl;
+		cout << white << "           |  |       " << yellow << "`--.__ " << endl;
+		cout << red << "           | :|             " << yellow << "`--.__ " << endl;
+		cout << white << "           |  |                   " << yellow << "`--.__ " << endl;
+		cout << lightblue << "._,,.-," << darkgrey << ".__." << white << "'__`" << darkgrey << ".___." << lightblue << ",.,.-..,_.,.,.,-._..`" << yellow << "--" << lightblue << ".." << yellow << "-" << lightblue << ".,._.,,._,-,..,._..,.,_,,._.,,._,-,..,._..,.,_,,._.,,._,-,..,._..,.,_,,.,, " << endl;
 		//SOURCE: http://ascii.co.uk/art/lighthouse Made originally by: unknown
 		// very sensitive to spaces and tabs do not change.
 
@@ -333,7 +309,7 @@ int intro()
 		cin >> players;
 
 		//players has to equal 1-3 if it does not, run it again.
-		if(players == 1 || players == 2 || players == 3 )//HERE doesnt seem to want to loop for some reason also need an array for the player choice since this is staying a void function to pass on the choice 1 or 2 Maybe an OPTION button to change the colors? that would be cool. maybe a few presets
+		if (players == 1 || players == 2 || players == 3)//HERE doesnt seem to want to loop for some reason also need an array for the player choice since this is staying a void function to pass on the choice 1 or 2 Maybe an OPTION button to change the colors? that would be cool. maybe a few presets
 		{
 			menuNumber = true;
 		}
@@ -343,12 +319,47 @@ int intro()
 		}
 
 
-	}while (menuNumber != true);
+	} while (menuNumber != true);
 	system("cls");
+
+	if (players == 1)//1 player vs ai.
+	{
+		//need to make a function to place the ship in a random location on the board.
+		//cout << "Look forward to this feature in a new update! We require an A.I. to hire, know any around?" << endl;
+		onePlayer();
+
+		//Sleep(3000);
+		//and back to intro(); until we decide to tackle that	
+		//system("cls");
+		//intro(); // ****game seems to break and default to press any key if going through the intro function more than once?**** why does it do this.
+
+		//OnePlayer();
+
+	}
+	else if (players == 2)//2 players - Primary Focus
+	{
+
+		TwoPlayer();
+		// need when the ship is being placed to be across more than one position on the board.
+		//Possible idea, a max amount of shots you can shoot before you lose? could also manipulate in options to unlimited or limited
+
+	}
+	else if (players == 3)//Options
+	{
+
+		// cout << "Future development is required here, look forward to changing colors of the game board!" << endl; colors and board size? we may be able to manipulate sound still looking into it.
+		Options(difficulty);
+
+	}
+	else
+	{
+		cout << "How'd you get here? Your not supposed to be here." << endl;
+
+
+	}
 
 	return players;
 }
-
 
 //void board_intilization()
 //{
@@ -1056,7 +1067,7 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 
 }
 
-//Erik
+//================================ERIK'S FUNCTIONS==============================================================================
 void destroyerHP(int &destroy, int &destroy1, int &spaceOneNum, int &spaceTwo, string board[][11], string &userDirectionalInput)
 {
 	int destHP = 2;
@@ -1230,8 +1241,8 @@ void carrierHP()
 
 
 
-//chuck
-void sound()
+//===========================CHUCK'S FUNCTIONS===================================================
+void startSound()
 {
 
 
@@ -1286,23 +1297,24 @@ void displayMiss(int count) //Still unable to get displayed properly in command 
 
 
 
-/*
-when you get a hit
-red on the flames, green on text
 
-  *   )                            )     (                                     (     
-` )  /(    )  (    (  (     (   ( /(     )\\           (     (   (   (      (   )\\ )  
- ( )(_))( /(  )(   )\\))(   ))\\  )\\()) ((((_)(   (   ( )\\   ))\\  )\\  )(    ))\\ (()/(  
-(_(_()) )(_))(()\\ ((_))\\  /((_)(_))/   )\\ _ )\\  )\\  )(( ) /((_)((_)(()\\  /((_) ((_)) 
-|_   _|((_)_  ((_) (()(_)(_))  | |_    (_)_\\(_)((_)((_)_)(_))(  (_) ((_)(_))   _| |  
-  | |  / _` || '_|/ _` | / -_) |  _|    / _ \\ / _| / _` || || | | || '_|/ -_)/ _` |  
-  |_|  \\__,_||_|  \\__, | \\___|  \\__|   /_/ \\_\\\\__| \\__, | \\_,_| |_||_|  \\___|\\__,_|  
-                  |___/                               |_|                            
- //Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
+void displayHit(int count)
+{
+	/*((((
+		*)    ()\)  (*)     ((()\))\))\ )
+		` ) / ()\    (() / ()\)    (`) / ()\       )\  ()\      ((() / ((() / (((() / (
+		()(_))((((_)(/ (_))(() / ()\   ()(_)) ((((_)((((_))((_))\ / (_)) / (_)))\ / (_))
+			(_(_()))\ _)\ (_)) / (_))_((_)(_(_()))\ _)\)\___((_)_   _((_)(_)) (_)) ((_)(_))_
+			| _   _ | (_)_\(_) | _ \ (_)) __ || __ || _   _ | (_)_\(_)((/ __|/ _ \ | | | ||_ _ || _ \ | __ || \
+				| |     / _ \  |   /   | (_ || _|   | |      / _ \ | (__ | (_) || |_| | | | |   /| _| | |) |
+					|_|    /_ / \_\ | _ | _\    \___ || ___|  |_|     /_ / \_\   \___ | \__\_\ \___/ |___ || _ | _\ | ___ || ___ /
 
+				
+				//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
 
 
 */
+}
 
 //=====================TRISTAN'S FUNCTIONS=========================================
 void onePlayer()
@@ -1312,13 +1324,13 @@ void onePlayer()
 	string between = "---------------------------------------------------------------------------------------------------------------";
 	bool promptCheck = false;
 	const int size = 11;
-
 	string spaceOne = " "; //letter that player enters for coordinate 1
 	int spaceTwo = 0;    //Number that player enters for coordinate 2
 	int spaceOneNum = 0; //Number conversion between char and int for spaceOne
 	int random;          //variable that determines which board the user uses
 	int maxNum = 10;     //Setting the random number not to exceed 10
-
+	int allShips = 0;    //Variable used to count how many hits have been detected. There are a total of 17 hits before all ships are sunk. So, if this number reaches 17, the game is won. Most likely a placeholder for whenever we get
+						 //Hit detection properly
 	bool validInput = false; //Making sure their guess stays within bounds of the board
 
 	//int shotsLeft = 30; see its in 'count'
@@ -1455,13 +1467,18 @@ void onePlayer()
 									{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 									{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
-	do
-	{
-	random = (rand() % maxNum); 
-	} while (random == 0);
+	//do
+	//{
+	random = 1; //(rand() % maxNum); 
+	//} while (random == 0);
 
-	cout << "Your board number is: " << random << "." << endl << endl;
-	system("pause");
+	for (int count = 0; count < 3; count++)
+	{
+		cout << setw(67) << endl << endl << endl << endl << endl << endl << "Your board number is: " << random << "." << endl << endl;
+		Sleep(1000);
+		system("cls");
+		Sleep(100);
+	}
 
 	if (random == 1)
 	{
@@ -1474,16 +1491,32 @@ void onePlayer()
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
-				system("pause");						 //}
+				Sleep(2000);						 //}
+			}
+			if (blank[spaceOneNum][spaceTwo] == "X")
+			{
+				allShips++;
+				displayHit(count);
+				Sleep(2000);
 			}
 
 			system("cls");
 			displayBlank(blank);
+			if (allShips == 17)
+			{
+				system("cls");
+				count = 29;
+				cout << white << "==========================================" << endl;
+				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << white << "==========================================" << endl;
+			}
 		}
-		cout << white << "=====================================" << endl;
-		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-		cout << white << "=====================================" << endl;
-
+		if (allShips != 17)
+		{
+			cout << white << "=====================================" << endl;
+			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+			cout << white << "=====================================" << endl;
+		}
 	}
 
 	else if (random == 2)
@@ -1498,16 +1531,26 @@ void onePlayer()
 			{											// } //STILL CANNOT GET ASCII ART 
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
 				Sleep(1500);
-				//system("pause");						 //}
 			}
 			
 			
 			system("cls");
 			displayBlank(blank);
+			if (allShips == 17)
+			{
+				system("cls");
+				count = 29;
+				cout << white << "==========================================" << endl;
+				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << white << "==========================================" << endl;
+			}
 		}
-		cout << white << "=====================================" << endl;
-		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-		cout << white << "=====================================" << endl;
+		if (allShips != 17)
+		{
+			cout << white << "=====================================" << endl;
+			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+			cout << white << "=====================================" << endl;
+		}
 	}
 	else if (random == 3)
 	{
@@ -1526,10 +1569,21 @@ void onePlayer()
 			
 			system("cls");
 			displayBlank(blank);
+			if (allShips == 17)
+			{
+				system("cls");
+				count = 29;
+				cout << white << "==========================================" << endl;
+				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << white << "==========================================" << endl;
+			}
 		}
-		cout << white << "=====================================" << endl;
-		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-		cout << white << "=====================================" << endl;
+		if (allShips != 17)
+		{
+			cout << white << "=====================================" << endl;
+			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+			cout << white << "=====================================" << endl;
+		}
 	}
 	else if (random == 4)
 	{
@@ -1548,10 +1602,21 @@ void onePlayer()
 			
 			system("cls");
 			displayBlank(blank);
+			if (allShips == 17)
+			{
+				system("cls");
+				count = 29;
+				cout << white << "==========================================" << endl;
+				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << white << "==========================================" << endl;
+			}
 		}
-		cout << white << "=====================================" << endl;
-		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-		cout << white << "=====================================" << endl;
+		if (allShips != 17)
+		{
+			cout << white << "=====================================" << endl;
+			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+			cout << white << "=====================================" << endl;
+		}
 	}
 	else if (random == 5)
 	{
@@ -1570,10 +1635,21 @@ void onePlayer()
 			
 			system("cls");
 			displayBlank(blank);
+			if (allShips == 17)
+			{
+				system("cls");
+				count = 29;
+				cout << white << "==========================================" << endl;
+				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << white << "==========================================" << endl;
+			}
 		}
-		cout << white << "=====================================" << endl;
-		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-		cout << white << "=====================================" << endl;
+		if (allShips != 17)
+		{
+			cout << white << "=====================================" << endl;
+			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+			cout << white << "=====================================" << endl;
+		}
 	}
 	else if (random == 6)
 	{
@@ -1592,10 +1668,21 @@ void onePlayer()
 			
 			system("cls");
 			displayBlank(blank);
+			if (allShips == 17)
+			{
+				system("cls");
+				count = 29;
+				cout << white << "==========================================" << endl;
+				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << white << "==========================================" << endl;
+			}
 		}
-		cout << white << "=====================================" << endl;
-		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-		cout << white << "=====================================" << endl;
+		if (allShips != 17)
+		{
+			cout << white << "=====================================" << endl;
+			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+			cout << white << "=====================================" << endl;
+		}
 	}
 	else if (random == 7)
 	{
@@ -1614,10 +1701,21 @@ void onePlayer()
 			
 			system("cls");
 			displayBlank(blank);
+			if (allShips == 17)
+			{
+				system("cls");
+				count = 29;
+				cout << white << "==========================================" << endl;
+				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << white << "==========================================" << endl;
+			}
 		}
-		cout << white << "=====================================" << endl;
-		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-		cout << white << "=====================================" << endl;
+		if (allShips != 17)
+		{
+			cout << white << "=====================================" << endl;
+			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+			cout << white << "=====================================" << endl;
+		}
 	}
 	else if (random == 8)
 	{
@@ -1636,10 +1734,21 @@ void onePlayer()
 			
 			system("cls");
 			displayBlank(blank);
+			if (allShips == 17)
+			{
+				system("cls");
+				count = 29;
+				cout << white << "==========================================" << endl;
+				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << white << "==========================================" << endl;
+			}
 		}
-		cout << white << "=====================================" << endl;
-		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-		cout << white << "=====================================" << endl;
+		if (allShips != 17)
+		{
+			cout << white << "=====================================" << endl;
+			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+			cout << white << "=====================================" << endl;
+		}
 	}
 	else if (random == 9)
 	{
@@ -1658,10 +1767,21 @@ void onePlayer()
 			
 			system("cls");
 			displayBlank(blank);
+			if (allShips == 17)
+			{
+				system("cls");
+				count = 29;
+				cout << white << "==========================================" << endl;
+				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << white << "==========================================" << endl;
+			}
 		}
-		cout << white << "=====================================" << endl;
-		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-		cout << white << "=====================================" << endl;
+		if (allShips != 17)
+		{
+			cout << white << "=====================================" << endl;
+			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+			cout << white << "=====================================" << endl;
+		}
 	}
 	else if (random == 10)
 	{
@@ -1680,10 +1800,21 @@ void onePlayer()
 			
 			system("cls");
 			displayBlank(blank);
+			if (allShips == 17)
+			{
+				system("cls");
+				count = 29;
+				cout << white << "==========================================" << endl;
+				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << white << "==========================================" << endl;
+			}
 		}
-		cout << white << "=====================================" << endl;
-		cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-		cout << white << "=====================================" << endl;
+		if (allShips != 17)
+		{
+			cout << white << "=====================================" << endl;
+			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
+			cout << white << "=====================================" << endl;
+		}
 	}
 
 }
@@ -1711,7 +1842,16 @@ void firstCoordOne(string spaceOne, int& spaceOneNum, string blank[][11], bool& 
 		cin >> spaceOne;
 
 		//check to see if input is a-j or A-J before sending it on.
-		if ((spaceOne >= "a" && spaceOne <= "j") || (spaceOne >= "A" && spaceOne <= "J"))
+		if (spaceOne.length() > 1)
+		{
+			cout << endl;
+			cout << setw(74) << red << "=========================================================" << endl;
+			cout << setw(75) << "This is not a valid input. Try again, using a letter a-j. " << endl;
+			cout << setw(74) << "=========================================================" << endl;
+			Sleep(1500);
+			system("cls");
+		}
+		else if ((spaceOne >= "a" && spaceOne <= "j") || (spaceOne >= "A" && spaceOne <= "J"))
 		{
 			promptCheck = true;
 
@@ -2024,6 +2164,70 @@ void setPos(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, string &
 	
 	} while (promptCheck == false);
 
+}
+void Options(int &difficulty)
+{
+	bool exitInput = false;
+	bool valInput = false;
+	int optionSelect;
+	int diffSelect;
+
+
+	cout << cyan;
+	cout << setw(72) << "WELCOME TO THE OPTIONS SCREEN" << endl;
+	cout << setw(67) << "1. Change Difficulty" << endl;
+	cout << setw(67) << "4. Back to main menu" << endl;
+
+	while (!exitInput)
+	{
+
+		cout << "Please choose 1-*: ";
+		cin >> optionSelect;
+		if (optionSelect == 1)
+		{
+			cout << white << setw(67) << "1. Easy (40 guesses)\n";
+			cout << white << setw(69) << "2. Normal (30 guesses)\n";
+			cout << white << setw(67) << "3. Hard (20 guesses)\n";
+			cout << setw(69) << white << "4. Extreme (17 guesses;" << red << " ALL GUESSES MUST BE HITS)\n";
+			while (!valInput)
+			{
+				cout << cyan << "Please selct a difficulty: ";
+				cin >> diffSelect;
+				if (diffSelect == 1)
+				{
+					valInput = true;
+					difficulty = 40;
+				}
+				else if (diffSelect = 2)
+				{
+					valInput = true;
+					difficulty = 30;
+				}
+				else if (diffSelect = 3)
+				{
+					valInput = true;
+					difficulty = 20;
+				}
+				else if (diffSelect = 4)
+				{
+					valInput = true;
+					difficulty = 17;
+				}
+				else
+				{
+					cout << red << "========================" << endl;
+					cout << red << "INVALID INPUT, TRY AGAIN" << endl;
+					cout << red << "========================" << endl;
+					Sleep(2000);
+				}
+			}
+		}
+		else if (optionSelect == 4)
+		{
+			exitInput = true;
+		}
+	}
+	mainMenu();
 }
 
 //=============================END OF TRISTAN=====================================================================
