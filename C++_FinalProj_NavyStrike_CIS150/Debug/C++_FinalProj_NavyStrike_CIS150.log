@@ -1,9 +1,9 @@
 ﻿  C++_FinalProj_NavyStrike_CIS150.cpp
-d:\program files (x86)\visual studio projects\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(8): warning C4603: '_WIN32_WINNT': macro is not defined or definition is different after precompiled header use
-  d:\program files (x86)\visual studio projects\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(8): note: Add macro to precompiled header instead of defining here
-  d:\program files (x86)\visual studio projects\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(10): note: use of precompiled header
-d:\program files (x86)\visual studio projects\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(92): warning C4101: 'players': unreferenced local variable
-d:\program files (x86)\visual studio projects\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(1287): warning C4129: 'V': unrecognized character escape sequence
-d:\program files (x86)\visual studio projects\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(1322): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  C++_FinalProj_NavyStrike_CIS150.vcxproj -> D:\Program Files (x86)\Visual Studio Projects\navy-strike\Debug\C++_FinalProj_NavyStrike_CIS150.exe
-  C++_FinalProj_NavyStrike_CIS150.vcxproj -> D:\Program Files (x86)\Visual Studio Projects\navy-strike\Debug\C++_FinalProj_NavyStrike_CIS150.pdb (Partial PDB)
+c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(8): warning C4603: '_WIN32_WINNT': macro is not defined or definition is different after precompiled header use
+  c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(8): note: Add macro to precompiled header instead of defining here
+  c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(10): note: use of precompiled header
+c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(100): warning C4101: 'players': unreferenced local variable
+c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(1707): warning C4129: 'V': unrecognized character escape sequence
+c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(1742): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\jacka\Desktop\Do not move\FinalProj_CIS150_NavyStrike\navy-strike\Debug\C++_FinalProj_NavyStrike_CIS150.exe
+  C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\jacka\Desktop\Do not move\FinalProj_CIS150_NavyStrike\navy-strike\Debug\C++_FinalProj_NavyStrike_CIS150.pdb (Partial PDB)

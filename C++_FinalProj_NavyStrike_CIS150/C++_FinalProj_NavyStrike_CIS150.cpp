@@ -18,6 +18,7 @@
 #include <Ctime>       // To use the random number generator for onePlayer.
 //#include <sstream>	   // to convert a string to a integer to raise its ascii value and then change it back to a string. 'a' ++ now == 'b' https://www.youtube.com/watch?v=LM6EDIKS5Pk
 #include "vector"
+
 using namespace std;
 
 //Code found from cplusplus.com: SOURCE: http://www.cplusplus.com/forum/beginner/105484/ ; User: Giblit
@@ -69,13 +70,20 @@ void down(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&
 void left(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 void right(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 
+//ship Hp
 void destroyerHP(int&, int&, int&, int&, string[][11], string&);
-void submarineHP();
-void cruiserHP();
-void battleshipHP();
-void carrierHP();
-
+void submarineHP(int&, int&, int&, int&, int&, string[][11], string&);
+void cruiserHP(int&, int&, int&, int&, int&, string[][11], string&);
+void battleshipHP(int&, int&, int&, int&, int&, int&, string[][11], string&);
+void carrierHP(int&, int&, int&, int&, int&, int&, int&, string[][11], string&);
 void shipDestroyed();
+
+//ship Placement
+bool chkPlacement(bool&, string[][11], int&, int&, int&, int&, string[][11]);
+
+//start of missile strikes / player2
+void cleaningSlate(string[][11]);
+void missiles();
 
 //void startSound();
 
@@ -431,7 +439,9 @@ void TwoPlayer()
 	int spaceTwo = 0; //Number that player enters for coordinate 2
 	int spaceOneNum = 0; //Number conversion between char and int for spaceOne
 
-	bool validInput = false; //Making sure their guess stays within bounds of the board
+	bool validInput = false; //Making sure their guess stays within bounds of the board ...
+							 //validInput will be tied to chkPlacement(); if the placement is good it will return 
+								//that it is okay and the next ship will be able to be placed. Erik- 11/26/17
 	bool promptCheck = false;
 
 	const int ships = 5;
@@ -484,6 +494,21 @@ void TwoPlayer()
 
 	string shipName[ships] = { "Destroyer","Submarine","Cruiser","Battleship","Carrier" };
 	int shipsLeft = ships;
+
+
+
+	string cleanSlate[ROWS][COLUMNS] = {	{ " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10"  },
+											{ "A",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+											{ "B",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+											{ "C",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+											{ "D",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+											{ "E",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+											{ "F",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+											{ "G",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+											{ "H",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+											{ "I",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+											{ "J",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" } };
+
 
 	string board[ROWS][COLUMNS] = {	{ " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10"  },
 									{ "A",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
@@ -557,21 +582,30 @@ void TwoPlayer()
 	//another loop surronding all this for shipName[ships] until all ships are placed on the board.
 	for (int count = 0; count < ships; count++)
 	{
-		if (count == 0)
-		{
+		//if (count == 0)
+		//{
 
+		//dowhile and valid input are work on progress for ship placement to avoid stacking and ship placement over the board. Erik 11/26/17
+		//do {
+			//validInput = false;
 			firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
 			secCoord(spaceTwo, promptCheck, board, shipName, count);
-			
+
 
 			setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck);
 			cout << endl << endl;
 			refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
+			//validInput = chkPlacement(validInput, board, destroy, destroy1, spaceOneNum, spaceTwo, cleanSlate);
+		//} while (validInput == false);
+
+			
+
+			
 			//destroyerHP(); // idea to break this up so that each ship has its own function...
 			//if this doesnt work break the if else chain keep the functions within this, 'for loop'.
 
-		}
-		else if (count == 1)
+		//}
+		/*else if (count == 1)
 		{
 			firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
 			secCoord(spaceTwo, promptCheck, board, shipName, count);
@@ -618,7 +652,7 @@ void TwoPlayer()
 			refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
 			//carrierHP();
 
-		}
+		}*/
 		//replacing the shipsplaced on to the board making it visible to player one to see where their placed.
 		//This does not update with every placed ship though. perhaps make this a function. Erik - 11/15/2017
 		//maybe can use board intilization to refresh. what the board looks like, from placement to placement.
@@ -627,10 +661,15 @@ void TwoPlayer()
 	}
 	system("cls");
 	displayBlank(board);
-
-
 	
+	//a prompt here confirming player 1s ship placement? or something to let player two to take over
+	// player two starts to set ships? 11/26/17 Erik.
+
+	//player two starts to attack
+	system("cls");
+	cleaningSlate(cleanSlate);
 	
+	missiles();
 
 
 
@@ -875,28 +914,28 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					board[spaceOneNum][spaceTwo] = shipsPlaced[sub][spaceTwo];
 					board[sub1][spaceTwo] = shipsPlaced[sub1][spaceTwo];
 					board[sub2][spaceTwo] = shipsPlaced[sub2][spaceTwo];
-
+					submarineHP(sub, sub1, sub2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 				{
 					board[spaceOneNum][spaceTwo] = shipsPlaced[sub][spaceTwo];
 					board[sub1][spaceTwo] = shipsPlaced[sub1][spaceTwo];
 					board[sub2][spaceTwo] = shipsPlaced[sub2][spaceTwo];
-
+					submarineHP(sub, sub1, sub2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 				{
 					board[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][sub];
 					board[spaceOneNum][sub1] = shipsPlaced[spaceOneNum][sub1];
 					board[spaceOneNum][sub2] = shipsPlaced[spaceOneNum][sub2];
-
+					submarineHP(sub, sub1, sub2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 				{
 					board[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][sub];
 					board[spaceOneNum][sub1] = shipsPlaced[spaceOneNum][sub1];
 					board[spaceOneNum][sub2] = shipsPlaced[spaceOneNum][sub2];
-
+					submarineHP(sub, sub1, sub2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else
 				{
@@ -915,14 +954,14 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					board[spaceOneNum][spaceTwo] = shipsPlaced[cruis][spaceTwo];
 					board[cruis1][spaceTwo] = shipsPlaced[cruis1][spaceTwo];
 					board[cruis2][spaceTwo] = shipsPlaced[cruis2][spaceTwo];
-
+					cruiserHP(cruis, cruis1, cruis2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 				{
 					board[spaceOneNum][spaceTwo] = shipsPlaced[cruis][spaceTwo];
 					board[cruis1][spaceTwo] = shipsPlaced[cruis1][spaceTwo];
 					board[cruis2][spaceTwo] = shipsPlaced[cruis2][spaceTwo];
-
+					cruiserHP(cruis, cruis1, cruis2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 				{
@@ -930,7 +969,7 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					board[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][cruis];
 					board[spaceOneNum][cruis1] = shipsPlaced[spaceOneNum][cruis1];
 					board[spaceOneNum][cruis2] = shipsPlaced[spaceOneNum][cruis2];
-
+					cruiserHP(cruis, cruis1, cruis2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 				{
@@ -938,7 +977,7 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					board[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][cruis];
 					board[spaceOneNum][cruis1] = shipsPlaced[spaceOneNum][cruis1];
 					board[spaceOneNum][cruis2] = shipsPlaced[spaceOneNum][cruis2];
-
+					cruiserHP(cruis, cruis1, cruis2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else
 				{
@@ -958,7 +997,7 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					board[battleship1][spaceTwo] = shipsPlaced[battleship1][spaceTwo];
 					board[battleship2][spaceTwo] = shipsPlaced[battleship2][spaceTwo];
 					board[battleship3][spaceTwo] = shipsPlaced[battleship3][spaceTwo];
-
+					battleshipHP(battleship, battleship1, battleship2, battleship3, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 				{
@@ -966,7 +1005,7 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					board[battleship1][spaceTwo] = shipsPlaced[battleship1][spaceTwo];
 					board[battleship2][spaceTwo] = shipsPlaced[battleship2][spaceTwo];
 					board[battleship3][spaceTwo] = shipsPlaced[battleship3][spaceTwo];
-
+					battleshipHP(battleship, battleship1, battleship2, battleship3, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 				{
@@ -975,7 +1014,7 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					board[spaceOneNum][battleship1] = shipsPlaced[spaceOneNum][battleship1];
 					board[spaceOneNum][battleship2] = shipsPlaced[spaceOneNum][battleship2];
 					board[spaceOneNum][battleship3] = shipsPlaced[spaceOneNum][battleship3];
-
+					battleshipHP(battleship, battleship1, battleship2, battleship3, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 				{
@@ -984,7 +1023,7 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					board[spaceOneNum][battleship1] = shipsPlaced[spaceOneNum][battleship1];
 					board[spaceOneNum][battleship2] = shipsPlaced[spaceOneNum][battleship2];
 					board[spaceOneNum][battleship3] = shipsPlaced[spaceOneNum][battleship3];
-
+					battleshipHP(battleship, battleship1, battleship2, battleship3, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else
 				{
@@ -1006,7 +1045,7 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					board[carrier2][spaceTwo] = shipsPlaced[carrier2][spaceTwo];
 					board[carrier3][spaceTwo] = shipsPlaced[carrier3][spaceTwo];
 					board[carrier4][spaceTwo] = shipsPlaced[carrier4][spaceTwo];
-
+					carrierHP(carrier, carrier1, carrier2, carrier3, carrier4, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 				{
@@ -1016,6 +1055,7 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					board[carrier2][spaceTwo] = shipsPlaced[carrier2][spaceTwo];
 					board[carrier3][spaceTwo] = shipsPlaced[carrier3][spaceTwo];
 					board[carrier4][spaceTwo] = shipsPlaced[carrier4][spaceTwo];
+					carrierHP(carrier, carrier1, carrier2, carrier3, carrier4, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 				{
@@ -1025,7 +1065,7 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					board[spaceOneNum][carrier2] = shipsPlaced[spaceOneNum][carrier2];
 					board[spaceOneNum][carrier3] = shipsPlaced[spaceOneNum][carrier3];
 					board[spaceOneNum][carrier4] = shipsPlaced[spaceOneNum][carrier4];
-
+					carrierHP(carrier, carrier1, carrier2, carrier3, carrier4, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 				{
@@ -1035,7 +1075,7 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					board[spaceOneNum][carrier2] = shipsPlaced[spaceOneNum][carrier2];
 					board[spaceOneNum][carrier3] = shipsPlaced[spaceOneNum][carrier3];
 					board[spaceOneNum][carrier4] = shipsPlaced[spaceOneNum][carrier4];
-
+					carrierHP(carrier, carrier1, carrier2, carrier3, carrier4, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else
 				{
@@ -1059,7 +1099,7 @@ void refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 
 
 
-				
+			
 
 		}
 
@@ -1131,114 +1171,494 @@ void destroyerHP(int &destroy, int &destroy1, int &spaceOneNum, int &spaceTwo, s
 
 }
 
-/*void submarineHP()
+void submarineHP(int &sub, int &sub1, int &sub2, int &spaceOneNum, int &spaceTwo, string board[][11], string &userDirectionalInput)
 {
 	int subHP = 3;
 
 	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
 	{
-
-
+		if(board[spaceOneNum][spaceTwo] == "X")
+		{
+			subHP = subHP - 1;
+		}
+		else if(board[sub1][spaceTwo] == "X")
+		{
+			subHP = subHP - 1;
+		}
+		else if(board[sub2][spaceTwo] == "X")
+		{
+			subHP = subHP - 1;
+		}
+	
 	}
+
 	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 	{
 
+		if(board[spaceOneNum][spaceTwo] == "X")
+		{
+			subHP = subHP - 1;
+		}
+		else if(board[sub1][spaceTwo] == "X")
+		{
+			subHP = subHP - 1;
+		}
+		else if(board[sub2][spaceTwo] == "X")
+		{
+			subHP = subHP - 1;
+		}
 
 	}
+
 	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 	{
 
+		if(board[spaceOneNum][spaceTwo] == "X")
+		{
+			subHP = subHP - 1;
+		}
+
+		else if(board[spaceOneNum][sub1] == "X")
+		{
+			subHP = subHP - 1;
+		}
+
+		else if(board[spaceOneNum][sub2] == "X")
+		{
+			subHP = subHP - 1;
+		}
+
 
 	}
+
 	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 	{
 
+	if(board[spaceOneNum][spaceTwo] == "X")
+		{
+			subHP = subHP - 1;
+		}
 
+		else if(board[spaceOneNum][sub1] == "X")
+		{
+			subHP = subHP - 1;
+		}
+
+		else if(board[spaceOneNum][sub2] == "X")
+		{
+			subHP = subHP - 1;
+		}
+
+	}
+
+	if (subHP == 0)
+	{
+
+	shipDestroyed();
+	cout << "You lost your submarine." << endl;
+	Sleep(1500);
 	}
 
 }
 
-void cruiserHP()
+
+void cruiserHP(int &cruis, int &cruis1, int &cruis2, int &spaceOneNum, int &spaceTwo, string board[][11], string &userDirectionalInput)
 {
 	int cruisHP = 3;
 
 	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
 	{
 
+		if(board[spaceOneNum][spaceTwo] == "X")
+		{
+			cruisHP = cruisHP - 1;
+		}
+		else if(board[cruis1][spaceTwo] == "X")
+		{
+			cruisHP = cruisHP - 1;
+		}
+		else if(board[cruis2][spaceTwo] == "X")
+		{
+			cruisHP = cruisHP - 1;
+		}
+
 
 	}
+
 	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 	{
 
+	if(board[spaceOneNum][spaceTwo] == "X")
+		{
+			cruisHP = cruisHP - 1;
+		}
+		else if(board[cruis1][spaceTwo] == "X")
+		{
+			cruisHP = cruisHP - 1;
+		}
+		else if(board[cruis2][spaceTwo] == "X")
+		{
+			cruisHP = cruisHP - 1;
+		}
 
 	}
+
 	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 	{
 
+		if(board[spaceOneNum][spaceTwo] == "X")
+		{
+			cruisHP = cruisHP - 1;
+		}
+		else if(board[spaceOneNum][cruis1] == "X")
+		{
+			cruisHP = cruisHP - 1;
+		}
+		else if(board[spaceOneNum][cruis2] == "X")
+		{
+			cruisHP = cruisHP - 1;
+		}
 
 	}
+
 	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 	{
 
+	if(board[spaceOneNum][spaceTwo] == "X")
+		{
+			cruisHP = cruisHP - 1;
+		}
+		else if(board[spaceOneNum][cruis1] == "X")
+		{
+			cruisHP = cruisHP - 1;
+		}
+		else if(board[spaceOneNum][cruis2] == "X")
+		{
+			cruisHP = cruisHP - 1;
+		}
 
+
+	}
+
+	if (cruisHP == 0)
+	{
+
+	shipDestroyed();
+	cout << "You lost your cruiser." << endl;
+	Sleep(1500);
 	}
 
 }
 
-void battleshipHP()
+void battleshipHP(int &battleship, int &battleship1, int &battleship2, int &battleship3, int &spaceOneNum, int &spaceTwo, string board[][11], string &userDirectionalInput)
 {
 	int battleHP = 4;
 
 	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
 	{
 
+		if(board[spaceOneNum][spaceTwo] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
+		else if(board[battleship1][spaceTwo] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
+		else if(board[battleship2][spaceTwo] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
+		else if(board[battleship3][spaceTwo] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
 
 	}
+
 	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 	{
 
+	if(board[spaceOneNum][spaceTwo] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
+		else if(board[battleship1][spaceTwo] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
+		else if(board[battleship2][spaceTwo] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
+		else if(board[battleship3][spaceTwo] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
 
 	}
+
 	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 	{
 
+		if (board[spaceOneNum][spaceTwo] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
+		else if(board[spaceOneNum][battleship1] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
+		else if(board[spaceOneNum][battleship2] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
+		else if(board[spaceOneNum][battleship3] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
 
 	}
+
 	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 	{
 
+		if (board[spaceOneNum][spaceTwo] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
+		else if(board[spaceOneNum][battleship1] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
+		else if(board[spaceOneNum][battleship2] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
+		else if(board[spaceOneNum][battleship3] == "X")
+		{
+			battleHP = battleHP - 1;
+		}
 
+	}
+
+	if (battleHP == 0)
+	{
+
+	shipDestroyed();
+	cout << "You lost your battleship." << endl;
+	Sleep(1500);
 	}
 
 }
 
-void carrierHP()
+void carrierHP(int &carrier, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &spaceOneNum, int &spaceTwo, string board[][11], string &userDirectionalInput)
 {
 	int carriHP = 5;
 
 	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
 	{
 
+		if(board[spaceOneNum][spaceTwo] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
+		else if(board[carrier1][spaceTwo] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
+		else if(board[carrier2][spaceTwo] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
+		else if(board[carrier3][spaceTwo] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
+		else if(board[carrier4][spaceTwo] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
 
 	}
+
 	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 	{
 
+	if(board[spaceOneNum][spaceTwo] == "X")
+	{
+		carriHP = carriHP - 1;
+	}
+	else if(board[carrier1][spaceTwo] == "X")
+	{
+		carriHP = carriHP - 1;
+	}
+	else if(board[carrier2][spaceTwo] == "X")
+	{
+		carriHP = carriHP - 1;
+	}
+	else if(board[carrier3][spaceTwo] == "X")
+	{
+		carriHP = carriHP - 1;
+	}
+	else if(board[carrier4][spaceTwo] == "X")
+	{
+		carriHP = carriHP - 1;
+	}
 
 	}
+
 	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 	{
 
+		if(board[spaceOneNum][spaceTwo] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
+		else if(board[spaceOneNum][carrier1] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
+		else if(board[spaceOneNum][carrier2] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
+		else if(board[spaceOneNum][carrier3] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
+		else if(board[spaceOneNum][carrier4] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
 
 	}
+
 	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 	{
 
+		if(board[spaceOneNum][spaceTwo] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
+		else if(board[spaceOneNum][carrier1] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
+		else if(board[spaceOneNum][carrier2] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
+		else if(board[spaceOneNum][carrier3] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
+		else if(board[spaceOneNum][carrier4] == "X")
+		{
+			carriHP = carriHP - 1;
+		}
 
 	}
 
-}*/
+	if (carriHP == 0)
+	{
 
+	shipDestroyed();
+	cout << "You lost your carrier." << endl;
+	Sleep(1500);
+	}
+
+}
+
+bool chkPlacement(bool &validInput, string board[][11], int &destroy, int &destroy1, int &spaceOneNum, int &spaceTwo, string cleanSlate[][11])
+{
+
+	//checks the placement with all the ships that they are okay to be placed where the user says, otherwise redo that ship placement.
+	const int ROWS = 11;
+	const int COLS = 11;
+	
+
+		if (board[spaceOneNum][spaceTwo] == "~") // or "O"
+		{
+			
+
+			validInput = true;
+		}
+		else
+		{
+			system("cls");
+			cout << "Theirs a ship here already, redo your ship placement." << endl;
+			Sleep(1000);
+
+			for (int i = 0; i < ROWS; i++)
+			{
+				for (int y = 0; y < COLS; y++)
+				{
+					board[i][y] = cleanSlate[i][y];
+
+				}
+
+			}
+		
+			validInput = false;
+		}
+		
+		
+		
+
+	
+
+	return validInput;
+
+}
+
+void cleaningSlate(string cleanSlate[][11])
+{
+
+	string div = "===============================================================================================================";
+	string between = "---------------------------------------------------------------------------------------------------------------";
+	const int ROWS = 11;
+	const int COLUMNS = 11;
+
+	cout << setw(115) << darkgrey << div << endl; // divider ' === '
+	for (int i = 0; i < ROWS; i++)
+	{
+		cout << darkgrey << setw(5) << "|";
+		for (int s = 0; s < COLUMNS; s++)
+		{
+			//if else added by Tristan to make our X equal red & 0 equal white.
+			if (cleanSlate[i][s] == "X")
+			{
+				cout << setw(5) << red << cleanSlate[i][s] << setw(5) << darkgrey << "|";
+			}
+			else if (cleanSlate[i][s] == "O")
+			{
+				cout << setw(5) << white << cleanSlate[i][s] << setw(5) << darkgrey << "|";
+			}
+			else
+			{
+				cout << setw(5) << cyan << cleanSlate[i][s] << setw(5) << darkgrey << "|";
+			}
+		}
+		if (i != ROWS - 1)
+		{
+			cout << endl << setw(115) << between << endl;
+		}
+		else
+		{
+			cout << endl;
+		}
+	}
+	cout << setw(115) << darkgrey << div << endl;
+
+
+}
+
+void missiles()
+{
+
+
+}
 
 
 //===========================CHUCK'S FUNCTIONS===================================================
@@ -1248,7 +1668,7 @@ void startSound()
 
 }
 
-
+//===========================CHUCK'S FUNCTIONS===================================================
 
 //Erik 11/13/17
 //           ascii art place holder until we get to it.
