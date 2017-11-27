@@ -102,8 +102,8 @@ int main()
 
 	//Functions
 
-	//intro(players);  //currently to test deeper code comment this out, set players = 2;
-	mainMenu(); //Skip past the intro straight into the main menu;
+	intro(players);  //currently to test deeper code comment this out, set players = 2;
+	//mainMenu(); //Skip past the intro straight into the main menu;
 
 	//board_intilization(); //board intilization will go into the functions OnePlayer(), TwoPlayer() // board intilization is completely replaced with, displayBlank.
 	
@@ -995,7 +995,7 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 				{
 					validInput = true;
 
-					and if its true then assign it to a master board? or after all boards have cleared.
+					//and if its true then assign it to a master board? or after all boards have cleared.
 				}
 				
 
