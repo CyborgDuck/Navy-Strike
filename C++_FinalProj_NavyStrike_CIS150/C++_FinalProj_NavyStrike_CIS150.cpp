@@ -111,7 +111,68 @@ int main()
 	return 0;
 }
 
-//==============================Functions=================
+//============================== ALL Functions=================
+
+
+
+
+//================================ERIK'S FUNCTIONS BELOW==============================================================================
+
+//void board_intilization()
+//{
+//
+//	//this function is being used to give the player a prompt on where they should place the board.
+//	//May be possible to use this one to highlight the color of the letter that is currently being selected and then the number, Erik 11/15/2017
+//
+//	//const int victorVec = 2; // possible idea for a 3d array
+//	const int ROWS = 11;
+//	const int COLUMNS = 11;
+//
+//	//variables
+//	string div = "===============================================================================================================";
+//	string between = "---------------------------------------------------------------------------------------------------------------";
+//	
+//	//       \/ [victorVec] 3d array
+//	char board[ROWS][COLUMNS] = {	{ ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0'  },
+//									{ 'A',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
+//									{ 'B',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
+//									{ 'C',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
+//									{ 'D',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
+//									{ 'E',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
+//									{ 'F',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
+//									{ 'G',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
+//									{ 'H',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
+//									{ 'I',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
+//									{ 'J',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' } };
+//
+//
+//
+//	//This will be the board that the player uses to place and will look similar to the player guessing. except will be rewritten over the hidden spots
+//	//2 for loops for making the board
+//	cout << setw(115) << darkgrey << div << endl; // divider ' === '
+//	for (int i = 0; i < ROWS; i++)
+//	{
+//		cout << darkgrey << setw(5) << "|";
+//		for (int s = 0; s < COLUMNS; s++)
+//		{
+//			cout << setw(5) << lightcyan << board[i][s] << setw(5) << darkgrey << "|";
+//		}
+//		if (i != ROWS - 1)
+//		{
+//			cout << endl << setw(115) << between << endl;
+//		}
+//		else
+//		{
+//			cout << endl;
+//		}
+//	}
+//	cout << setw(115) << darkgrey << div << endl;
+//
+//	//was considering sending a few variables to displayblank.. but wouldnt this also call displayBlank within the current function? I dont want that.
+//	//displayBlank();
+//
+//
+//}
 
 void intro(int &players)
 {
@@ -153,91 +214,91 @@ void intro(int &players)
 
 	//This, 'do while' was for changing color on one of the splash screens but i dont like it.
 	//May be able to use this in options though. - Erik
-	
+
 	/*do
 	{
-		
-		if (v == 0)
-		{
-			cout << white;
-		}
-		else if (v == 1)
-		{
-			cout << cyan;
-		}
-		else if (v == 2)
-		{
-			cout << blue;
-		}
-		else if (v == 3)
-		{
-			cout << white;
-		}
-		else if (v == 4)
-		{
-			cout << blue;
-		}
-		else if (v == 5)
-		{
-			cout << cyan;
-		}
-		else if (v == 6)
-		{
-			cout << white;
-		}
-		else
-		{
-			cout << white;
-		}*/
+
+	if (v == 0)
+	{
+	cout << white;
+	}
+	else if (v == 1)
+	{
+	cout << cyan;
+	}
+	else if (v == 2)
+	{
+	cout << blue;
+	}
+	else if (v == 3)
+	{
+	cout << white;
+	}
+	else if (v == 4)
+	{
+	cout << blue;
+	}
+	else if (v == 5)
+	{
+	cout << cyan;
+	}
+	else if (v == 6)
+	{
+	cout << white;
+	}
+	else
+	{
+	cout << white;
+	}*/
 
 
-		//title
-		for (int i = 0; i < 30; i++)
-		{
-			cout << endl;
-			Sleep(10);
-		}
+	//title
+	for (int i = 0; i < 30; i++)
+	{
+		cout << endl;
+		Sleep(10);
+	}
 
 
-		//cout << endl << endl << endl; //part of the above color switch turned off the timer on endl;s
+	//cout << endl << endl << endl; //part of the above color switch turned off the timer on endl;s
 
-		// very sensitive to spaces and tabs do not change.
-		cout << cyan;
-		cout << "          _/      _/                                  _/        _/_/_/    _/                _/  _/                " << endl;
-		cout << "         _/_/    _/    _/_/_/  _/      _/    _/_/_/  _/      _/        _/_/_/_/  _/  _/_/      _/  _/      _/_/  " << endl;
-		cout << "        _/  _/  _/  _/    _/  _/      _/  _/    _/  _/        _/_/      _/      _/_/      _/  _/_/      _/_/_/_/ " << endl;
-		cout << "       _/    _/_/  _/    _/    _/  _/    _/    _/  _/            _/    _/      _/        _/  _/  _/    _/        " << endl;
-		cout << "      _/      _/    _/_/_/      _/        _/_/_/  _/      _/_/_/        _/_/  _/        _/  _/    _/    _/_/_/   " << endl;
-		//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
+	// very sensitive to spaces and tabs do not change.
+	cout << cyan;
+	cout << "          _/      _/                                  _/        _/_/_/    _/                _/  _/                " << endl;
+	cout << "         _/_/    _/    _/_/_/  _/      _/    _/_/_/  _/      _/        _/_/_/_/  _/  _/_/      _/  _/      _/_/  " << endl;
+	cout << "        _/  _/  _/  _/    _/  _/      _/  _/    _/  _/        _/_/      _/      _/_/      _/  _/_/      _/_/_/_/ " << endl;
+	cout << "       _/    _/_/  _/    _/    _/  _/    _/    _/  _/            _/    _/      _/        _/  _/  _/    _/        " << endl;
+	cout << "      _/      _/    _/_/_/      _/        _/_/_/  _/      _/_/_/        _/_/  _/        _/  _/    _/    _/_/_/   " << endl;
+	//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
 
 
-		// very sensitive to spaces and tabs do not change.
+	// very sensitive to spaces and tabs do not change.
 
-		// to utilize back space use \\ twice.
-		//ascii art, SOURCE: http://ascii.co.uk/art/battleship
-		cout << endl << endl << endl << endl << endl << endl << darkgrey;
-		cout << "                                                        |__" << endl;
-		cout << "                                                        |\\/" << endl;
-		cout << "                                                        ---" << endl;
-		cout << "                                                        / | [" << endl;
-		cout << "                                                 !      | |||" << endl;
-		cout << "                                               _/|     _/|-++'" << endl;
-		cout << "                                           +  +--|    |--|--|_ |-" << endl;
-		cout << "                                        { /|__|  |/\\__|  |--- |||__/" << endl;
-		cout << "                                       +---------------___[}-_===_.'____                 /\\ " << endl;
-		cout << "                                   ____`-' ||___-{]_| _[}-  |     |_[___\\==--            \\/   _" << endl;
-		cout << "                    __..._____--==/___]_|__|_____________________________[___\\==--____,------' .7" << endl;
-		cout << "                   |                                                                     BB-61/" << endl;
-		cout << lightblue << "~~~~~~~~~~~~~~~~~~~~" << darkgrey << "\\_________________________________________________________________________|" << lightblue << "~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-		cout << "                      ~               ~                ~               ~                ~               " << endl;
-		//ascii art, SOURCE: http://ascii.co.uk/art/battleship
-		cout << endl << endl;
-		Sleep(5500);  //if returning to the color switch change the timer to something less than 5.5seconds
-		system("cls");
-		// very sensitive to spaces and tabs do not change.
+	// to utilize back space use \\ twice.
+	//ascii art, SOURCE: http://ascii.co.uk/art/battleship
+	cout << endl << endl << endl << endl << endl << endl << darkgrey;
+	cout << "                                                        |__" << endl;
+	cout << "                                                        |\\/" << endl;
+	cout << "                                                        ---" << endl;
+	cout << "                                                        / | [" << endl;
+	cout << "                                                 !      | |||" << endl;
+	cout << "                                               _/|     _/|-++'" << endl;
+	cout << "                                           +  +--|    |--|--|_ |-" << endl;
+	cout << "                                        { /|__|  |/\\__|  |--- |||__/" << endl;
+	cout << "                                       +---------------___[}-_===_.'____                 /\\ " << endl;
+	cout << "                                   ____`-' ||___-{]_| _[}-  |     |_[___\\==--            \\/   _" << endl;
+	cout << "                    __..._____--==/___]_|__|_____________________________[___\\==--____,------' .7" << endl;
+	cout << "                   |                                                                     BB-61/" << endl;
+	cout << lightblue << "~~~~~~~~~~~~~~~~~~~~" << darkgrey << "\\_________________________________________________________________________|" << lightblue << "~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+	cout << "                      ~               ~                ~               ~                ~               " << endl;
+	//ascii art, SOURCE: http://ascii.co.uk/art/battleship
+	cout << endl << endl;
+	Sleep(5500);  //if returning to the color switch change the timer to something less than 5.5seconds
+	system("cls");
+	// very sensitive to spaces and tabs do not change.
 
-		//both the v and the while is the end of the do while color change. again leaving for possible changes in options
-		//v++;
+	//both the v and the while is the end of the do while color change. again leaving for possible changes in options
+	//v++;
 	//} while (v != 6);
 
 
@@ -368,62 +429,6 @@ int mainMenu()
 
 	return players;
 }
-
-//void board_intilization()
-//{
-//
-//	//this function is being used to give the player a prompt on where they should place the board.
-//	//May be possible to use this one to highlight the color of the letter that is currently being selected and then the number, Erik 11/15/2017
-//
-//	//const int victorVec = 2; // possible idea for a 3d array
-//	const int ROWS = 11;
-//	const int COLUMNS = 11;
-//
-//	//variables
-//	string div = "===============================================================================================================";
-//	string between = "---------------------------------------------------------------------------------------------------------------";
-//	
-//	//       \/ [victorVec] 3d array
-//	char board[ROWS][COLUMNS] = {	{ ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0'  },
-//									{ 'A',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'B',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'C',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'D',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'E',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'F',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'G',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'H',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'I',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'J',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' } };
-//
-//
-//
-//	//This will be the board that the player uses to place and will look similar to the player guessing. except will be rewritten over the hidden spots
-//	//2 for loops for making the board
-//	cout << setw(115) << darkgrey << div << endl; // divider ' === '
-//	for (int i = 0; i < ROWS; i++)
-//	{
-//		cout << darkgrey << setw(5) << "|";
-//		for (int s = 0; s < COLUMNS; s++)
-//		{
-//			cout << setw(5) << lightcyan << board[i][s] << setw(5) << darkgrey << "|";
-//		}
-//		if (i != ROWS - 1)
-//		{
-//			cout << endl << setw(115) << between << endl;
-//		}
-//		else
-//		{
-//			cout << endl;
-//		}
-//	}
-//	cout << setw(115) << darkgrey << div << endl;
-//
-//	//was considering sending a few variables to displayblank.. but wouldnt this also call displayBlank within the current function? I dont want that.
-//	//displayBlank();
-//
-//
-//}
 
 void TwoPlayer()
 {
@@ -740,7 +745,6 @@ void TwoPlayer()
 
 
 }
-
 
 void up(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, int &sub1, int &sub2, int &cruis1, int &cruis2, int &battleship1, int &battleship2, int &battleship3, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &sub, int &cruis, int &battleship, int &carrier, int &destroy)
 {
@@ -1199,7 +1203,7 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 
 }
 
-//================================ERIK'S FUNCTIONS==============================================================================
+
 void destroyerHP(int &destroy, int &destroy1, int &spaceOneNum, int &spaceTwo, string board[][11], string &userDirectionalInput, string destroyerBOARD[][11])
 {
 	int destHP = 2;
@@ -1752,15 +1756,7 @@ void missiles()
 
 }
 
-
-//===========================CHUCK'S FUNCTIONS===================================================
-void startSound()
-{
-
-
-}
-
-//===========================CHUCK'S FUNCTIONS===================================================
+//ascii art
 
 //Erik 11/13/17
 //           ascii art place holder until we get to it.
@@ -1769,12 +1765,50 @@ void startSound()
 //up in the command prompt it may be because i missed a backslash
 //game over / you won! with x amount of shots left. time left? or with a total time.
 
+void displayHit(int count) // not set to anything yet.
+{ 
+	/*((((
+	*)    ()\)  (*)     ((()\))\))\ )
+	` ) / ()\    (() / ()\)    (`) / ()\       )\  ()\      ((() / ((() / (((() / (
+	()(_))((((_)(/ (_))(() / ()\   ()(_)) ((((_)((((_))((_))\ / (_)) / (_)))\ / (_))
+	(_(_()))\ _)\ (_)) / (_))_((_)(_(_()))\ _)\)\___((_)_   _((_)(_)) (_)) ((_)(_))_
+	| _   _ | (_)_\(_) | _ \ (_)) __ || __ || _   _ | (_)_\(_)((/ __|/ _ \ | | | ||_ _ || _ \ | __ || \
+	| |     / _ \  |   /   | (_ || _|   | |      / _ \ | (__ | (_) || |_| | | | |   /| _| | |) |
+	|_|    /_ / \_\ | _ | _\    \___ || ___|  |_|     /_ / \_\   \___ | \__\_\ \___/ |___ || _ | _\ | ___ || ___ /
+
+
+	//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
+
+
+	*/
+}
+
+void displayMiss(int count) //Still unable to get displayed properly in command window
+{
+	//collaberated on by both tristan and erik.
+	system("cls");
+	//when shot was missed trigger this
+	//green?
+	cout << endl << endl << endl << endl << endl << endl;
+	cout << setw(82) << " __   _____  _   _   __  __ ___ ____ ____  _____ ____  " << endl;
+	cout << setw(82) << " \\ \\ / / _ \\| | | | |  \\/  |_ _/ ___/ ___|| ____|  _ \\ " << endl;
+	cout << setw(82) << "  \\ \V / | | | | | | | |\\/| || |\\___ \\___ \\|  _| | | | |" << endl;
+	cout << setw(82) << "   | || |_| | |_| | | |  | || | ___) |__) | |___| |_| |" << endl;
+	cout << setw(82) << "   |_| \\___/ \\___/  |_|  |_|___|____/____/|_____|____/ " << endl;
+
+	//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
+	count = 29 - count; // change 30 to 'difficulty' and adjust difficulty to amount of shots
+
+	cout << endl << setw(55) << "You have, " << count << " shots left." << endl;
+	cout << endl << endl << endl << endl;
+}
+
 void shipDestroyed()
 {
 	//this needs to be tested if it needs to be formated still, and colorized. Erik 11/27/17
 	system("cls");
 	//ship blows up use this,
-	 //red and orange black/grey
+	//red and orange black/grey
 	cout << endl << endl << endl << endl << endl << endl;
 	cout << setw(82) << "			 \\         .  ./" << endl;
 	cout << setw(82) << " \\      .:; '.:..   / " << endl;
@@ -1786,50 +1820,27 @@ void shipDestroyed()
 	cout << setw(82) << " \\  \\   /  /" << endl;
 	//Made with the help of this site, SOURCE:	 http://www.chris.com/ascii/index.php?art=objects/explosives
 
-	 // you blew up // you lost your // x ship.				 
+	// you blew up // you lost your // x ship.				 
 }
 
-void displayMiss(int count) //Still unable to get displayed properly in command window
+//================================ERIK'S FUNCTIONS ABOVE==============================================================================
+
+
+
+
+//===========================CHUCK'S FUNCTIONS BELOW===================================================
+void startSound()
 {
-	system("cls");
-	//when shot was missed trigger this
-	//green?
-	cout << endl << endl << endl << endl << endl << endl;
-	cout << setw(82) << " __   _____  _   _   __  __ ___ ____ ____  _____ ____  " << endl;
-    cout << setw(82) << " \\ \\ / / _ \\| | | | |  \\/  |_ _/ ___/ ___|| ____|  _ \\ " << endl;
-    cout << setw(82) << "  \\ \V / | | | | | | | |\\/| || |\\___ \\___ \\|  _| | | | |" << endl;
-	cout << setw(82) << "   | || |_| | |_| | | |  | || | ___) |__) | |___| |_| |" << endl;
-    cout << setw(82) << "   |_| \\___/ \\___/  |_|  |_|___|____/____/|_____|____/ " << endl;
-                                           
-		//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
-	count = 29 - count; // change 30 to 'difficulty' and adjust difficulty to amount of shots
-	
-	cout << endl << setw(55) << "You have, " << count << " shots left." << endl;
-	cout << endl << endl << endl << endl;
+
+
 }
 
+//===========================CHUCK'S FUNCTIONS ABOVE===================================================
 
 
 
-void displayHit(int count)
-{
-	/*((((
-		*)    ()\)  (*)     ((()\))\))\ )
-		` ) / ()\    (() / ()\)    (`) / ()\       )\  ()\      ((() / ((() / (((() / (
-		()(_))((((_)(/ (_))(() / ()\   ()(_)) ((((_)((((_))((_))\ / (_)) / (_)))\ / (_))
-			(_(_()))\ _)\ (_)) / (_))_((_)(_(_()))\ _)\)\___((_)_   _((_)(_)) (_)) ((_)(_))_
-			| _   _ | (_)_\(_) | _ \ (_)) __ || __ || _   _ | (_)_\(_)((/ __|/ _ \ | | | ||_ _ || _ \ | __ || \
-				| |     / _ \  |   /   | (_ || _|   | |      / _ \ | (__ | (_) || |_| | | | |   /| _| | |) |
-					|_|    /_ / \_\ | _ | _\    \___ || ___|  |_|     /_ / \_\   \___ | \__\_\ \___/ |___ || _ | _\ | ___ || ___ /
 
-				
-				//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
-
-
-*/
-}
-
-//=====================TRISTAN'S FUNCTIONS=========================================
+//=====================TRISTAN'S FUNCTIONS BELOW=========================================
 void onePlayer()
 {
 	srand(time(NULL));
@@ -2743,4 +2754,4 @@ void Options(int &difficulty)
 	mainMenu();
 }
 
-//=============================END OF TRISTAN=====================================================================
+//=============================END OF TRISTAN ABOVE=====================================================================
