@@ -1,3 +1,9 @@
 ﻿  C++_FinalProj_NavyStrike_CIS150.cpp
-  C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\eenglish13820\Desktop\FinalProj_CIS150_NavyStrike\x64\Debug\C++_FinalProj_NavyStrike_CIS150.exe
-  C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\eenglish13820\Desktop\FinalProj_CIS150_NavyStrike\x64\Debug\C++_FinalProj_NavyStrike_CIS150.pdb (Partial PDB)
+c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(8): warning C4603: '_WIN32_WINNT': macro is not defined or definition is different after precompiled header use
+  c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(8): note: Add macro to precompiled header instead of defining here
+  c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(10): note: use of precompiled header
+c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(104): warning C4101: 'players': unreferenced local variable
+c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(1874): warning C4129: 'V': unrecognized character escape sequence
+c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(1925): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\eenglish13820\Documents\GitHub\navy-strike\x64\Debug\C++_FinalProj_NavyStrike_CIS150.exe
+  C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\eenglish13820\Documents\GitHub\navy-strike\x64\Debug\C++_FinalProj_NavyStrike_CIS150.pdb (Partial PDB)

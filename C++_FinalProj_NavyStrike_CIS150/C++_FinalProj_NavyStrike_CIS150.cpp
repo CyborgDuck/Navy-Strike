@@ -56,7 +56,7 @@ void TwoPlayer();
 void Options(int&);
 void firstCoordOne(string, int&, string[][11], bool&);
 void firstCoordTwo(string, int&, bool&, string[], int&, string[][11], string[][11]); //Needed to change this to "firstCoordTwo" because you use more variables than Single Player
-void secCoord(int&, bool&, string[][11], string[], int&);
+void secCoord(int&, bool&, string[][11], string[], int&, string[][11]);
 void secCoordOne(int&, bool&, string[][11]);
 bool refresh(int&, string[][11], string[][11], int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, string[][11], string[][11], string[][11], string[][11], string[][11], bool&, string[][11], string[][11]);
 void displayBlank(string[][11]);
@@ -64,7 +64,7 @@ void displayMiss(int);
 void displayHit(int);
 
 //movement positions.
-void setPos(int&, int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, string[][11], string[], bool&);
+void setPos(int&, int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, string[][11], string[], bool&, string[][11]);
 void up(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 void down(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 void left(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
@@ -80,6 +80,10 @@ void shipDestroyed();
 
 //ship Placement
 bool chkPlacement(bool&, string[][11], int&, int&, int&, int&, string[][11]);
+
+//Happy with the placement? or reset/redo > then turn controls to player two
+
+//bool happyPlacement(bool&); 
 
 //start of missile strikes / player2
 void cleaningSlate(string[][11]);
@@ -102,8 +106,8 @@ int main()
 
 	//Functions
 
-	intro(players);  //currently to test deeper code comment this out, set players = 2;
-	//mainMenu(); //Skip past the intro straight into the main menu;
+	//intro(players);  //currently to test deeper code comment this out, set players = 2;
+	mainMenu(); //Skip past the intro straight into the main menu;
 
 	//board_intilization(); //board intilization will go into the functions OnePlayer(), TwoPlayer() // board intilization is completely replaced with, displayBlank.
 	
@@ -489,6 +493,8 @@ void TwoPlayer()
 	int carrier3 = 0;
 	int carrier4 = 0;
 
+	bool happy = false;
+
 	//11.14.17 observation Erik
 	// our ships arent actually tied to anything in our arrays..
 	// were replacing ~ with Xs for place holders of the ships but they dont actually represent Destroyer equals 3 spots
@@ -649,27 +655,29 @@ void TwoPlayer()
 	//Player One
 	
 	//another loop surronding all this for shipName[ships] until all ships are placed on the board.
-	for (int count = 0; count < ships; count++)
-	{
-		//if (count == 0)
-		//{
+	//do //for happy with placement?
+	//{
+		for (int count = 0; count < ships; count++)
+		{
+			//if (count == 0)
+			//{
 
-		//dowhile and valid input are work on progress for ship placement to avoid stacking and ship placement over the board. Erik 11/26/17
-		do {
-			validInput = false;
-			firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
-			secCoord(spaceTwo, promptCheck, board, shipName, count);
+			//dowhile and valid input are work on progress for ship placement to avoid stacking and ship placement over the board. Erik 11/26/17
+		//	do {
+				validInput = false;
+				firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
+				secCoord(spaceTwo, promptCheck, board, shipName, count, shipsPlaced);
 
 
-			setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck);
-			cout << endl << endl;
-			validInput = refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, destroyerBOARD, subBOARD, cruiserBOARD, battleshipBOARD, carrierBOARD, validInput, cleanSlate, shipHits);
-			//validInput = chkPlacement(validInput, board, destroy, destroy1, spaceOneNum, spaceTwo, cleanSlate);
-		} while (validInput == false);
+				setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck, shipsPlaced);
+				cout << endl << endl;
+				validInput = refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, destroyerBOARD, subBOARD, cruiserBOARD, battleshipBOARD, carrierBOARD, validInput, cleanSlate, shipHits);
+				//validInput = chkPlacement(validInput, board, destroy, destroy1, spaceOneNum, spaceTwo, cleanSlate);
+			//} while (validInput == false);
 
-			
 
-			
+
+
 			//destroyerHP(); // idea to break this up so that each ship has its own function...
 			//if this doesnt work break the if else chain keep the functions within this, 'for loop'.
 
@@ -725,20 +733,23 @@ void TwoPlayer()
 		//replacing the shipsplaced on to the board making it visible to player one to see where their placed.
 		//This does not update with every placed ship though. perhaps make this a function. Erik - 11/15/2017
 		//maybe can use board intilization to refresh. what the board looks like, from placement to placement.
-		
-		
-	}
-	system("cls");
-	displayBlank(board);
-	
+
+
+		}
+		system("cls");
+		displayBlank(board);
+
+//		happy = happyPlacement(happy);
+//	} while (happy = false);
 	//a prompt here confirming player 1s ship placement? or something to let player two to take over
 	// player two starts to set ships? 11/26/17 Erik.
 
 	//player two starts to attack
-	system("cls");
-	cleaningSlate(cleanSlate);
+	//system("cls");  // class 11/27/17
+	//cleaningSlate(cleanSlate);
 	
 	missiles();
+	
 
 
 
@@ -927,11 +938,7 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 	const int ROWS = 11;
 	const int COLUMNS = 11;
 	//is this double for loop doing anything? Erik 11/27/17 not sure its necessary.
-	for (int rows = 0; rows < ROWS; rows++)
-	{
-
-		for (int cols = 0; cols < COLUMNS; cols++)
-		{
+	
 			//initial ship placement idea by Tristan
 			//board[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
@@ -944,26 +951,75 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 
 				if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
 				{
-					destroyerBOARD[spaceOneNum][spaceTwo] = shipHits[destroy][spaceTwo];
-					destroyerBOARD[destroy1][spaceTwo] = shipHits[destroy1][spaceTwo];
+
+					//board[spaceOneNum][spaceTwo] = destroyerBOARD[destroy][spaceTwo];
+					//board[destroy1][spaceTwo] = destroyerBOARD[destroy1][spaceTwo];
+
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						destroyerBOARD[spaceOneNum][spaceTwo] = shipHits[destroy][spaceTwo];
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+					}
+					else
+					{
+						cout << "Wrong Placement." << endl;
+						Sleep(2000);
+					}
+
+					if (shipsPlaced[destroy1][spaceTwo] == "O")
+					{
+						destroyerBOARD[destroy1][spaceTwo] = shipHits[destroy1][spaceTwo];
+						shipsPlaced[destroy1][spaceTwo] = "X";
+					}
+					else
+					{
+						cout << "Wrong Placement." << endl;
+						Sleep(2000);
+					}
+					
+
+					//shipsPlaced[spaceOneNum][spaceTwo] = destroyerBOARD[destroy][spaceTwo];
+					//shipsPlaced[destroy1][spaceTwo] = destroyerBOARD[destroy1][spaceTwo];
+
+					//if destroyerBOARD[spaceOneNum][spaceTwo] == subBOARD[spaceOneNum][spaceTwo]
 					destroyerHP(destroy, destroy1, spaceOneNum, spaceTwo, board, userDirectionalInput, destroyerBOARD);
 				}
 				else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 				{
-					destroyerBOARD[spaceOneNum][spaceTwo] = shipHits[destroy][spaceTwo];
-					destroyerBOARD[destroy1][spaceTwo] = shipHits[destroy1][spaceTwo];
+
+					board[spaceOneNum][spaceTwo] = destroyerBOARD[destroy][spaceTwo];
+					board[destroy1][spaceTwo] = destroyerBOARD[destroy1][spaceTwo];
+
+					//destroyerBOARD[spaceOneNum][spaceTwo] = shipHits[destroy][spaceTwo];
+					//destroyerBOARD[destroy1][spaceTwo] = shipHits[destroy1][spaceTwo];
+
+					//shipsPlaced[spaceOneNum][spaceTwo] = destroyerBOARD[destroy][spaceTwo];
+					//shipsPlaced[destroy1][spaceTwo] = destroyerBOARD[destroy1][spaceTwo];
 					destroyerHP(destroy, destroy1, spaceOneNum, spaceTwo, board, userDirectionalInput, destroyerBOARD);
 				}
 				else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 				{
-					destroyerBOARD[spaceOneNum][spaceTwo] = shipHits[spaceOneNum][destroy];
-					destroyerBOARD[spaceOneNum][destroy1] = shipHits[spaceOneNum][destroy1];
+					board[spaceOneNum][spaceTwo] = destroyerBOARD[spaceOneNum][destroy];
+					board[spaceOneNum][destroy1] = destroyerBOARD[spaceOneNum][destroy1];
+
+					//destroyerBOARD[spaceOneNum][spaceTwo] = shipHits[spaceOneNum][destroy];
+					//destroyerBOARD[spaceOneNum][destroy1] = shipHits[spaceOneNum][destroy1];
+
+					//shipsPlaced[spaceOneNum][spaceTwo] = destroyerBOARD[spaceOneNum][destroy];
+					//shipsPlaced[spaceOneNum][destroy1] = destroyerBOARD[spaceOneNum][destroy1];
 					destroyerHP(destroy, destroy1, spaceOneNum, spaceTwo, board, userDirectionalInput, destroyerBOARD);
 				}
 				else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 				{
-					destroyerBOARD[spaceOneNum][spaceTwo] = shipHits[spaceOneNum][destroy];
-					destroyerBOARD[spaceOneNum][destroy1] = shipHits[spaceOneNum][destroy1];
+					board[spaceOneNum][spaceTwo] = destroyerBOARD[spaceOneNum][destroy];
+					board[spaceOneNum][destroy1] = destroyerBOARD[spaceOneNum][destroy1];
+
+					//destroyerBOARD[spaceOneNum][spaceTwo] = shipHits[spaceOneNum][destroy];
+					//destroyerBOARD[spaceOneNum][destroy1] = shipHits[spaceOneNum][destroy1];
+
+
+					//shipsPlaced[spaceOneNum][spaceTwo] = destroyerBOARD[spaceOneNum][destroy];
+					//shipsPlaced[spaceOneNum][destroy1] = destroyerBOARD[spaceOneNum][destroy1];
 					destroyerHP(destroy, destroy1, spaceOneNum, spaceTwo, board, userDirectionalInput, destroyerBOARD);
 				}
 				else
@@ -974,32 +1030,42 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					cout << setw(65) << "--------------------------" << endl;
 				}
 
-				//ship placement check
-				if (destroyerBOARD[rows][cols] == subBOARD[rows][cols] || destroyerBOARD[rows][cols] == cruiserBOARD[rows][cols] || destroyerBOARD[rows][cols] == battleshipBOARD[rows][cols] || destroyerBOARD[rows][cols] == carrierBOARD[rows][cols])
-				{
-					system("cls");
-					cout << setw(65) << red << "-----------------------------------------------" << endl;
-					cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-					cout << setw(65) << "-----------------------------------------------" << endl;
-					Sleep(1000);
-
-					board[spaceOneNum][spaceTwo] = cleanSlate[spaceOneNum][spaceTwo];
-					board[spaceOneNum][destroy1] = cleanSlate[spaceOneNum][destroy1];
-					board[destroy1][spaceTwo] = cleanSlate[destroy1][spaceTwo];
-
-					destroyerBOARD[rows][cols] = shipsPlaced[rows][cols];
-
-					validInput = false;
-				}
-				else
-				{
-					validInput = true;
-
-					//and if its true then assign it to a master board? or after all boards have cleared.
-				}
+				//for (int rows = 0; rows < ROWS; rows++)
+				//{
 				
+					//for (int cols = 0; cols < COLUMNS; cols++)
+					//{
 
-			}
+						//ship placement check
+						//if (destroyerBOARD[rows][cols] == subBOARD[rows][cols] || destroyerBOARD[rows][cols] == cruiserBOARD[rows][cols] || destroyerBOARD[rows][cols] == battleshipBOARD[rows][cols] || destroyerBOARD[rows][cols] == carrierBOARD[rows][cols])
+						//{
+							//system("cls");
+							//cout << setw(65) << red << "-----------------------------------------------" << endl;
+							//cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+							//cout << setw(65) << "-----------------------------------------------" << endl;
+							//Sleep(1000);
+
+							//board[spaceOneNum][spaceTwo] = cleanSlate[spaceOneNum][spaceTwo];
+							//board[spaceOneNum][destroy1] = cleanSlate[spaceOneNum][destroy1];
+							//board[destroy1][spaceTwo] = cleanSlate[destroy1][spaceTwo];
+
+							//destroyerBOARD[rows][cols] = shipsPlaced[rows][cols];
+
+							//validInput = false;
+						//}
+						//else
+						//{
+						//	validInput = true;
+
+							//and if its true then assign it to a master board? or after all boards have cleared.
+						//}
+					//} //for loop class 11/27/17
+				}
+
+			//}
+
+
+
 			else if (count == 1) // 1 is the submarine, 3 spots
 			{
 				//what if the board isnt updating the position of the ship because spaceonenum / space two arent updating to the right number..
@@ -1196,9 +1262,9 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 
 			
 
-		}
+		
 
-	}
+	
 	return validInput;
 
 }
@@ -1707,6 +1773,19 @@ bool chkPlacement(bool &validInput, string board[][11], int &destroy, int &destr
 	return validInput;
 
 }
+
+/*bool happyPlacement(bool &happy)
+{
+	char yesNo;
+
+	cout << "Are you happy with your ships placement? (y/n)";
+	cin >> yesNo;
+
+	if(yesNo == )
+
+	return happy;
+
+}*/
 
 void cleaningSlate(string cleanSlate[][11])
 {
@@ -2442,7 +2521,7 @@ void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string 
 	{
 		//board_intilization(spaceOneNum, spaceTwo);
 		system("cls");
-		displayBlank(board);
+		displayBlank(shipsPlaced); //board // lets you visualize the board when placing the ships cord on the Y - COlS axis
 		cout << endl;
 		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
 		//cout << setw(75) << white << "Using letters A-J, and then a number 1-10, enter your coordinates: ";
@@ -2509,7 +2588,7 @@ void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string 
 
 }
 
-void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipName[], int &count)
+void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipName[], int &count, string shipsPlaced[][11])
 {
 
 	promptCheck = false;
@@ -2517,7 +2596,7 @@ void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipN
 	{
 		system("cls");
 		//board_intilization(spaceOneNum, spaceTwo);
-		displayBlank(board);
+		displayBlank(shipsPlaced); //board // lets you visualize the board when placing the ships cord on the Y - COlS axis
 		cout << endl;
 		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
 		cout << setw(75) << white << "Using numbers 1-10, enter your second coordinate: ";
@@ -2633,14 +2712,14 @@ void displayBlank(string board[][11])
 
 }
 
-void setPos(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, string &userDirectionalInput, int &sub1, int &sub2, int &cruis1, int &cruis2, int &battleship1, int &battleship2, int &battleship3, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &sub, int &cruis, int &battleship, int &carrier, int &destroy, string board[][11], string shipName[], bool &promptCheck) // board
+void setPos(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, string &userDirectionalInput, int &sub1, int &sub2, int &cruis1, int &cruis2, int &battleship1, int &battleship2, int &battleship3, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &sub, int &cruis, int &battleship, int &carrier, int &destroy, string board[][11], string shipName[], bool &promptCheck, string shipsPlaced[][11]) // board
 {
 	promptCheck = false;
 
 	do
 	{
 		system("cls");
-		displayBlank(board);
+		displayBlank(shipsPlaced);  //board
 		cout << endl;
 		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
 		cout << setw(75) << white << "How would you like to place your ship: (Up, Down, Left or Right) ";
