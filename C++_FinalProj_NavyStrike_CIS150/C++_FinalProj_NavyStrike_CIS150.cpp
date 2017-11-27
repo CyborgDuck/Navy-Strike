@@ -995,7 +995,7 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 				{
 					validInput = true;
 
-					//and if its true then assign it to a master board? or after all boards have cleared.
+					and if its true then assign it to a master board? or after all boards have cleared.
 				}
 				
 
@@ -1674,7 +1674,7 @@ bool chkPlacement(bool &validInput, string board[][11], int &destroy, int &destr
 	const int COLS = 11;
 	
 
-		if (board[spaceOneNum][spaceTwo] == "~") // or "O"
+		if (board[spaceOneNum][spaceTwo] == "~" || board[spaceOneNum][spaceTwo] == "O") // or "O"
 		{
 			
 
@@ -1683,7 +1683,7 @@ bool chkPlacement(bool &validInput, string board[][11], int &destroy, int &destr
 		else
 		{
 			system("cls");
-			cout << "Theirs a ship here already, redo your ship placement." << endl;
+			cout << "There's a ship here already, redo your ship placement." << endl;
 			Sleep(1000);
 
 			for (int i = 0; i < ROWS; i++)
@@ -1722,7 +1722,7 @@ void cleaningSlate(string cleanSlate[][11])
 		cout << darkgrey << setw(5) << "|";
 		for (int s = 0; s < COLUMNS; s++)
 		{
-			//if else added by Tristan to make our X equal red & 0 equal white.
+			//if else added by Tristan to make our X equal red & O equal white.
 			if (cleanSlate[i][s] == "X")
 			{
 				cout << setw(5) << red << cleanSlate[i][s] << setw(5) << darkgrey << "|";
