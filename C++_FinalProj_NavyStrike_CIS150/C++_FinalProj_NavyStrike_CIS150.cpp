@@ -667,7 +667,7 @@ void TwoPlayer()
 			//{
 
 			//dowhile and valid input are work on progress for ship placement to avoid stacking and ship placement over the board. Erik 11/26/17
-		//	do {
+			do {
 				validInput = false;
 				firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
 				secCoord(spaceTwo, promptCheck, board, shipName, count, shipsPlaced);
@@ -677,7 +677,7 @@ void TwoPlayer()
 				cout << endl << endl;
 				validInput = refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, destroyerBOARD, subBOARD, cruiserBOARD, battleshipBOARD, carrierBOARD, validInput, cleanSlate, shipHits);
 				//validInput = chkPlacement(validInput, board, destroy, destroy1, spaceOneNum, spaceTwo, cleanSlate);
-			//} while (validInput == false);
+			} while (validInput == false);
 
 
 
@@ -939,9 +939,12 @@ void right(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, int &sub1
 bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int &spaceTwo, int &destroy1, int &count, string &userDirectionalInput, int &sub1, int &sub2, int &cruis1, int &cruis2, int &battleship1, int &battleship2, int &battleship3, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &sub, int &cruis, int &battleship, int &carrier, int &destroy, string destroyerBOARD[][11], string subBOARD[][11], string cruiserBOARD[][11], string battleshipBOARD[][11], string carrierBOARD[][11], bool &validInput, string cleanSlate[][11], string shipHits[][11])
 {
 	
+	//rows and columns may be obsolete now.
+	//There may be an excessive amount of 'validInput = true;' may need only 1 per direction?
+	//Erik 11.27.17
 	const int ROWS = 11;
 	const int COLUMNS = 11;
-	//is this double for loop doing anything? Erik 11/27/17 not sure its necessary.
+	
 	
 			//initial ship placement idea by Tristan
 			//board[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
@@ -955,75 +958,171 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 
 				if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
 				{
-
+					//older version of code to place ships. Erik, 11/27/17
 					//board[spaceOneNum][spaceTwo] = destroyerBOARD[destroy][spaceTwo];
 					//board[destroy1][spaceTwo] = destroyerBOARD[destroy1][spaceTwo];
 
-					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O") // if theirs an "O" at this location procede to mark shipsPlaced and write shiphits to destroyerBOARD.
 					{
-						destroyerBOARD[spaceOneNum][spaceTwo] = shipHits[destroy][spaceTwo];
-						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+
+						//might be bloat since we found a side-step to this way.
+						//destroyerBOARD[spaceOneNum][spaceTwo] = shipHits[destroy][spaceTwo]; //setting an X marker from the shipHits[][] board onto DestroyerBOARD[][]
+						
+						shipsPlaced[spaceOneNum][spaceTwo] = "X"; // visualizing the placement of the ship for player 1.
+						validInput = true;
+
 					}
 					else
 					{
-						cout << "Wrong Placement." << endl;
-						Sleep(2000);
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+						Sleep(1500);
+						validInput = false;
 					}
+
 
 					if (shipsPlaced[destroy1][spaceTwo] == "O")
 					{
-						destroyerBOARD[destroy1][spaceTwo] = shipHits[destroy1][spaceTwo];
+
 						shipsPlaced[destroy1][spaceTwo] = "X";
+						validInput = true;
 					}
 					else
 					{
-						cout << "Wrong Placement." << endl;
-						Sleep(2000);
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+						
+						Sleep(1500);
+						validInput = false;
 					}
 					
-
-					//shipsPlaced[spaceOneNum][spaceTwo] = destroyerBOARD[destroy][spaceTwo];
-					//shipsPlaced[destroy1][spaceTwo] = destroyerBOARD[destroy1][spaceTwo];
-
-					//if destroyerBOARD[spaceOneNum][spaceTwo] == subBOARD[spaceOneNum][spaceTwo]
 					destroyerHP(destroy, destroy1, spaceOneNum, spaceTwo, board, userDirectionalInput, destroyerBOARD);
 				}
+
+
 				else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 				{
 
-					board[spaceOneNum][spaceTwo] = destroyerBOARD[destroy][spaceTwo];
-					board[destroy1][spaceTwo] = destroyerBOARD[destroy1][spaceTwo];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
 
-					//destroyerBOARD[spaceOneNum][spaceTwo] = shipHits[destroy][spaceTwo];
-					//destroyerBOARD[destroy1][spaceTwo] = shipHits[destroy1][spaceTwo];
+					}
+					else
+					{
 
-					//shipsPlaced[spaceOneNum][spaceTwo] = destroyerBOARD[destroy][spaceTwo];
-					//shipsPlaced[destroy1][spaceTwo] = destroyerBOARD[destroy1][spaceTwo];
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+
+					if (shipsPlaced[destroy1][spaceTwo] == "O")
+					{
+						shipsPlaced[destroy1][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					destroyerHP(destroy, destroy1, spaceOneNum, spaceTwo, board, userDirectionalInput, destroyerBOARD);
 				}
+
 				else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 				{
-					board[spaceOneNum][spaceTwo] = destroyerBOARD[spaceOneNum][destroy];
-					board[spaceOneNum][destroy1] = destroyerBOARD[spaceOneNum][destroy1];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
 
-					//destroyerBOARD[spaceOneNum][spaceTwo] = shipHits[spaceOneNum][destroy];
-					//destroyerBOARD[spaceOneNum][destroy1] = shipHits[spaceOneNum][destroy1];
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
 
-					//shipsPlaced[spaceOneNum][spaceTwo] = destroyerBOARD[spaceOneNum][destroy];
-					//shipsPlaced[spaceOneNum][destroy1] = destroyerBOARD[spaceOneNum][destroy1];
+						Sleep(1500);
+						validInput = false;
+					}
+
+
+					if (shipsPlaced[spaceOneNum][destroy1] == "O")
+					{
+						shipsPlaced[spaceOneNum][destroy1] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+
 					destroyerHP(destroy, destroy1, spaceOneNum, spaceTwo, board, userDirectionalInput, destroyerBOARD);
 				}
 				else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 				{
-					board[spaceOneNum][spaceTwo] = destroyerBOARD[spaceOneNum][destroy];
-					board[spaceOneNum][destroy1] = destroyerBOARD[spaceOneNum][destroy1];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
 
-					//destroyerBOARD[spaceOneNum][spaceTwo] = shipHits[spaceOneNum][destroy];
-					//destroyerBOARD[spaceOneNum][destroy1] = shipHits[spaceOneNum][destroy1];
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
 
+						Sleep(1500);
+						validInput = false;
+					}
 
-					//shipsPlaced[spaceOneNum][spaceTwo] = destroyerBOARD[spaceOneNum][destroy];
-					//shipsPlaced[spaceOneNum][destroy1] = destroyerBOARD[spaceOneNum][destroy1];
+					if (shipsPlaced[spaceOneNum][destroy1] == "O")
+					{
+						shipsPlaced[spaceOneNum][destroy1] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					destroyerHP(destroy, destroy1, spaceOneNum, spaceTwo, board, userDirectionalInput, destroyerBOARD);
 				}
 				else
@@ -1034,41 +1133,7 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					cout << setw(65) << "--------------------------" << endl;
 				}
 
-				//for (int rows = 0; rows < ROWS; rows++)
-				//{
-				
-					//for (int cols = 0; cols < COLUMNS; cols++)
-					//{
-
-						//ship placement check
-						//if (destroyerBOARD[rows][cols] == subBOARD[rows][cols] || destroyerBOARD[rows][cols] == cruiserBOARD[rows][cols] || destroyerBOARD[rows][cols] == battleshipBOARD[rows][cols] || destroyerBOARD[rows][cols] == carrierBOARD[rows][cols])
-						//{
-							//system("cls");
-							//cout << setw(65) << red << "-----------------------------------------------" << endl;
-							//cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-							//cout << setw(65) << "-----------------------------------------------" << endl;
-							//Sleep(1000);
-
-							//board[spaceOneNum][spaceTwo] = cleanSlate[spaceOneNum][spaceTwo];
-							//board[spaceOneNum][destroy1] = cleanSlate[spaceOneNum][destroy1];
-							//board[destroy1][spaceTwo] = cleanSlate[destroy1][spaceTwo];
-
-							//destroyerBOARD[rows][cols] = shipsPlaced[rows][cols];
-
-							//validInput = false;
-						//}
-						//else
-						//{
-						//	validInput = true;
-
-							//and if its true then assign it to a master board? or after all boards have cleared.
-						//}
-					//} //for loop class 11/27/17
-				}
-
-			//}
-
-
+			}
 
 			else if (count == 1) // 1 is the submarine, 3 spots
 			{
@@ -1076,30 +1141,222 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 
 				if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
 				{
-					board[spaceOneNum][spaceTwo] = subBOARD[sub][spaceTwo];
-					board[sub1][spaceTwo] = subBOARD[sub1][spaceTwo];
-					board[sub2][spaceTwo] = subBOARD[sub2][spaceTwo];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[sub1][spaceTwo] == "O")
+					{
+						shipsPlaced[sub1][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[sub2][spaceTwo] == "O")
+					{
+						shipsPlaced[sub2][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					submarineHP(sub, sub1, sub2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 				{
-					board[spaceOneNum][spaceTwo] = subBOARD[sub][spaceTwo];
-					board[sub1][spaceTwo] = subBOARD[sub1][spaceTwo];
-					board[sub2][spaceTwo] = subBOARD[sub2][spaceTwo];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[sub1][spaceTwo] == "O")
+					{
+						shipsPlaced[sub1][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[sub2][spaceTwo] == "O")
+					{
+						shipsPlaced[sub2][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					submarineHP(sub, sub1, sub2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 				{
-					board[spaceOneNum][spaceTwo] = subBOARD[spaceOneNum][sub];
-					board[spaceOneNum][sub1] = subBOARD[spaceOneNum][sub1];
-					board[spaceOneNum][sub2] = subBOARD[spaceOneNum][sub2];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][sub1] == "O")
+					{
+						shipsPlaced[spaceOneNum][sub1] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][sub2] == "O")
+					{
+						shipsPlaced[spaceOneNum][sub2] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					submarineHP(sub, sub1, sub2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 				{
-					board[spaceOneNum][spaceTwo] = subBOARD[spaceOneNum][sub];
-					board[spaceOneNum][sub1] = subBOARD[spaceOneNum][sub1];
-					board[spaceOneNum][sub2] = subBOARD[spaceOneNum][sub2];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][sub1] == "O")
+					{
+						shipsPlaced[spaceOneNum][sub1] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][sub2] == "O")
+					{
+						shipsPlaced[spaceOneNum][sub2] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					submarineHP(sub, sub1, sub2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else
@@ -1116,32 +1373,224 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 
 				if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
 				{
-					board[spaceOneNum][spaceTwo] = cruiserBOARD[cruis][spaceTwo];
-					board[cruis1][spaceTwo] = cruiserBOARD[cruis1][spaceTwo];
-					board[cruis2][spaceTwo] = cruiserBOARD[cruis2][spaceTwo];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[cruis1][spaceTwo] == "O")
+					{
+						shipsPlaced[cruis1][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[cruis2][spaceTwo] == "O")
+					{
+						shipsPlaced[cruis2][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					cruiserHP(cruis, cruis1, cruis2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 				{
-					board[spaceOneNum][spaceTwo] = cruiserBOARD[cruis][spaceTwo];
-					board[cruis1][spaceTwo] = cruiserBOARD[cruis1][spaceTwo];
-					board[cruis2][spaceTwo] = cruiserBOARD[cruis2][spaceTwo];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[cruis1][spaceTwo] == "O")
+					{
+						shipsPlaced[cruis1][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[cruis2][spaceTwo] == "O")
+					{
+						shipsPlaced[cruis2][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					cruiserHP(cruis, cruis1, cruis2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 				{
 
-					board[spaceOneNum][spaceTwo] = cruiserBOARD[spaceOneNum][cruis];
-					board[spaceOneNum][cruis1] = cruiserBOARD[spaceOneNum][cruis1];
-					board[spaceOneNum][cruis2] = cruiserBOARD[spaceOneNum][cruis2];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][cruis1] == "O")
+					{
+						shipsPlaced[spaceOneNum][cruis1] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][cruis2] == "O")
+					{
+						shipsPlaced[spaceOneNum][cruis2] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					cruiserHP(cruis, cruis1, cruis2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 				{
 
-					board[spaceOneNum][spaceTwo] = cruiserBOARD[spaceOneNum][cruis];
-					board[spaceOneNum][cruis1] = cruiserBOARD[spaceOneNum][cruis1];
-					board[spaceOneNum][cruis2] = cruiserBOARD[spaceOneNum][cruis2];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][cruis1] == "O")
+					{
+						shipsPlaced[spaceOneNum][cruis1] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][cruis2] == "O")
+					{
+						shipsPlaced[spaceOneNum][cruis2] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					cruiserHP(cruis, cruis1, cruis2, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else
@@ -1158,36 +1607,292 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 
 				if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
 				{
-					board[spaceOneNum][spaceTwo] = battleshipBOARD[battleship][spaceTwo];
-					board[battleship1][spaceTwo] = battleshipBOARD[battleship1][spaceTwo];
-					board[battleship2][spaceTwo] = battleshipBOARD[battleship2][spaceTwo];
-					board[battleship3][spaceTwo] = battleshipBOARD[battleship3][spaceTwo];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[battleship1][spaceTwo] == "O")
+					{
+						shipsPlaced[battleship1][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[battleship2][spaceTwo] == "O")
+					{
+						shipsPlaced[battleship2][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[battleship3][spaceTwo] == "O")
+					{
+						shipsPlaced[battleship3][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					battleshipHP(battleship, battleship1, battleship2, battleship3, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 				{
-					board[spaceOneNum][spaceTwo] = battleshipBOARD[battleship][spaceTwo];
-					board[battleship1][spaceTwo] = battleshipBOARD[battleship1][spaceTwo];
-					board[battleship2][spaceTwo] = battleshipBOARD[battleship2][spaceTwo];
-					board[battleship3][spaceTwo] = battleshipBOARD[battleship3][spaceTwo];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[battleship1][spaceTwo] == "O")
+					{
+						shipsPlaced[battleship1][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[battleship2][spaceTwo] == "O")
+					{
+						shipsPlaced[battleship2][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[battleship3][spaceTwo] == "O")
+					{
+						shipsPlaced[battleship3][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					battleshipHP(battleship, battleship1, battleship2, battleship3, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 				{
 
-					board[spaceOneNum][spaceTwo] = battleshipBOARD[spaceOneNum][battleship];
-					board[spaceOneNum][battleship1] = battleshipBOARD[spaceOneNum][battleship1];
-					board[spaceOneNum][battleship2] = battleshipBOARD[spaceOneNum][battleship2];
-					board[spaceOneNum][battleship3] = battleshipBOARD[spaceOneNum][battleship3];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][battleship1] == "O")
+					{
+						shipsPlaced[spaceOneNum][battleship1] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][battleship2] == "O")
+					{
+						shipsPlaced[spaceOneNum][battleship2] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][battleship3] == "O")
+					{
+						shipsPlaced[spaceOneNum][battleship3] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					battleshipHP(battleship, battleship1, battleship2, battleship3, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 				{
 
-					board[spaceOneNum][spaceTwo] = battleshipBOARD[spaceOneNum][battleship];
-					board[spaceOneNum][battleship1] = battleshipBOARD[spaceOneNum][battleship1];
-					board[spaceOneNum][battleship2] = battleshipBOARD[spaceOneNum][battleship2];
-					board[spaceOneNum][battleship3] = battleshipBOARD[spaceOneNum][battleship3];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][battleship1] == "O")
+					{
+						shipsPlaced[spaceOneNum][battleship1] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][battleship2] == "O")
+					{
+						shipsPlaced[spaceOneNum][battleship2] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][battleship3] == "O")
+					{
+						shipsPlaced[spaceOneNum][battleship3] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					battleshipHP(battleship, battleship1, battleship2, battleship3, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else
@@ -1205,41 +1910,363 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 				if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up")
 				{
 
-					board[spaceOneNum][spaceTwo] = carrierBOARD[carrier][spaceTwo];
-					board[carrier1][spaceTwo] = carrierBOARD[carrier1][spaceTwo];
-					board[carrier2][spaceTwo] = carrierBOARD[carrier2][spaceTwo];
-					board[carrier3][spaceTwo] = carrierBOARD[carrier3][spaceTwo];
-					board[carrier4][spaceTwo] = carrierBOARD[carrier4][spaceTwo];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[carrier1][spaceTwo] == "O")
+					{
+						shipsPlaced[carrier1][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[carrier2][spaceTwo] == "O")
+					{
+						shipsPlaced[carrier2][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[carrier3][spaceTwo] == "O")
+					{
+						shipsPlaced[carrier3][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[carrier4][spaceTwo] == "O")
+					{
+						shipsPlaced[carrier4][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					carrierHP(carrier, carrier1, carrier2, carrier3, carrier4, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down")
 				{
 
-					board[spaceOneNum][spaceTwo] = carrierBOARD[carrier][spaceTwo];
-					board[carrier1][spaceTwo] = carrierBOARD[carrier1][spaceTwo];
-					board[carrier2][spaceTwo] = carrierBOARD[carrier2][spaceTwo];
-					board[carrier3][spaceTwo] = carrierBOARD[carrier3][spaceTwo];
-					board[carrier4][spaceTwo] = carrierBOARD[carrier4][spaceTwo];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[carrier1][spaceTwo] == "O")
+					{
+						shipsPlaced[carrier1][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[carrier2][spaceTwo] == "O")
+					{
+						shipsPlaced[carrier2][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[carrier3][spaceTwo] == "O")
+					{
+						shipsPlaced[carrier3][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[carrier4][spaceTwo] == "O")
+					{
+						shipsPlaced[carrier4][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					carrierHP(carrier, carrier1, carrier2, carrier3, carrier4, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left")
 				{
 
-					board[spaceOneNum][spaceTwo] = carrierBOARD[spaceOneNum][carrier];
-					board[spaceOneNum][carrier1] = carrierBOARD[spaceOneNum][carrier1];
-					board[spaceOneNum][carrier2] = carrierBOARD[spaceOneNum][carrier2];
-					board[spaceOneNum][carrier3] = carrierBOARD[spaceOneNum][carrier3];
-					board[spaceOneNum][carrier4] = carrierBOARD[spaceOneNum][carrier4];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][carrier1] == "O")
+					{
+						shipsPlaced[spaceOneNum][carrier1] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][carrier2] == "O")
+					{
+						shipsPlaced[spaceOneNum][carrier2] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][carrier3] == "O")
+					{
+						shipsPlaced[spaceOneNum][carrier3] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][carrier4] == "O")
+					{
+						shipsPlaced[spaceOneNum][carrier4] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					carrierHP(carrier, carrier1, carrier2, carrier3, carrier4, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right")
 				{
 
-					board[spaceOneNum][spaceTwo] = carrierBOARD[spaceOneNum][carrier];
-					board[spaceOneNum][carrier1] = carrierBOARD[spaceOneNum][carrier1];
-					board[spaceOneNum][carrier2] = carrierBOARD[spaceOneNum][carrier2];
-					board[spaceOneNum][carrier3] = carrierBOARD[spaceOneNum][carrier3];
-					board[spaceOneNum][carrier4] = carrierBOARD[spaceOneNum][carrier4];
+					if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+					{
+						shipsPlaced[spaceOneNum][spaceTwo] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+
+					if (shipsPlaced[spaceOneNum][carrier1] == "O")
+					{
+						shipsPlaced[spaceOneNum][carrier1] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+
+					if (shipsPlaced[spaceOneNum][carrier2] == "O")
+					{
+						shipsPlaced[spaceOneNum][carrier2] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][carrier3] == "O")
+					{
+						shipsPlaced[spaceOneNum][carrier3] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
+					if (shipsPlaced[spaceOneNum][carrier4] == "O")
+					{
+						shipsPlaced[spaceOneNum][carrier4] = "X";
+						validInput = true;
+					}
+					else
+					{
+
+						system("cls");
+						cout << setw(65) << red << "-----------------------------------------------" << endl;
+						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(65) << "-----------------------------------------------" << endl;
+
+						Sleep(1500);
+						validInput = false;
+					}
+
 					carrierHP(carrier, carrier1, carrier2, carrier3, carrier4, spaceOneNum, spaceTwo, board, userDirectionalInput);
 				}
 				else
@@ -1251,22 +2278,6 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 				}
 
 			}
-
-
-
-
-
-
-
-
-
-
-
-
-
-			
-
-		
 
 	
 	return validInput;
@@ -2185,8 +3196,9 @@ void onePlayer()
 
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count);							// }    //TO DISPLAY PROPERLY
-				system("pause");						 //}
+				displayMiss(count);		
+				Sleep(1500);							// }    //TO DISPLAY PROPERLY
+				//system("pause");						 //}
 			}
 			
 			
@@ -2218,8 +3230,9 @@ void onePlayer()
 
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count);							// }    //TO DISPLAY PROPERLY
-				system("pause");						 //}
+				displayMiss(count);
+				Sleep(1500);							// }    //TO DISPLAY PROPERLY
+				//system("pause");						 //}
 			}
 			
 			
@@ -2251,8 +3264,9 @@ void onePlayer()
 
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count);							// }    //TO DISPLAY PROPERLY
-				system("pause");						 //}
+				displayMiss(count);
+				Sleep(1500);								// }    //TO DISPLAY PROPERLY
+				//system("pause");						 //}
 			}
 			
 			
@@ -2285,7 +3299,8 @@ void onePlayer()
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
-				system("pause");						 //}
+				Sleep(1500);
+				//system("pause");						 //}
 			}
 			
 			
@@ -2318,7 +3333,8 @@ void onePlayer()
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
-				system("pause");						 //}
+				Sleep(1500);
+				//system("pause");						 //}
 			}
 			
 			
@@ -2351,7 +3367,8 @@ void onePlayer()
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
-				system("pause");						 //}
+				Sleep(1500);
+				//system("pause");						 //}
 			}
 			
 			
@@ -2384,7 +3401,8 @@ void onePlayer()
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
-				system("pause");						 //}
+				Sleep(1500);
+				//system("pause");						 //}
 			}
 			
 			
@@ -2417,7 +3435,8 @@ void onePlayer()
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
-				system("pause");						 //}
+				Sleep(1500);
+				//system("pause");						 //}
 			}
 			
 			
@@ -2541,7 +3560,7 @@ void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string 
 	{
 		//board_intilization(spaceOneNum, spaceTwo);
 		system("cls");
-		displayBlank(shipsPlaced); //board // lets you visualize the board when placing the ships cord on the Y - COlS axis
+		displayBlank(shipsPlaced); //board // lets you visualize the board when placing the ships cord on the X - ROWS axis
 		cout << endl;
 		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
 		//cout << setw(75) << white << "Using letters A-J, and then a number 1-10, enter your coordinates: ";
