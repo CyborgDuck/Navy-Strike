@@ -3653,13 +3653,16 @@ void firstCoordOne(string spaceOne, int& spaceOneNum, string blank[][11], bool& 
 
 	do
 	{
-		//board_intilization(spaceOneNum, spaceTwo);
-		system("cls");
-		displayBlank(blank);
-		cout << endl;
-		//cout << setw(75) << white << "Using letters A-J, and then a number 1-10, enter your coordinates: ";
-		cout << setw(75) << white << "Using letters A-J, enter your coordinates: ";
-		cin >> spaceOne;
+		do {
+			//board_intilization(spaceOneNum, spaceTwo);
+			system("cls");
+			displayBlank(blank);
+			cout << endl;
+			//cout << setw(75) << white << "Using letters A-J, and then a number 1-10, enter your coordinates: ";
+			cout << setw(75) << white << "Using letters A-J, enter your coordinates: ";
+			cin >> spaceOne;
+		} while (spaceOne.length() != 1);
+		
 
 		//check to see if input is a-j or A-J before sending it on.
 		if (spaceOne.length() > 1)
@@ -3736,14 +3739,16 @@ void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string 
 	//===========FOR TWO PLAYER==========================================================================
 	do
 	{
-		//board_intilization(spaceOneNum, spaceTwo);
-		system("cls");
-		displayBlank(shipsPlaced); //board // lets you visualize the board when placing the ships cord on the X - ROWS axis
-		cout << endl;
-		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
-		//cout << setw(75) << white << "Using letters A-J, and then a number 1-10, enter your coordinates: ";
-		cout << setw(75) << white << "Using letters A-J, enter your coordinates: ";
-		cin >> spaceOne;
+		do {
+			//board_intilization(spaceOneNum, spaceTwo);
+			system("cls");
+			displayBlank(shipsPlaced); //board // lets you visualize the board when placing the ships cord on the X - ROWS axis
+			cout << endl;
+			cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
+			//cout << setw(75) << white << "Using letters A-J, and then a number 1-10, enter your coordinates: ";
+			cout << setw(75) << white << "Using letters A-J, enter your coordinates: ";
+			cin >> spaceOne;
+		} while (spaceOne.length() != 1);
 
 		//check to see if input is a-j or A-J before sending it on.
 		if ((spaceOne >= "a" && spaceOne <= "j") || (spaceOne >= "A" && spaceOne <= "J"))
@@ -3811,13 +3816,15 @@ void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipN
 	promptCheck = false;
 	while (!promptCheck)
 	{
-		system("cls");
-		//board_intilization(spaceOneNum, spaceTwo);
-		displayBlank(shipsPlaced); //board // lets you visualize the board when placing the ships cord on the Y - COlS axis
-		cout << endl;
-		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
-		cout << setw(75) << white << "Using numbers 1-10, enter your second coordinate: ";
-		cin >> spaceTwo;
+		
+			system("cls");
+			//board_intilization(spaceOneNum, spaceTwo);
+			displayBlank(shipsPlaced); //board // lets you visualize the board when placing the ships cord on the Y - COlS axis
+			cout << endl;
+			cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
+			cout << setw(75) << white << "Using numbers 1-10, enter your second coordinate: ";
+			cin >> spaceTwo;
+		
 
 		if (spaceTwo >= 1 && spaceTwo <= 10)
 		{
@@ -3851,12 +3858,15 @@ void secCoordOne(int &spaceTwo, bool &promptCheck, string board[][11])
 	promptCheck = false;
 	while (!promptCheck)
 	{
-		system("cls");
-		//board_intilization(spaceOneNum, spaceTwo);
-		displayBlank(board);
-		cout << endl;
-		cout << setw(75) << white << "Using numbers 1-10, enter your second coordinate: ";
-		cin >> spaceTwo;
+		
+			system("cls");
+			//board_intilization(spaceOneNum, spaceTwo);
+			displayBlank(board);
+			cout << endl;
+			cout << setw(75) << white << "Using numbers 1-10, enter your second coordinate: ";
+			cin >> spaceTwo;
+		
+		
 
 		if (spaceTwo >= 1 && spaceTwo <= 10)
 		{
