@@ -79,11 +79,11 @@ void carrierHP(int&, int&, int&, int&, int&, int&, int&, string[][11], string&);
 void shipDestroyed();
 
 //ship Placement
-bool chkPlacement(bool&, string[][11], int&, int&, int&, int&, string[][11]);
+//bool chkPlacement(bool&, string[][11], int&, int&, int&, int&, string[][11]); //obsolete I believe, 11/28/17 Erik.
 
 //Happy with the placement? or reset/redo > then turn controls to player two
-
-//bool happyPlacement(bool&); 
+bool happyPlacement(bool&, string[][11]); 
+void boardRESET(string[][11]);
 
 //start of missile strikes / player2
 void cleaningSlate(string[][11]);
@@ -497,7 +497,9 @@ void TwoPlayer()
 	int carrier3 = 0;
 	int carrier4 = 0;
 
+	//redo ship placement
 	bool happy = false;
+	int redoShipsPlace = 0;
 
 	//11.14.17 observation Erik
 	// our ships arent actually tied to anything in our arrays..
@@ -659,28 +661,43 @@ void TwoPlayer()
 	//Player One
 	
 	//another loop surronding all this for shipName[ships] until all ships are placed on the board.
-	//do //for happy with placement?
-	//{
-		for (int count = 0; count < ships; count++)
+	do //for happy with placement?
+	{
+		if (redoShipsPlace != 0)
 		{
-			//if (count == 0)
-			//{
+			boardRESET(shipsPlaced);
+			
+		}
+			for (int count = 0; count < ships; count++)
+			{
+				if (redoShipsPlace != 0)
+				{
+					count = 0;
+					redoShipsPlace = 0;
+				}
+				
 
-			//dowhile and valid input are work on progress for ship placement to avoid stacking and ship placement over the board. Erik 11/26/17
-			do {
-				validInput = false;
-				firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
-				secCoord(spaceTwo, promptCheck, board, shipName, count, shipsPlaced);
+				//dowhile and valid input are work on progress for ship placement to avoid stacking and ship placement over the board. Erik 11/26/17
+				do {
+					validInput = false;
+					firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
+					secCoord(spaceTwo, promptCheck, board, shipName, count, shipsPlaced);
 
 
-				setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck, shipsPlaced);
-				cout << endl << endl;
-				validInput = refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, destroyerBOARD, subBOARD, cruiserBOARD, battleshipBOARD, carrierBOARD, validInput, cleanSlate, shipHits);
-			} while (validInput == false);
+					setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck, shipsPlaced);
+					cout << endl << endl;
+					validInput = refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, destroyerBOARD, subBOARD, cruiserBOARD, battleshipBOARD, carrierBOARD, validInput, cleanSlate, shipHits);
+				} while (validInput == false);
 
+			}
+		
 
+		redoShipsPlace++;
+			happy = happyPlacement(happy, shipsPlaced);
 
+		} while (happy == false);
 
+		
 			//destroyerHP(); // idea to break this up so that each ship has its own function...
 			//if this doesnt work break the if else chain keep the functions within this, 'for loop'.
 
@@ -738,20 +755,17 @@ void TwoPlayer()
 		//maybe can use board intilization to refresh. what the board looks like, from placement to placement.
 
 
-		}
-		system("cls");
-		displayBlank(board);
+	
 
-//		happy = happyPlacement(happy);
-//	} while (happy = false);
 	//a prompt here confirming player 1s ship placement? or something to let player two to take over
 	// player two starts to set ships? 11/26/17 Erik.
 
 	//player two starts to attack
 	//system("cls");  // class 11/27/17
 	//cleaningSlate(cleanSlate);
-	
-	missiles();
+		system("cls");
+		displayBlank(board);
+		missiles();
 	
 
 
@@ -2967,18 +2981,40 @@ void carrierHP(int &carrier, int &carrier1, int &carrier2, int &carrier3, int &c
 
 }*/
 
-/*bool happyPlacement(bool &happy)
+bool happyPlacement(bool &happy, string shipsPlaced[][11])
 {
-	char yesNo;
+	string yesNo;
 
-	cout << "Are you happy with your ships placement? (y/n)";
+	system("cls");
+	displayBlank(shipsPlaced);
+	cout << endl << endl << setw(65) << white << "Are you happy with your ships placement? (y/n): ";
 	cin >> yesNo;
 
-	if(yesNo == )
+	if (yesNo == "yes" || yesNo == "YES" || yesNo == "Yes" || yesNo == "y" || yesNo == "Y")
+	{
+		happy = true;
+	}
+	else if (yesNo == "no" || yesNo == "NO" || yesNo == "No" || yesNo == "n" || yesNo == "N")
+	{
+		happy = false;
+	}
 
 	return happy;
 
-}*/
+}
+
+void boardRESET(string shipsPlaced[][11])
+{
+	for (int i = 0; i < 11; i++)
+	{
+		for (int e = 0; e < 11; e++)
+		{
+			shipsPlaced[i][e] = "O";
+
+		}
+	}
+
+}
 
 void cleaningSlate(string cleanSlate[][11])
 {
