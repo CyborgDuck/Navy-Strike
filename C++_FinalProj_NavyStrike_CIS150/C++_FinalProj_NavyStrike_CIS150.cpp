@@ -86,7 +86,7 @@ bool happyPlacement(bool&, string[][11]);
 void boardRESET(string[][11]);
 
 //start of missile strikes / player2
-void cleaningSlate(string[][11]);
+//void cleaningSlate(string[][11]); //obsolete function Erik 11/28/17
 void missiles();
 
 //sounds
@@ -517,8 +517,8 @@ void TwoPlayer()
 	string cleanSlate[ROWS][COLUMNS] = {	{ " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10"  },
 											{ "A",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
 											{ "B",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
-											{ "C",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
-											{ "D",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
+											{ "C",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },		//obsolete board
+											{ "D",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },		//need to remove where their located/sent to before commenting out.	
 											{ "E",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
 											{ "F",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
 											{ "G",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
@@ -555,6 +555,8 @@ void TwoPlayer()
 
 
 	//new individual ship boards, Erik 11/27/17 this will replace shipsPlaced
+
+	 //Obsolete boards, Erik 11/28/17, need to remove where their being sent to before deleting / commenting out.
 
 	string destroyerBOARD[ROWS][COLUMNS] = {	{ " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
 												{ "A",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
@@ -763,6 +765,9 @@ void TwoPlayer()
 	//player two starts to attack
 	//system("cls");  // class 11/27/17
 	//cleaningSlate(cleanSlate);
+
+
+
 		system("cls");
 		displayBlank(board);
 		missiles();
@@ -988,9 +993,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					else if (shipsPlaced[spaceOneNum][spaceTwo] != "O" && continu3 == true)
 					{
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 						Sleep(1500);
 						validInput = false;
 						continu3 = false;
@@ -1007,9 +1013,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 						
 						Sleep(1500);
 
@@ -1035,9 +1042,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1054,9 +1062,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O"; //reset
@@ -1078,9 +1087,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1097,9 +1107,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O"; //reset
@@ -1121,9 +1132,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1139,9 +1151,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O"; //reset
@@ -1154,9 +1167,11 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 				else
 				{
 					//need to test if setw is correct still.
-					cout << setw(65) << red << "--------------------------" << endl;
-					cout << setw(65) << "Invalid input. Try again." << endl;
-					cout << setw(65) << "--------------------------" << endl;
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(85) << red << "--------------------------" << endl;
+					cout << setw(85) << "Invalid input. Try again." << endl;
+					cout << setw(85) << "--------------------------" << endl;
 				}
 
 			}
@@ -1177,9 +1192,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1195,9 +1211,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O"; //reset
@@ -1214,9 +1231,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O"; //reset
@@ -1238,9 +1256,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1256,9 +1275,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O"; //reset
@@ -1275,9 +1295,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[sub1][spaceTwo] = "O"; //reset
@@ -1299,9 +1320,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1317,9 +1339,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1337,9 +1360,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1361,9 +1385,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1379,9 +1404,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1399,9 +1425,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1415,9 +1442,11 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 				else
 				{
 					//need to test if setw is correct still.
-					cout << setw(65) << red << "--------------------------" << endl;
-					cout << setw(65) << "Invalid input. Try again." << endl;
-					cout << setw(65) << "--------------------------" << endl;
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(85) << red << "--------------------------" << endl;
+					cout << setw(85) << "Invalid input. Try again." << endl;
+					cout << setw(85) << "--------------------------" << endl;
 				}
 
 			}
@@ -1436,9 +1465,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1454,9 +1484,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1474,9 +1505,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1498,9 +1530,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1516,9 +1549,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1536,9 +1570,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1561,9 +1596,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1579,9 +1615,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1599,9 +1636,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";					//reset
@@ -1624,9 +1662,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1642,9 +1681,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1662,9 +1702,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1678,9 +1719,11 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 				else
 				{
 					//need to test if setw is correct still.
-					cout << setw(65) << red << "--------------------------" << endl;
-					cout << setw(65) << "Invalid input. Try again." << endl;
-					cout << setw(65) << "--------------------------" << endl;
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(85) << red << "--------------------------" << endl;
+					cout << setw(85) << "Invalid input. Try again." << endl;
+					cout << setw(85) << "--------------------------" << endl;
 				}
 
 			}
@@ -1699,9 +1742,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1717,9 +1761,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1737,9 +1782,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1757,9 +1803,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1782,9 +1829,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1800,9 +1848,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1820,9 +1869,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1840,9 +1890,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1866,9 +1917,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1884,9 +1936,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1904,9 +1957,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -1924,9 +1978,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -1950,9 +2005,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -1968,9 +2024,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -1988,9 +2045,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -2008,9 +2066,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -2025,9 +2084,11 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 				else
 				{
 					//need to test if setw is correct still.
-					cout << setw(65) << red << "--------------------------" << endl;
-					cout << setw(65) << "Invalid input. Try again." << endl;
-					cout << setw(65) << "--------------------------" << endl;
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(85) << red << "--------------------------" << endl;
+					cout << setw(85) << "Invalid input. Try again." << endl;
+					cout << setw(85) << "--------------------------" << endl;
 				}
 
 			}
@@ -2047,9 +2108,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -2065,9 +2127,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -2085,9 +2148,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";	//reset
@@ -2105,9 +2169,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -2126,9 +2191,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -2153,9 +2219,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -2171,9 +2238,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -2191,9 +2259,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -2211,9 +2280,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -2232,9 +2302,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -2259,9 +2330,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -2277,9 +2349,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -2297,9 +2370,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";						//reset
@@ -2317,9 +2391,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";						//reset
@@ -2338,9 +2413,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";						//reset
@@ -2365,9 +2441,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						validInput = false;
@@ -2384,9 +2461,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -2405,9 +2483,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -2425,9 +2504,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -2446,9 +2526,10 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 					{
 
 						system("cls");
-						cout << setw(65) << red << "-----------------------------------------------" << endl;
-						cout << setw(65) << "Theirs a ship here already, redo your ship placement." << endl;
-						cout << setw(65) << "-----------------------------------------------" << endl;
+						cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+						cout << setw(85) << red << "-----------------------------------------------" << endl;
+						cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
+						cout << setw(85) << "-----------------------------------------------" << endl;
 
 						Sleep(1500);
 						shipsPlaced[spaceOneNum][spaceTwo] = "O";		//reset
@@ -2464,9 +2545,11 @@ bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int
 				else
 				{
 					//need to test if setw is correct still.
-					cout << setw(65) << red << "--------------------------" << endl;
-					cout << setw(65) << "Invalid input. Try again." << endl;
-					cout << setw(65) << "--------------------------" << endl;
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(85) << red << "--------------------------" << endl;
+					cout << setw(85) << "Invalid input. Try again." << endl;
+					cout << setw(85) << "--------------------------" << endl;
 				}
 
 			}
@@ -3016,9 +3099,9 @@ void boardRESET(string shipsPlaced[][11])
 
 }
 
-void cleaningSlate(string cleanSlate[][11])
+/*void cleaningSlate(string cleanSlate[][11])
 {
-
+	//obsolete function now i think. 11/28/17 Erik.
 	string div = "===============================================================================================================";
 	string between = "---------------------------------------------------------------------------------------------------------------";
 	const int ROWS = 11;
@@ -3056,7 +3139,7 @@ void cleaningSlate(string cleanSlate[][11])
 	cout << setw(115) << darkgrey << div << endl;
 
 
-}
+}*/
 
 void missiles()
 {

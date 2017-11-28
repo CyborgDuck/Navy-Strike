@@ -3,7 +3,7 @@ c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_f
   c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(8): note: Add macro to precompiled header instead of defining here
   c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(10): note: use of precompiled header
 c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(108): warning C4101: 'players': unreferenced local variable
-c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(3104): warning C4129: 'V': unrecognized character escape sequence
-c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(3171): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(3186): warning C4129: 'V': unrecognized character escape sequence
+c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(3253): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\jacka\Desktop\Do not move\FinalProj_CIS150_NavyStrike\navy-strike\Debug\C++_FinalProj_NavyStrike_CIS150.exe
   C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\jacka\Desktop\Do not move\FinalProj_CIS150_NavyStrike\navy-strike\Debug\C++_FinalProj_NavyStrike_CIS150.pdb (Partial PDB)
