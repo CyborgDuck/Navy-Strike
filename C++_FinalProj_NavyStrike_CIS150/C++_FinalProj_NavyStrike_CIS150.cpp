@@ -89,7 +89,11 @@ bool chkPlacement(bool&, string[][11], int&, int&, int&, int&, string[][11]);
 void cleaningSlate(string[][11]);
 void missiles();
 
-//void startSound();
+//sounds
+void startSound();
+void missSound();
+void hitSound();
+void sinkSound();
 
 int main()
 {
@@ -1911,6 +1915,22 @@ void shipDestroyed()
 void startSound()
 {
 
+
+}
+
+void missSound()
+{
+
+
+}
+
+void hitSound()
+{
+
+}
+
+void sinkSound()
+{
 
 }
 
