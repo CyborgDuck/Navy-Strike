@@ -3191,6 +3191,7 @@ void onePlayer(int difficulty)
 			{											// } //STILL CANNOT GET ASCII ART 
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
 <<<<<<< HEAD
+<<<<<<< HEAD
 				Sleep(1500);						 //}
 =======
 			if (blank[spaceOneNum][spaceTwo] == "O")    
@@ -3201,6 +3202,9 @@ void onePlayer(int difficulty)
 =======
 				Sleep(2000);						 //}
 >>>>>>> parent of f1c9178... counter to work
+=======
+				Sleep(2000);						 //}
+>>>>>>> parent of f1c9178... counter to work
 			}
 			if (blank[spaceOneNum][spaceTwo] == "X")
 			{
@@ -3208,11 +3212,15 @@ void onePlayer(int difficulty)
 <<<<<<< HEAD
 				displayHit(count);
 <<<<<<< HEAD
+<<<<<<< HEAD
 				Sleep(1500);
 =======
 				displayHit(count, difficulty);
 				Sleep(2000);
 >>>>>>> 17376e25cc987fa40450a37de0c66ffe166fd1c5
+=======
+				Sleep(2000);
+>>>>>>> parent of f1c9178... counter to work
 =======
 				Sleep(2000);
 >>>>>>> parent of f1c9178... counter to work
