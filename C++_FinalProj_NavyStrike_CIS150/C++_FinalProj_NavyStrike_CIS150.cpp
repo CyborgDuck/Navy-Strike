@@ -329,7 +329,7 @@ void intro(int &players)
 		Sleep(10);
 	}
 
-	cout << setw(65) << white << "Created By," << endl << setw(70) << "Erik, Tristan and Chuck" << endl << setw(65) << "Version 0.02" << endl; //update version count, for every day in class? we will be at 0.08 on Dec 6, 2017 	
+	cout << setw(65) << white << "Created By," << endl << setw(70) << "Erik, Tristan and Chuck" << endl << setw(65) << "Version 0.03" << endl; //update version count, for every day in class? we will be at 0.08 on Dec 6, 2017 	
 	for (int i = 0; i < 16; i++)
 	{
 		cout << endl;
