@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿  stdafx.cpp
   C++_FinalProj_NavyStrike_CIS150.cpp
 c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(10): warning C4603: '_WIN32_WINNT': macro is not defined or definition is different after precompiled header use
@@ -52,3 +53,8 @@ c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis
 >>>>>>> parent of f1c9178... counter to work
 =======
 >>>>>>> parent of 60b35dd... Merge branch 'master' of https://github.com/CyborgDuck/navy-strike
+=======
+﻿  LINK : C:\Users\tludwig33344\Documents\GitHub\navy-strike\x64\Debug\C++_FinalProj_NavyStrike_CIS150.exe not found or not built by the last incremental link; performing full link
+  C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\tludwig33344\Documents\GitHub\navy-strike\x64\Debug\C++_FinalProj_NavyStrike_CIS150.exe
+  C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\tludwig33344\Documents\GitHub\navy-strike\x64\Debug\C++_FinalProj_NavyStrike_CIS150.pdb (Partial PDB)
+>>>>>>> parent of 7585f27... Bug fixes

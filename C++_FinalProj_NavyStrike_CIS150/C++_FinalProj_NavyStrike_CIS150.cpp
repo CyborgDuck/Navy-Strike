@@ -344,7 +344,11 @@ void intro(int &players)
 int mainMenu()
 {
 	int players = 0;
+<<<<<<< HEAD
 	int difficulty = 30; //How many guesses the player has before losing the game
+=======
+	static int difficulty = 30; //How many guesses the player has before losing the game
+>>>>>>> parent of 7585f27... Bug fixes
 	bool menuNumber = false;
 	//MENU
 
@@ -3196,6 +3200,7 @@ void onePlayer()
 
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
+<<<<<<< HEAD
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3219,6 +3224,10 @@ void onePlayer()
 =======
 				Sleep(2000);						 //}
 >>>>>>> parent of f1c9178... counter to work
+=======
+				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
+				Sleep(2000);						 //}
+>>>>>>> parent of 7585f27... Bug fixes
 			}
 			if (blank[spaceOneNum][spaceTwo] == "X")
 			{
@@ -3275,7 +3284,11 @@ void onePlayer()
 
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
+<<<<<<< HEAD
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+=======
+				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
+>>>>>>> parent of 7585f27... Bug fixes
 				Sleep(1500);
 			}
 			
@@ -3308,7 +3321,11 @@ void onePlayer()
 
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
+<<<<<<< HEAD
 				displayMiss(count);		
+=======
+				displayMiss(count, difficulty);		
+>>>>>>> parent of 7585f27... Bug fixes
 				Sleep(1500);							// }    //TO DISPLAY PROPERLY
 				//system("pause");						 //}
 			}
@@ -3342,7 +3359,11 @@ void onePlayer()
 
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
+<<<<<<< HEAD
 				displayMiss(count);
+=======
+				displayMiss(count, difficulty);
+>>>>>>> parent of 7585f27... Bug fixes
 				Sleep(1500);							// }    //TO DISPLAY PROPERLY
 				//system("pause");						 //}
 			}
@@ -3376,7 +3397,11 @@ void onePlayer()
 
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
+<<<<<<< HEAD
 				displayMiss(count);
+=======
+				displayMiss(count, difficulty);
+>>>>>>> parent of 7585f27... Bug fixes
 				Sleep(1500);								// }    //TO DISPLAY PROPERLY
 				//system("pause");						 //}
 			}
@@ -3410,7 +3435,11 @@ void onePlayer()
 			
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
+<<<<<<< HEAD
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+=======
+				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
+>>>>>>> parent of 7585f27... Bug fixes
 				Sleep(1500);
 				//system("pause");						 //}
 			}
@@ -3444,7 +3473,11 @@ void onePlayer()
 			
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
+<<<<<<< HEAD
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+=======
+				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
+>>>>>>> parent of 7585f27... Bug fixes
 				Sleep(1500);
 				//system("pause");						 //}
 			}
@@ -3478,7 +3511,11 @@ void onePlayer()
 			
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
+<<<<<<< HEAD
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+=======
+				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
+>>>>>>> parent of 7585f27... Bug fixes
 				Sleep(1500);
 				//system("pause");						 //}
 			}
@@ -3512,7 +3549,11 @@ void onePlayer()
 			
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
+<<<<<<< HEAD
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+=======
+				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
+>>>>>>> parent of 7585f27... Bug fixes
 				Sleep(1500);
 				//system("pause");						 //}
 			}
@@ -3546,7 +3587,11 @@ void onePlayer()
 			
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
+<<<<<<< HEAD
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+=======
+				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
+>>>>>>> parent of 7585f27... Bug fixes
 				Sleep(1500);
 				//system("pause");						 //}
 			}
@@ -4015,22 +4060,61 @@ void Options(int &difficulty)
 			cout << setw(69) << white << "4. Extreme (17 guesses;" << red << " ALL GUESSES MUST BE HITS)\n";
 			while (!valInput)
 			{
+<<<<<<< HEAD
 				cout << cyan << "Please selct a difficulty: ";
 				cin >> diffSelect;
 				if (diffSelect == 1)
 				{
 					valInput = true;
 					difficulty = 40;
+=======
+				cout << white << setw(67) << "1. Easy (40 guesses)\n";
+				cout << white << setw(69) << "2. Normal (30 guesses)\n";
+				cout << white << setw(67) << "3. Hard (20 guesses)\n";
+				cout << setw(69) << white << "4. Extreme (17 guesses;" << lightred << " ALL GUESSES MUST BE HITS" << white << ")\n";
+				cout << setw(65) << white << "5. Back to options\n";
+				
+				
+				cout << "Please selct a difficulty: ";
+				cin >> diffSelect;
+				if (diffSelect == 1)
+				{
+					difInput = true;
+					difficulty = 40;
+					cout << "Difficulty set to: " << lightred << "Easy" << endl << endl;
+					Sleep(2000);
+				}
+				else if (diffSelect == 2)
+				{
+					difInput = true;
+					difficulty = 30;
+					cout << "Difficulty set to: " << lightred << "Normal" << endl << endl;
+					Sleep(2000);
+>>>>>>> parent of 7585f27... Bug fixes
 				}
 				else if (diffSelect = 2)
 				{
+<<<<<<< HEAD
 					valInput = true;
 					difficulty = 30;
+=======
+					difInput = true;
+					difficulty = 20;
+					cout << "Difficulty set to: " << lightred << "Hard" << endl << endl;
+					Sleep(2000);
+>>>>>>> parent of 7585f27... Bug fixes
 				}
 				else if (diffSelect = 3)
 				{
+<<<<<<< HEAD
 					valInput = true;
 					difficulty = 20;
+=======
+					difInput = true;
+					difficulty = 17;
+					cout << "Difficulty set to: " << lightred << "Extreme" << endl << endl;
+					Sleep(2000);
+>>>>>>> parent of 7585f27... Bug fixes
 				}
 				else if (diffSelect = 4)
 				{
