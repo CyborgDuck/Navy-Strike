@@ -5,6 +5,8 @@
 /*DESCRIPTION: Final Project - Naval Strike a game based off of Battleship.  */
 //VERSION: 2017
 
+//displayblankTwo needs happy, and so does the functions that have it inside it. Erik 11/29/17 Classwork
+
 #define _WIN32_WINNT 0x0500 //Must have defined before Windows.h (Citation given on line 71)
 
 #include "stdafx.h"    // Precompiled Header
@@ -61,7 +63,7 @@ void secCoordOne(int&, bool&, string[][11]);
 bool refresh(int&, string[][11], string[][11], int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, string[][11], string[][11], string[][11], string[][11], string[][11], bool&, string[][11], string[][11]);
 void errorRefresh(bool&, bool&);
 void invalidInputRefresh();
-void displayBlankTwo(string[][11], string[][11]);
+void displayBlankTwo(string[][11], string[][11], bool&);
 void displayBlankOne(string[][11]);
 void displayMiss(int);
 void displayHit(int);
@@ -81,7 +83,7 @@ void battleshipHP(int&, int&, int&, int&, int&, int&, string[][11], string&);
 void carrierHP(int&, int&, int&, int&, int&, int&, int&, string[][11], string&);
 void shipDestroyed();
 
-void shipHPCounter(string[][11], string[][11]);
+void shipHPCounter(string[][11], string[][11], bool&);
 void displayBlankTwoa(string[][11], string[][11]);
 
 //ship Placement
@@ -2019,7 +2021,7 @@ void invalidInputRefresh()
 
 }
 
-void shipHPCounter(string board[][11], string shipsPlaced[][11])
+void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 {
 	//code in destHP etc to fill in here to point to the asci art on hits etc. Erik 11/29/17
 
@@ -2081,27 +2083,27 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11])
 		{
 			for (int x = 0; x < 11; x++)
 			{
-				if (board[y][x] == "X") // not counting correctly
+				if (board[y][x] == "X" && shipsPlaced[y][x] == "d") // not counting correctly
 				{
 					dCounter--;
 				}
 
-				if (board[y][x] == "X")
+				if (board[y][x] == "X" &&  shipsPlaced[y][x] == "s")
 				{
 					sCounter--;
 				}
 
-				if (board[y][x] == "X")
+				if (board[y][x] == "X" && shipsPlaced[y][x] == "c")
 				{
 					cCounter--;
 				}
 
-				if (board[y][x] == "X")
+				if (board[y][x] == "X" && shipsPlaced[y][x] == "b")
 				{
 					bCounter--;
 				}
 
-				if (board[y][x] == "X")
+				if (board[y][x] == "X" && shipsPlaced[y][x] == "a")
 				{
 					aCounter--;
 				}
@@ -2109,7 +2111,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11])
 		}
 	}
 	twoPlayerCounter++;
-	cout << twoPlayerCounter;
+	//cout << twoPlayerCounter;
 
 	
 	cout << setw(25) << white << "Destroyer: " << lightgreen << dCounter << white << "   Sub: " << lightgreen << sCounter << white << "   Cruiser: " << lightgreen << cCounter << white << "   Battleship: " << lightgreen << bCounter << white << "   Air-carrier: " << lightgreen << aCounter << endl;
@@ -2625,7 +2627,7 @@ bool happyPlacement(bool &happy, string shipsPlaced[][11], string board[][11])
 	string yesNo;
 
 	system("cls");
-	displayBlankTwo(board, shipsPlaced);
+	displayBlankTwo(board, shipsPlaced, happy);
 	cout << endl << endl << setw(65) << white << "Are you happy with your ships placement? (y/n): ";
 	cin >> yesNo;
 
@@ -3197,13 +3199,13 @@ void onePlayer()
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
-				Sleep(2000);						 //}
+				Sleep(1500);						 //}
 			}
 			if (blank[spaceOneNum][spaceTwo] == "X")
 			{
 				allShips++;
 				displayHit(count);
-				Sleep(2000);
+				Sleep(1500);
 			}
 
 			system("cls");
@@ -3716,7 +3718,7 @@ void displayBlankOne(string board[][11])
 }
 
 //2player
-void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string shipName[], int &count, string board[][11], string shipsPlaced[][11])
+void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string shipName[], int &count, string board[][11], string shipsPlaced[][11], bool &happy)
 {
 	//variables
 	const int ROWS = 11;
@@ -3731,7 +3733,7 @@ void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string 
 		do {
 			//board_intilization(spaceOneNum, spaceTwo);
 			system("cls");
-			displayBlankTwo(board, shipsPlaced); //board // lets you visualize the board when placing the ships cord on the X - ROWS axis
+			displayBlankTwo(board, shipsPlaced, happy); //board // lets you visualize the board when placing the ships cord on the X - ROWS axis
 			
 			cout << endl;
 			cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
@@ -3809,7 +3811,7 @@ void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipN
 		
 			system("cls");
 			//board_intilization(spaceOneNum, spaceTwo);
-			displayBlankTwo(board, shipsPlaced); //board // lets you visualize the board when placing the ships cord on the Y - COlS axis
+			displayBlankTwo(board, shipsPlaced, happy); //board // lets you visualize the board when placing the ships cord on the Y - COlS axis
 			
 			cout << endl;
 			cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
@@ -3843,7 +3845,7 @@ void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipN
 	
 }
 
-void displayBlankTwo(string board[][11], string shipsPlaced[][11])
+void displayBlankTwo(string board[][11], string shipsPlaced[][11], bool &happy)
 {
 
 	//board is catching shipsPlaced the board string is
@@ -3893,7 +3895,7 @@ void displayBlankTwo(string board[][11], string shipsPlaced[][11])
 	cout << setw(115) << darkgrey << div << endl;
 
 
-	shipHPCounter(board, shipsPlaced);
+	shipHPCounter(board, shipsPlaced, happy);
 
 }
 
@@ -3904,7 +3906,7 @@ void setPos(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, string &
 	do
 	{
 		system("cls");
-		displayBlankTwo(board, shipsPlaced);  //board
+		displayBlankTwo(board, shipsPlaced, happy);  //board
 		cout << endl;
 		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
 		cout << setw(75) << white << "How would you like to place your ship: (Up, Down, Left or Right) ";
