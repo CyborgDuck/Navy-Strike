@@ -53,8 +53,8 @@ int mainMenu(); //In order to display the main menu, and not the ENTIRE intro ev
 
 //void board_intilization();
 
-void onePlayer();
-void TwoPlayer();
+void onePlayer(int);
+void TwoPlayer(int);
 void Options(int&);
 void firstCoordOne(string, int&, string[][11], bool&);
 void firstCoordTwo(string, int&, bool&, string[], int&, string[][11], string[][11]); //Needed to change this to "firstCoordTwo" because you use more variables than Single Player
@@ -65,8 +65,8 @@ void errorRefresh(bool&, bool&);
 void invalidInputRefresh();
 void displayBlankTwo(string[][11], string[][11], bool&);
 void displayBlankOne(string[][11]);
-void displayMiss(int);
-void displayHit(int);
+void displayMiss(int, int);
+void displayHit(int, int);
 
 //movement positions.
 void setPos(int&, int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, string[][11], string[], bool&, string[][11]);
@@ -98,7 +98,7 @@ void boardRESET(string[][11]);
 
 //void cleaningSlate(string[][11]); //obsolete function Erik 11/28/17
 void playerTwoTakeOver();
-void missiles(string[][11], string[][11], string&, int&, int&, bool&);
+void missiles(string[][11], string[][11], string&, int&, int&, bool&, int);
 void firstMissileYAxis(string&, int&, string[][11], string[][11], int&, bool&);
 void secondMissileXAxis(int&, string[][11], string[][11], int&, bool&);
 
@@ -331,7 +331,7 @@ void intro(int &players)
 		Sleep(10);
 	}
 
-	cout << setw(65) << white << "Created By," << endl << setw(70) << "Erik, Tristan and Chuck" << endl << setw(65) << "Version 0.02" << endl; //update version count, for every day in class? we will be at 0.08 on Dec 6, 2017 	
+	cout << setw(65) << white << "Created By," << endl << setw(70) << "Erik, Tristan and Chuck" << endl << setw(65) << "Version 0.03" << endl; //update version count, for every day in class? we will be at 0.08 on Dec 6, 2017 	
 	for (int i = 0; i < 16; i++)
 	{
 		cout << endl;
@@ -346,7 +346,7 @@ void intro(int &players)
 int mainMenu()
 {
 	int players = 0;
-	int difficulty = 30; //How many guesses the player has before losing the game
+	static int difficulty = 50; //How many guesses the player has before losing the game
 	bool menuNumber = false;
 	//MENU
 
@@ -415,32 +415,18 @@ int mainMenu()
 
 	if (players == 1)//1 player vs ai.
 	{
-		//need to make a function to place the ship in a random location on the board.
-		//cout << "Look forward to this feature in a new update! We require an A.I. to hire, know any around?" << endl;
-		onePlayer();
-
-		//Sleep(3000);
-		//and back to intro(); until we decide to tackle that	
-		//system("cls");
-		//intro(); // ****game seems to break and default to press any key if going through the intro function more than once?**** why does it do this.
-
-		//OnePlayer();
+		onePlayer(difficulty);
 
 	}
 	else if (players == 2)//2 players - Primary Focus
 	{
 
-		TwoPlayer();
-		// need when the ship is being placed to be across more than one position on the board.
-		//Possible idea, a max amount of shots you can shoot before you lose? could also manipulate in options to unlimited or limited
+		TwoPlayer(difficulty);
 
 	}
 	else if (players == 3)//Options
 	{
-
-		// cout << "Future development is required here, look forward to changing colors of the game board!" << endl; colors and board size? we may be able to manipulate sound still looking into it.
 		Options(difficulty);
-
 	}
 	else
 	{
@@ -452,7 +438,7 @@ int mainMenu()
 	return players;
 }
 
-void TwoPlayer()
+void TwoPlayer(int difficulty)
 {
 	//Variables
 	string PlayerX;
@@ -782,7 +768,7 @@ void TwoPlayer()
 
 
 		playerTwoTakeOver();
-		missiles(board, shipsPlaced, spaceOne, spaceTwo, spaceOneNum, promptCheck);
+		missiles(board, shipsPlaced, spaceOne, spaceTwo, spaceOneNum, promptCheck, difficulty);
 
 
 
@@ -2015,9 +2001,9 @@ void invalidInputRefresh()
 {
 	system("cls");
 	cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
-	cout << setw(85) << red << "--------------------------" << endl;
-	cout << setw(85) << "Invalid input. Try again." << endl;
-	cout << setw(85) << "--------------------------" << endl;
+	cout << setw(75) << red << "--------------------------" << endl;
+	cout << setw(75) << "Invalid input. Try again." << endl;
+	cout << setw(75) << "--------------------------" << endl;
 
 }
 
@@ -2699,7 +2685,7 @@ void boardRESET(string shipsPlaced[][11])
 
 }*/
 
-void missiles(string board[][11], string shipsPlaced[][11], string &spaceOne, int &spaceTwo, int &spaceOneNum, bool &promptCheck)
+void missiles(string board[][11], string shipsPlaced[][11], string &spaceOne, int &spaceTwo, int &spaceOneNum, bool &promptCheck, int difficulty)
 {
 
 	//change 100 to difficulty base that into options then difficulty will equal easy, normal or hard and each of those will have their own variables.
@@ -2720,7 +2706,7 @@ void missiles(string board[][11], string shipsPlaced[][11], string &spaceOne, in
 
 		if (board[spaceOneNum][spaceTwo] == "O")
 		{
-			displayMiss(count);
+			displayMiss(count, difficulty);
 			Sleep(1500);
 		}
 	}
@@ -2860,25 +2846,31 @@ void secondMissileXAxis(int &spaceTwo, string board[][11], string shipsPlaced[][
 //up in the command prompt it may be because i missed a backslash
 //game over / you won! with x amount of shots left. time left? or with a total time.
 
-void displayHit(int count) // not set to anything yet.
+void displayHit(int count, int difficulty) // not set to anything yet.
 { 
-	/*((((
-	*)    ()\)  (*)     ((()\))\))\ )
-	` ) / ()\    (() / ()\)    (`) / ()\       )\  ()\      ((() / ((() / (((() / (
-	()(_))((((_)(/ (_))(() / ()\   ()(_)) ((((_)((((_))((_))\ / (_)) / (_)))\ / (_))
-	(_(_()))\ _)\ (_)) / (_))_((_)(_(_()))\ _)\)\___((_)_   _((_)(_)) (_)) ((_)(_))_
-	| _   _ | (_)_\(_) | _ \ (_)) __ || __ || _   _ | (_)_\(_)((/ __|/ _ \ | | | ||_ _ || _ \ | __ || \
-	| |     / _ \  |   /   | (_ || _|   | |      / _ \ | (__ | (_) || |_| | | | |   /| _| | |) |
-	|_|    /_ / \_\ | _ | _\    \___ || ___|  |_|     /_ / \_\   \___ | \__\_\ \___/ |___ || _ | _\ | ___ || ___ /
+	system("cls");
+	cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+	cout << setw(100) << yellow << "	                (                                                 (   (      (   " << endl;
+	cout << setw(100) << yellow << "  *   )   (     )\\ ) (           *   )     (       (    (         )\\ ))\\ )   )\\ )   " << endl;
+	cout << setw(100) << lightred << "` )  /(   )\\   (()/( )\\ )   (  ` )  /(     )\\      )\\ ( )\\     ( (()/(()/(( (()/(   " << endl;
+	cout << setw(100) << red << " ( )(_)|(((_)(  /(_)|()/(   )\\  ( )(_)) ((((_)(  (((_))((_)    )\\ /(_))(_))\\ /(_))  " << endl;
+	cout << setw(17) << red << "(" << white << "_" << red << "(" << white << "_" << red << "()) )\\ " << white << "_ " << red << ")\\(" << white << "_" << red << "))  /(" << white << "_" << red << "))" << white << "_" << red << "((" << white << "_" << red << ")(" << white << "_" << red << "(" << white << "_" << red << "())   )\\ " << white << "_ " << red << ")\\ )\\" << white << "__" << red << "((" << white << "_" << red << ")" << white << "_  _ " << red << "((" << white << "_" << red << "|" << white << "_" << red << "))(" << white << "_" << red << "))((" << white << "_" << red << "|" << white << "_" << red << "))" << white << "_   " << endl;
+	cout << setw(100) << "|_   _| (_)_\\(_) _ \\(_)) __| __|_   _|   (_)_\\(_|(/ __/ _ \\| | | |_ _| _ \\ __|   \\  " << endl;
+	cout << setw(100) << "  | |    / _ \\ |   /  | (_ | _|  | |      / _ \\  | (_| (_) | |_| || ||   / _|| |) | " << endl;
+	cout << setw(100) << "  |_|   /_/ \\_\\|_|_\\   \\___|___| |_|     /_/ \\_\\  \\___\\__\\_\\\\___/|___|_|_\\___|___/  " << endl;
+                                                                                    
+    
 
 
 	//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
+	count = (difficulty - 1) - count; // change 30 to 'difficulty' and adjust difficulty to amount of shots
 
-
-	*/
+	cout << endl << setw(54) << "You have, " << count << " shots left." << endl;
+	cout << endl << endl << endl << endl;
 }
 
-void displayMiss(int count) //Still unable to get displayed properly in command window
+
+void displayMiss(int count, int difficulty) //Still unable to get displayed properly in command window
 {
 	//collaberated on by both tristan and erik.
 	system("cls");
@@ -2892,7 +2884,7 @@ void displayMiss(int count) //Still unable to get displayed properly in command 
 	cout << setw(86) << "   |_| \\___/ \\___/  |_|  |_|___|____/____/|_____|____/ " << endl;
 
 	//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
-	count = 29 - count; // change 30 to 'difficulty' and adjust difficulty to amount of shots
+	count = (difficulty - 1) - count; // change 30 to 'difficulty' and adjust difficulty to amount of shots
 
 	cout << endl << setw(55) << "You have, " << count << " shots left." << endl;
 	cout << endl << endl << endl << endl;
@@ -3025,7 +3017,7 @@ void sinkSound()
 
 //=====================TRISTAN'S FUNCTIONS BELOW=========================================
 
-void onePlayer()
+void onePlayer(int difficulty)
 {
 	srand(time(NULL));
 	string div = "===============================================================================================================";
@@ -3175,10 +3167,10 @@ void onePlayer()
 									{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 									{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
-	//do
-	//{
-	random = 1; //(rand() % maxNum); 
-	//} while (random == 0);
+	do
+	{
+	random = (rand() % maxNum); 
+	} while (random == 0);
 
 	for (int count = 0; count < 3; count++)
 	{
@@ -3190,22 +3182,34 @@ void onePlayer()
 
 	if (random == 1)
 	{
-		for (int count = 0; count < 30; count++)
+		for (int count = 0; count < difficulty; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardOne[spaceOneNum][spaceTwo];
 
+<<<<<<< HEAD
 			if (blank[spaceOneNum][spaceTwo] == "O")     //}
 			{											// } //STILL CANNOT GET ASCII ART 
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
 				Sleep(1500);						 //}
+=======
+			if (blank[spaceOneNum][spaceTwo] == "O")    
+			{											
+				displayMiss(count, difficulty);			
+				Sleep(2000);						 
+>>>>>>> 17376e25cc987fa40450a37de0c66ffe166fd1c5
 			}
 			if (blank[spaceOneNum][spaceTwo] == "X")
 			{
 				allShips++;
+<<<<<<< HEAD
 				displayHit(count);
 				Sleep(1500);
+=======
+				displayHit(count, difficulty);
+				Sleep(2000);
+>>>>>>> 17376e25cc987fa40450a37de0c66ffe166fd1c5
 			}
 
 			system("cls");
@@ -3213,7 +3217,7 @@ void onePlayer()
 			if (allShips == 17)
 			{
 				system("cls");
-				count = 29;
+				count = difficulty - 1;
 				cout << white << "==========================================" << endl;
 				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << white << "==========================================" << endl;
@@ -3221,23 +3225,23 @@ void onePlayer()
 		}
 		if (allShips != 17)
 		{
-			cout << white << "=====================================" << endl;
-			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-			cout << white << "=====================================" << endl;
+			cout << setw(35) << white << "=====================" << endl;
+			cout << setw(35) << white << "TARGETS EVADED ATTACK\n" << setw(20) << red << "YOU LOSE" << endl;
+			cout << setw(35) << white << "=====================" << endl;
 		}
 	}
 
 	else if (random == 2)
 	{
-		for (int count = 0; count < 30; count++)
+		for (int count = 0; count < difficulty; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardTwo[spaceOneNum][spaceTwo];
 
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+			if (blank[spaceOneNum][spaceTwo] == "O")     
+			{											 
+				displayMiss(count, difficulty);
 				Sleep(1500);
 			}
 			
@@ -3247,7 +3251,7 @@ void onePlayer()
 			if (allShips == 17)
 			{
 				system("cls");
-				count = 29;
+				count = difficulty - 1;
 				cout << white << "==========================================" << endl;
 				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << white << "==========================================" << endl;
@@ -3262,17 +3266,16 @@ void onePlayer()
 	}
 	else if (random == 3)
 	{
-		for (int count = 0; count < 30; count++)
+		for (int count = 0; count < difficulty; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardThree[spaceOneNum][spaceTwo];
 
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count);		
-				Sleep(1500);							// }    //TO DISPLAY PROPERLY
-				//system("pause");						 //}
+			if (blank[spaceOneNum][spaceTwo] == "O")     
+			{											
+				displayMiss(count, difficulty);		
+				Sleep(1500);												 
 			}
 			
 			
@@ -3281,7 +3284,7 @@ void onePlayer()
 			if (allShips == 17)
 			{
 				system("cls");
-				count = 29;
+				count = difficulty - 1;
 				cout << white << "==========================================" << endl;
 				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << white << "==========================================" << endl;
@@ -3296,17 +3299,16 @@ void onePlayer()
 	}
 	else if (random == 4)
 	{
-		for (int count = 0; count < 30; count++)
+		for (int count = 0; count < difficulty; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardFour[spaceOneNum][spaceTwo];
 
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count);
-				Sleep(1500);							// }    //TO DISPLAY PROPERLY
-				//system("pause");						 //}
+			if (blank[spaceOneNum][spaceTwo] == "O")
+			{											
+				displayMiss(count, difficulty);
+				Sleep(1500);							
 			}
 			
 			
@@ -3315,7 +3317,7 @@ void onePlayer()
 			if (allShips == 17)
 			{
 				system("cls");
-				count = 29;
+				count = difficulty - 1;
 				cout << white << "==========================================" << endl;
 				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << white << "==========================================" << endl;
@@ -3330,17 +3332,16 @@ void onePlayer()
 	}
 	else if (random == 5)
 	{
-		for (int count = 0; count < 30; count++)
+		for (int count = 0; count < difficulty; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardFive[spaceOneNum][spaceTwo];
 
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count);
-				Sleep(1500);								// }    //TO DISPLAY PROPERLY
-				//system("pause");						 //}
+			if (blank[spaceOneNum][spaceTwo] == "O")    
+			{											
+				displayMiss(count, difficulty);
+				Sleep(1500);								
 			}
 			
 			
@@ -3349,7 +3350,7 @@ void onePlayer()
 			if (allShips == 17)
 			{
 				system("cls");
-				count = 29;
+				count = difficulty - 1;
 				cout << white << "==========================================" << endl;
 				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << white << "==========================================" << endl;
@@ -3364,17 +3365,16 @@ void onePlayer()
 	}
 	else if (random == 6)
 	{
-		for (int count = 0; count < 30; count++)
+		for (int count = 0; count < difficulty; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardSix[spaceOneNum][spaceTwo];
 			
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+			if (blank[spaceOneNum][spaceTwo] == "O")    
+			{											
+				displayMiss(count, difficulty);			
 				Sleep(1500);
-				//system("pause");						 //}
 			}
 			
 			
@@ -3383,7 +3383,7 @@ void onePlayer()
 			if (allShips == 17)
 			{
 				system("cls");
-				count = 29;
+				count = difficulty - 1;
 				cout << white << "==========================================" << endl;
 				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << white << "==========================================" << endl;
@@ -3398,17 +3398,16 @@ void onePlayer()
 	}
 	else if (random == 7)
 	{
-		for (int count = 0; count < 30; count++)
+		for (int count = 0; count < difficulty; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardSeven[spaceOneNum][spaceTwo];
 			
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+			if (blank[spaceOneNum][spaceTwo] == "O")
+			{										
+				displayMiss(count, difficulty);			
 				Sleep(1500);
-				//system("pause");						 //}
 			}
 			
 			
@@ -3417,7 +3416,7 @@ void onePlayer()
 			if (allShips == 17)
 			{
 				system("cls");
-				count = 29;
+				count = difficulty - 1;
 				cout << white << "==========================================" << endl;
 				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << white << "==========================================" << endl;
@@ -3432,17 +3431,17 @@ void onePlayer()
 	}
 	else if (random == 8)
 	{
-		for (int count = 0; count < 30; count++)
+		for (int count = 0; count < difficulty; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardEight[spaceOneNum][spaceTwo];
 			
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+			if (blank[spaceOneNum][spaceTwo] == "O")     
+			{											
+				displayMiss(count, difficulty);			
 				Sleep(1500);
-				//system("pause");						 //}
+				
 			}
 			
 			
@@ -3451,7 +3450,7 @@ void onePlayer()
 			if (allShips == 17)
 			{
 				system("cls");
-				count = 29;
+				count = difficulty - 1;
 				cout << white << "==========================================" << endl;
 				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << white << "==========================================" << endl;
@@ -3466,17 +3465,16 @@ void onePlayer()
 	}
 	else if (random == 9)
 	{
-		for (int count = 0; count < 30; count++)
+		for (int count = 0; count < difficulty; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardNine[spaceOneNum][spaceTwo];
 			
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+			if (blank[spaceOneNum][spaceTwo] == "O")
+			{											
+				displayMiss(count, difficulty);							
 				Sleep(1500);
-				//system("pause");						 //}
 			}
 			
 			
@@ -3485,7 +3483,7 @@ void onePlayer()
 			if (allShips == 17)
 			{
 				system("cls");
-				count = 29;
+				count = difficulty - 1;
 				cout << white << "==========================================" << endl;
 				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << white << "==========================================" << endl;
@@ -3500,17 +3498,16 @@ void onePlayer()
 	}
 	else if (random == 10)
 	{
-		for (int count = 0; count < 30; count++)
+		for (int count = 0; count < difficulty; count++)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardTen[spaceOneNum][spaceTwo];
 			
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count);							// }    //TO DISPLAY PROPERLY
+			if (blank[spaceOneNum][spaceTwo] == "O")
+			{											
+				displayMiss(count, difficulty);			
 				Sleep(1500);
-				//system("pause");						 //}
 			}
 			
 			
@@ -3519,7 +3516,7 @@ void onePlayer()
 			if (allShips == 17)
 			{
 				system("cls");
-				count = 29;
+				count = difficulty - 1;
 				cout << white << "==========================================" << endl;
 				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << white << "==========================================" << endl;
@@ -3698,6 +3695,10 @@ void displayBlankOne(string board[][11])
 			else if (board[i][s] == "d" || board[i][s] == "s" || board[i][s] == "c" || board[i][s] == "b" || board[i][s] == "a")
 			{
 				cout << setw(5) << lightgreen << board[i][s] << setw(5) << darkgrey << "|"; // using lightgreen, magneta looked bright as well. I want something that is visible and seperate from the border text
+			}
+			else if (board[i][s] == "~")
+			{
+				cout << setw(5) << lightcyan << board[i][s] << setw(5) << darkgrey << "|";
 			}
 			else
 			{
@@ -3955,53 +3956,74 @@ void Options(int &difficulty)
 {
 	bool exitInput = false;
 	bool valInput = false;
+	bool difInput = false;
 	int optionSelect;
 	int diffSelect;
 
+	system("cls");
 
-	cout << cyan;
-	cout << setw(72) << "WELCOME TO THE OPTIONS SCREEN" << endl;
-	cout << setw(67) << "1. Change Difficulty" << endl;
-	cout << setw(67) << "4. Back to main menu" << endl;
 
 	while (!exitInput)
 	{
+		system("cls");
+		cout << white;
+		cout << setw(72) << "WELCOME TO THE OPTIONS SCREEN" << endl;
+		cout << setw(72) << "-----------------------------" << endl;
+		cout << setw(67) << "1. Change Difficulty" << endl;
+		cout << setw(67) << "4. Back to main menu" << endl;
 
 		cout << "Please choose 1-*: ";
 		cin >> optionSelect;
 		if (optionSelect == 1)
 		{
-			cout << white << setw(67) << "1. Easy (40 guesses)\n";
-			cout << white << setw(69) << "2. Normal (30 guesses)\n";
-			cout << white << setw(67) << "3. Hard (20 guesses)\n";
-			cout << setw(69) << white << "4. Extreme (17 guesses;" << red << " ALL GUESSES MUST BE HITS)\n";
-			while (!valInput)
+			while(!difInput)
 			{
-				cout << cyan << "Please selct a difficulty: ";
+				cout << white << setw(67) << "1. Easy (70 guesses)\n";
+				cout << white << setw(69) << "2. Normal (50 guesses)\n";
+				cout << white << setw(67) << "3. Hard (30 guesses)\n";
+				cout << setw(69) << white << "4. Extreme (20 guesses;" << lightred << " ALL GUESSES MUST BE HITS" << white << ")\n";
+				cout << setw(65) << white << "5. Back to options\n";
+				
+				
+				cout << "Please selct a difficulty: ";
 				cin >> diffSelect;
 				if (diffSelect == 1)
 				{
-					valInput = true;
-					difficulty = 40;
+					difInput = true;
+					difficulty = 70;
+					cout << "Difficulty set to: " << lightred << "Easy" << endl << endl;
+					Sleep(2000);
 				}
-				else if (diffSelect = 2)
+				else if (diffSelect == 2)
 				{
-					valInput = true;
+					difInput = true;
+					difficulty = 50;
+					cout << "Difficulty set to: " << lightred << "Normal" << endl << endl;
+					Sleep(2000);
+				}
+				else if (diffSelect == 3)
+				{
+					difInput = true;
 					difficulty = 30;
+					cout << "Difficulty set to: " << lightred << "Hard" << endl << endl;
+					Sleep(2000);
 				}
-				else if (diffSelect = 3)
+				else if (diffSelect == 4)
 				{
-					valInput = true;
+					difInput = true;
 					difficulty = 20;
+					cout << "Difficulty set to: " << lightred << "Extreme" << endl << endl;
+					Sleep(2000);
 				}
-				else if (diffSelect = 4)
+				else if (diffSelect == 5)
 				{
-					valInput = true;
-					difficulty = 17;
+					Options(difficulty);
 				}
 				else
 				{
 					invalidInputRefresh();
+					Sleep(2000);
+					system("cls");
 				}
 			}
 		}
