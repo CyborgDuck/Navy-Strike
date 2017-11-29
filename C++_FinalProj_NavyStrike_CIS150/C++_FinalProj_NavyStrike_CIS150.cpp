@@ -3689,6 +3689,10 @@ void displayBlankOne(string board[][11])
 			{
 				cout << setw(5) << lightgreen << board[i][s] << setw(5) << darkgrey << "|"; // using lightgreen, magneta looked bright as well. I want something that is visible and seperate from the border text
 			}
+			else if (board[i][s] == "~")
+			{
+				cout << setw(5) << lightcyan << board[i][s] << setw(5) << darkgrey << "|";
+			}
 			else
 			{
 				cout << setw(5) << cyan << board[i][s] << setw(5) << darkgrey << "|";
