@@ -3199,6 +3199,7 @@ void onePlayer()
 				displayMiss(count);							// }    //TO DISPLAY PROPERLY
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				Sleep(1500);						 //}
 <<<<<<< HEAD
 =======
@@ -3215,11 +3216,15 @@ void onePlayer()
 >>>>>>> parent of f1c9178... counter to work
 =======
 >>>>>>> parent of 60b35dd... Merge branch 'master' of https://github.com/CyborgDuck/navy-strike
+=======
+				Sleep(2000);						 //}
+>>>>>>> parent of f1c9178... counter to work
 			}
 			if (blank[spaceOneNum][spaceTwo] == "X")
 			{
 				allShips++;
 				displayHit(count);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 				Sleep(1500);
@@ -3236,6 +3241,9 @@ void onePlayer()
 >>>>>>> parent of f1c9178... counter to work
 =======
 >>>>>>> parent of 60b35dd... Merge branch 'master' of https://github.com/CyborgDuck/navy-strike
+=======
+				Sleep(2000);
+>>>>>>> parent of f1c9178... counter to work
 			}
 
 			system("cls");
