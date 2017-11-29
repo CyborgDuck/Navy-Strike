@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿  stdafx.cpp
   C++_FinalProj_NavyStrike_CIS150.cpp
 c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(10): warning C4603: '_WIN32_WINNT': macro is not defined or definition is different after precompiled header use
@@ -36,6 +37,8 @@ c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis
   c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(3021): note: this line contains a '{' which has not yet been matched
 c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(3021): fatal error C1075: the left brace '{' was unmatched at the end of the file
 =======
+=======
+>>>>>>> parent of 60b35dd... Merge branch 'master' of https://github.com/CyborgDuck/navy-strike
 ﻿  C++_FinalProj_NavyStrike_CIS150.cpp
 c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(8): warning C4603: '_WIN32_WINNT': macro is not defined or definition is different after precompiled header use
   c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(8): note: Add macro to precompiled header instead of defining here
@@ -45,4 +48,7 @@ c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis
 c:\users\eenglish13820\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(1925): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\eenglish13820\Documents\GitHub\navy-strike\x64\Debug\C++_FinalProj_NavyStrike_CIS150.exe
   C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\eenglish13820\Documents\GitHub\navy-strike\x64\Debug\C++_FinalProj_NavyStrike_CIS150.pdb (Partial PDB)
+<<<<<<< HEAD
 >>>>>>> parent of f1c9178... counter to work
+=======
+>>>>>>> parent of 60b35dd... Merge branch 'master' of https://github.com/CyborgDuck/navy-strike
