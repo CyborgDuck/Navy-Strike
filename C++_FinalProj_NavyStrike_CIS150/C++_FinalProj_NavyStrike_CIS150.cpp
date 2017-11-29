@@ -344,7 +344,7 @@ void intro(int &players)
 int mainMenu()
 {
 	int players = 0;
-	static int difficulty = 30; //How many guesses the player has before losing the game
+	static int difficulty = 50; //How many guesses the player has before losing the game
 	bool menuNumber = false;
 	//MENU
 
@@ -3165,10 +3165,10 @@ void onePlayer(int difficulty)
 									{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 									{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
-	//do
-	//{
-	random = 1; //(rand() % maxNum); 
-	//} while (random == 0);
+	do
+	{
+	random = (rand() % maxNum); 
+	} while (random == 0);
 
 	for (int count = 0; count < 3; count++)
 	{
@@ -3186,10 +3186,10 @@ void onePlayer(int difficulty)
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardOne[spaceOneNum][spaceTwo];
 
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
-				Sleep(2000);						 //}
+			if (blank[spaceOneNum][spaceTwo] == "O")    
+			{											
+				displayMiss(count, difficulty);			
+				Sleep(2000);						 
 			}
 			if (blank[spaceOneNum][spaceTwo] == "X")
 			{
@@ -3225,9 +3225,9 @@ void onePlayer(int difficulty)
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardTwo[spaceOneNum][spaceTwo];
 
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
+			if (blank[spaceOneNum][spaceTwo] == "O")     
+			{											 
+				displayMiss(count, difficulty);
 				Sleep(1500);
 			}
 			
@@ -3258,11 +3258,10 @@ void onePlayer(int difficulty)
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardThree[spaceOneNum][spaceTwo];
 
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
+			if (blank[spaceOneNum][spaceTwo] == "O")     
+			{											
 				displayMiss(count, difficulty);		
-				Sleep(1500);							// }    //TO DISPLAY PROPERLY
-				//system("pause");						 //}
+				Sleep(1500);												 
 			}
 			
 			
@@ -3292,11 +3291,10 @@ void onePlayer(int difficulty)
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardFour[spaceOneNum][spaceTwo];
 
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
+			if (blank[spaceOneNum][spaceTwo] == "O")
+			{											
 				displayMiss(count, difficulty);
-				Sleep(1500);							// }    //TO DISPLAY PROPERLY
-				//system("pause");						 //}
+				Sleep(1500);							
 			}
 			
 			
@@ -3326,11 +3324,10 @@ void onePlayer(int difficulty)
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardFive[spaceOneNum][spaceTwo];
 
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
+			if (blank[spaceOneNum][spaceTwo] == "O")    
+			{											
 				displayMiss(count, difficulty);
-				Sleep(1500);								// }    //TO DISPLAY PROPERLY
-				//system("pause");						 //}
+				Sleep(1500);								
 			}
 			
 			
@@ -3360,11 +3357,10 @@ void onePlayer(int difficulty)
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardSix[spaceOneNum][spaceTwo];
 			
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
+			if (blank[spaceOneNum][spaceTwo] == "O")    
+			{											
+				displayMiss(count, difficulty);			
 				Sleep(1500);
-				//system("pause");						 //}
 			}
 			
 			
@@ -3394,11 +3390,10 @@ void onePlayer(int difficulty)
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardSeven[spaceOneNum][spaceTwo];
 			
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
+			if (blank[spaceOneNum][spaceTwo] == "O")
+			{										
+				displayMiss(count, difficulty);			
 				Sleep(1500);
-				//system("pause");						 //}
 			}
 			
 			
@@ -3428,11 +3423,11 @@ void onePlayer(int difficulty)
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardEight[spaceOneNum][spaceTwo];
 			
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
+			if (blank[spaceOneNum][spaceTwo] == "O")     
+			{											
+				displayMiss(count, difficulty);			
 				Sleep(1500);
-				//system("pause");						 //}
+				
 			}
 			
 			
@@ -3462,11 +3457,10 @@ void onePlayer(int difficulty)
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardNine[spaceOneNum][spaceTwo];
 			
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
+			if (blank[spaceOneNum][spaceTwo] == "O")
+			{											
+				displayMiss(count, difficulty);							
 				Sleep(1500);
-				//system("pause");						 //}
 			}
 			
 			
@@ -3496,11 +3490,10 @@ void onePlayer(int difficulty)
 			secCoordOne(spaceTwo, promptCheck, blank);
 			blank[spaceOneNum][spaceTwo] = boardTen[spaceOneNum][spaceTwo];
 			
-			if (blank[spaceOneNum][spaceTwo] == "O")     //}
-			{											// } //STILL CANNOT GET ASCII ART 
-				displayMiss(count, difficulty);							// }    //TO DISPLAY PROPERLY
+			if (blank[spaceOneNum][spaceTwo] == "O")
+			{											
+				displayMiss(count, difficulty);			
 				Sleep(1500);
-				//system("pause");						 //}
 			}
 			
 			
@@ -3971,10 +3964,10 @@ void Options(int &difficulty)
 		{
 			while(!difInput)
 			{
-				cout << white << setw(67) << "1. Easy (40 guesses)\n";
-				cout << white << setw(69) << "2. Normal (30 guesses)\n";
-				cout << white << setw(67) << "3. Hard (20 guesses)\n";
-				cout << setw(69) << white << "4. Extreme (17 guesses;" << lightred << " ALL GUESSES MUST BE HITS" << white << ")\n";
+				cout << white << setw(67) << "1. Easy (70 guesses)\n";
+				cout << white << setw(69) << "2. Normal (50 guesses)\n";
+				cout << white << setw(67) << "3. Hard (30 guesses)\n";
+				cout << setw(69) << white << "4. Extreme (20 guesses;" << lightred << " ALL GUESSES MUST BE HITS" << white << ")\n";
 				cout << setw(65) << white << "5. Back to options\n";
 				
 				
@@ -3983,28 +3976,28 @@ void Options(int &difficulty)
 				if (diffSelect == 1)
 				{
 					difInput = true;
-					difficulty = 40;
+					difficulty = 70;
 					cout << "Difficulty set to: " << lightred << "Easy" << endl << endl;
 					Sleep(2000);
 				}
 				else if (diffSelect == 2)
 				{
 					difInput = true;
-					difficulty = 30;
+					difficulty = 50;
 					cout << "Difficulty set to: " << lightred << "Normal" << endl << endl;
 					Sleep(2000);
 				}
 				else if (diffSelect == 3)
 				{
 					difInput = true;
-					difficulty = 20;
+					difficulty = 30;
 					cout << "Difficulty set to: " << lightred << "Hard" << endl << endl;
 					Sleep(2000);
 				}
 				else if (diffSelect == 4)
 				{
 					difInput = true;
-					difficulty = 17;
+					difficulty = 20;
 					cout << "Difficulty set to: " << lightred << "Extreme" << endl << endl;
 					Sleep(2000);
 				}
