@@ -3204,26 +3204,28 @@ void onePlayer(int difficulty)
 				{
 					shipsPlaced[spaceOneNum][spaceTwo] = "X";
 				}
-				if (shipsPlaced[spaceOneNum][spaceTwo] == "X")
+				
+				if (shipsPlaced[spaceOneNum][spaceTwo] == "X" && blank[spaceOneNum][spaceTwo] != "X")
 				{
-
-					if (blank[spaceOneNum][spaceTwo] == "~")
-					{
-						hitCheck = true;
-						allShips++;
-						displayHit(count, difficulty);
-						Sleep(2000);
-					}
-					else if (blank[spaceOneNum][spaceTwo] == "X")
-					{
-						cout << red << "THIS SPACE HAS ALREADY BEEN HIT" << endl;
-						Sleep(2000);
-					}
+					hitCheck = true;
+					allShips++;
+					displayHit(count, difficulty);
+					Sleep(2000);
+				}					
+				else if (blank[spaceOneNum][spaceTwo] == "X" || blank[spaceOneNum][spaceTwo] == "O")
+				{
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(77) << red << "===================================" << endl;
+					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
+					cout << setw(77) << "===================================" << endl;						
+					Sleep(2000);
 				}
-				else if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+				else
 				{
 					hitCheck = true;
 				}
+				
 			} while (!hitCheck);
 
 				blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
