@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  C++_FinalProj_NavyStrike_CIS150.cpp
 c:\users\tludwig33344\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(8): warning C4603: '_WIN32_WINNT': macro is not defined or definition is different after precompiled header use
   c:\users\tludwig33344\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(8): note: Add macro to precompiled header instead of defining here
@@ -7,3 +8,7 @@ c:\users\tludwig33344\documents\github\navy-strike\c++_finalproj_navystrike_cis1
 c:\users\tludwig33344\documents\github\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(3020): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\tludwig33344\Documents\GitHub\navy-strike\x64\Debug\C++_FinalProj_NavyStrike_CIS150.exe
   C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\tludwig33344\Documents\GitHub\navy-strike\x64\Debug\C++_FinalProj_NavyStrike_CIS150.pdb (Partial PDB)
+=======
+﻿  C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\eenglish13820\Documents\GitHub\navy-strike\x64\Debug\C++_FinalProj_NavyStrike_CIS150.exe
+  C++_FinalProj_NavyStrike_CIS150.vcxproj -> C:\Users\eenglish13820\Documents\GitHub\navy-strike\x64\Debug\C++_FinalProj_NavyStrike_CIS150.pdb (Partial PDB)
+>>>>>>> f196f5ed6cb77f8ede1acc501e73fda21f7af65e

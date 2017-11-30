@@ -2067,27 +2067,27 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11])
 		{
 			for (int x = 0; x < 11; x++)
 			{
-				if (board[y][x] == "X") // not counting correctly
+				if (board[y][x] == "X" && shipsPlaced[y][x] == "d") // not counting correctly
 				{
 					dCounter--;
 				}
 
-				if (board[y][x] == "X")
+				if (board[y][x] == "X" &&  shipsPlaced[y][x] == "s")
 				{
 					sCounter--;
 				}
 
-				if (board[y][x] == "X")
+				if (board[y][x] == "X" && shipsPlaced[y][x] == "c")
 				{
 					cCounter--;
 				}
 
-				if (board[y][x] == "X")
+				if (board[y][x] == "X" && shipsPlaced[y][x] == "b")
 				{
 					bCounter--;
 				}
 
-				if (board[y][x] == "X")
+				if (board[y][x] == "X" && shipsPlaced[y][x] == "a")
 				{
 					aCounter--;
 				}
