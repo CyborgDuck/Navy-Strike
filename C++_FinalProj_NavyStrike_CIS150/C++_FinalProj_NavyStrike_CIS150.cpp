@@ -3021,6 +3021,7 @@ void onePlayer(int difficulty)
 	string div = "===============================================================================================================";
 	string between = "---------------------------------------------------------------------------------------------------------------";
 	bool promptCheck = false;
+	bool hitCheck = false;
 	const int size = 11;
 	string spaceOne = " "; //letter that player enters for coordinate 1
 	int spaceTwo = 0;    //Number that player enters for coordinate 2
@@ -3045,86 +3046,98 @@ void onePlayer(int difficulty)
 	{ "I",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
 	{ "J",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" } };
 
-	string boardOne[11][11] = { { " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-	{ "A",  "X" , "O" , "O" , "O" , "O" , "X" , "X" , "X" , "O" , "O" },
-	{ "B",  "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "C",  "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "D",  "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "E",  "O" , "O" , "X" , "O" , "X" , "X" , "X" , "X" , "X" , "O" },
+	string shipsPlaced[11][11] = { { " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+	{ "A",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "B",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "C",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "D",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "E",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "F",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "G",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "H",  "O" , "X" , "X" , "X" , "X" , "O" , "O" , "O" , "O" , "O" },
+	{ "H",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "I",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "J",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
+
+	string boardOne[11][11] = { { " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
+	{ "A",  "d" , "O" , "O" , "O" , "O" , "s" , "s" , "s" , "O" , "O" },
+	{ "B",  "d" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "C",  "O" , "O" , "c" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "D",  "O" , "O" , "c" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "E",  "O" , "O" , "c" , "O" , "a" , "a" , "a" , "a" , "a" , "O" },
+	{ "F",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "G",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "H",  "O" , "b" , "b" , "b" , "b" , "O" , "O" , "O" , "O" , "O" },
 	{ "I",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "J",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
 	string boardTwo[11][11] = { { " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-	{ "A", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
-	{ "B", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
-	{ "C", "O" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "O" , "O" }, //C3-5 is a 3-spot ship
-	{ "D", "O" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "E", "O" , "X" , "O" , "O" , "O" , "X" , "X" , "X" , "X" , "O" },
-	{ "F", "O" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "A", "O" , "O" , "O" , "O" , "d" , "O" , "O" , "O" , "O" , "O" },
+	{ "B", "O" , "O" , "O" , "O" , "d" , "O" , "O" , "O" , "O" , "O" },
+	{ "C", "O" , "O" , "c" , "c" , "c" , "O" , "O" , "O" , "O" , "O" }, //C3-5 is a 3-spot ship
+	{ "D", "O" , "s" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "E", "O" , "s" , "O" , "O" , "O" , "b" , "b" , "b" , "b" , "O" },
+	{ "F", "O" , "s" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "G", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "I", "O" , "O" , "X" , "X" , "X" , "X" , "X" , "O" , "O" , "O" },
+	{ "I", "O" , "O" , "a" , "a" , "a" , "a" , "a" , "O" , "O" , "O" },
 	{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
 	string boardThree[11][11] = { { " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
 	{ "A", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "B", "O" , "O" , "O" , "O" , "O" , "X" , "X" , "X" , "O" , "O" },
-	{ "C", "O" , "X" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "B", "O" , "O" , "O" , "O" , "O" , "c" , "c" , "c" , "O" , "O" },
+	{ "C", "O" , "d" , "d" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "D", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "E", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" },
-	{ "F", "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" },
-	{ "G", "X" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "X" , "O" },
-	{ "H", "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" },
-	{ "I", "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" },
+	{ "E", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "a" , "O" },
+	{ "F", "b" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "a" , "O" },
+	{ "G", "b" , "O" , "s" , "s" , "s" , "O" , "O" , "O" , "a" , "O" },
+	{ "H", "b" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "a" , "O" },
+	{ "I", "b" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "a" , "O" },
 	{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
 	string boardFour[11][11] = { { " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-	{ "A", "O" , "X" , "X" , "X" , "X" , "X" , "O" , "O" , "O" , "O" },
+	{ "A", "O" , "a" , "a" , "a" , "a" , "a" , "O" , "O" , "O" , "O" },
 	{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "C", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "D", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" },
-	{ "E", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" },
-	{ "F", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" },
-	{ "G", "O" , "O" , "O" , "X" , "X" , "X" , "O" , "X" , "O" , "O" },
-	{ "H", "O" , "O" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "O" },
+	{ "D", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "b" , "O" , "O" },
+	{ "E", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "b" , "O" , "O" },
+	{ "F", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "b" , "O" , "O" },
+	{ "G", "O" , "O" , "O" , "s" , "s" , "s" , "O" , "b" , "O" , "O" },
+	{ "H", "O" , "O" , "O" , "c" , "c" , "c" , "O" , "O" , "O" , "O" },
 	{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "J", "X" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
+	{ "J", "d" , "d" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
 	string boardFive[11][11] = { { " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-	{ "A", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "X" , "O" },
-	{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "X" , "O" },
-	{ "C", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "X" , "O" },
+	{ "A", "O" , "O" , "O" , "O" , "O" , "O" , "s" , "O" , "c" , "O" },
+	{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "s" , "O" , "c" , "O" },
+	{ "C", "O" , "O" , "O" , "O" , "O" , "O" , "s" , "O" , "c" , "O" },
 	{ "D", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "E", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
-	{ "F", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
+	{ "E", "O" , "O" , "O" , "O" , "d" , "O" , "O" , "O" , "O" , "O" },
+	{ "F", "O" , "O" , "O" , "O" , "d" , "O" , "O" , "O" , "O" , "O" },
 	{ "G", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "I", "O" , "O" , "O" , "O" , "O" , "X" , "X" , "X" , "X" , "O" },
-	{ "J", "O" , "X" , "X" , "X" , "X" , "X" , "O" , "O" , "O" , "O" } };
+	{ "I", "O" , "O" , "O" , "O" , "O" , "b" , "b" , "b" , "b" , "O" },
+	{ "J", "O" , "a" , "a" , "a" , "a" , "a" , "O" , "O" , "O" , "O" } };
 
 	string boardSix[11][11] = { { " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-	{ "A", "O" , "O" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "X" },
-	{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "X" },
-	{ "C", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "X" },
-	{ "D", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "X" },
-	{ "E", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
-	{ "F", "X" , "X" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
-	{ "G", "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" , "O" , "O" },
+	{ "A", "O" , "O" , "O" , "s" , "s" , "s" , "O" , "O" , "O" , "b" },
+	{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "b" },
+	{ "C", "O" , "O" , "O" , "O" , "a" , "O" , "O" , "O" , "O" , "b" },
+	{ "D", "O" , "O" , "O" , "O" , "a" , "O" , "O" , "O" , "O" , "b" },
+	{ "E", "O" , "O" , "O" , "O" , "a" , "O" , "O" , "O" , "O" , "O" },
+	{ "F", "d" , "d" , "O" , "O" , "a" , "O" , "O" , "O" , "O" , "O" },
+	{ "G", "O" , "O" , "O" , "O" , "a" , "O" , "O" , "O" , "O" , "O" },
 	{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "J", "X" , "X" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
+	{ "J", "c" , "c" , "c" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
 	string boardSeven[11][11] = { { " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
 	{ "A", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "B", "O" , "O" , "X" , "X" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "C", "O" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "O" , "O" },
-	{ "D", "O" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "O" , "O" },
+	{ "B", "O" , "O" , "s" , "c" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "C", "O" , "O" , "s" , "c" , "d" , "O" , "O" , "O" , "O" , "O" },
+	{ "D", "O" , "O" , "s" , "c" , "d" , "O" , "O" , "O" , "O" , "O" },
 	{ "E", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "F", "O" , "O" , "X" , "X" , "X" , "X" , "O" , "O" , "O" , "O" },
-	{ "G", "O" , "O" , "X" , "X" , "X" , "X" , "X" , "O" , "O" , "O" },
+	{ "F", "O" , "O" , "b" , "b" , "b" , "b" , "O" , "O" , "O" , "O" },
+	{ "G", "O" , "O" , "a" , "a" , "a" , "a" , "a" , "O" , "O" , "O" },
 	{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
@@ -3132,43 +3145,43 @@ void onePlayer(int difficulty)
 	string boardEight[11][11] = { { " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
 	{ "A", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "C", "O" , "X" , "X" , "O" , "O" , "O" , "X" , "X" , "X" , "X" },
-	{ "D", "O" , "X" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "E", "O" , "X" , "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "F", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" },
-	{ "G", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" },
-	{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" },
-	{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "X" , "O" , "O" , "O" },
-	{ "J", "O" , "O" , "X" , "X" , "O" , "O" , "X" , "O" , "O" , "O" } };
+	{ "C", "O" , "s" , "c" , "O" , "O" , "O" , "b" , "b" , "b" , "b" },
+	{ "D", "O" , "s" , "c" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "E", "O" , "s" , "c" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "F", "O" , "O" , "O" , "O" , "O" , "O" , "a" , "O" , "O" , "O" },
+	{ "G", "O" , "O" , "O" , "O" , "O" , "O" , "a" , "O" , "O" , "O" },
+	{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "a" , "O" , "O" , "O" },
+	{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "a" , "O" , "O" , "O" },
+	{ "J", "O" , "O" , "d" , "d" , "O" , "O" , "a" , "O" , "O" , "O" } };
 
 	string boardNine[11][11] = { { " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-	{ "A", "O" , "O" , "O" , "X" , "X" , "O" , "O" , "O" , "O" , "O" },
+	{ "A", "O" , "O" , "O" , "d" , "d" , "O" , "O" , "O" , "O" , "O" },
 	{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "C", "X" , "O" , "O" , "X" , "X" , "X" , "O" , "O" , "O" , "O" },
-	{ "D", "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "E", "X" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "F", "O" , "O" , "X" , "X" , "X" , "X" , "X" , "O" , "O" , "O" },
+	{ "C", "c" , "O" , "O" , "s" , "s" , "s" , "O" , "O" , "O" , "O" },
+	{ "D", "c" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "E", "c" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
+	{ "F", "O" , "O" , "a" , "a" , "a" , "a" , "a" , "O" , "O" , "O" },
 	{ "G", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "I", "O" , "O" , "X" , "X" , "X" , "X" , "O" , "O" , "O" , "O" },
+	{ "I", "O" , "O" , "b" , "b" , "b" , "b" , "O" , "O" , "O" , "O" },
 	{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
 	string boardTen[11][11] = { { " ", "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-	{ "A", "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" }, // 2, 3, 5 
+	{ "A", "d" , "d" , "s" , "s" , "s" , "a" , "a" , "a" , "a" , "a" }, // 2, 3, 5 
 	{ "B", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "C", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "D", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "E", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-	{ "F", "O" , "O" , "X" , "X" , "X" , "O" , "X" , "X" , "X" , "X" },
+	{ "F", "O" , "O" , "c" , "c" , "c" , "O" , "b" , "b" , "b" , "b" },
 	{ "G", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
-	do
-	{
-		random = (rand() % maxNum);
-	} while (random == 0);
+	//do
+	//{
+	random = 1; //(rand() % maxNum);
+	//} while (random == 0);
 
 	for (int count = 0; count < 3; count++)
 	{
@@ -3182,21 +3195,45 @@ void onePlayer(int difficulty)
 	{
 		for (int count = 0; count < difficulty; count++)
 		{
-			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoordOne(spaceTwo, promptCheck, blank);
-			blank[spaceOneNum][spaceTwo] = boardOne[spaceOneNum][spaceTwo];
+			do
+			{
+				hitCheck = false;
+				firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+				secCoordOne(spaceTwo, promptCheck, blank);
+				if (boardOne[spaceOneNum][spaceTwo] == "d" || boardOne[spaceOneNum][spaceTwo] == "c" || boardOne[spaceOneNum][spaceTwo] == "s" || boardOne[spaceOneNum][spaceTwo] == "b" || boardOne[spaceOneNum][spaceTwo] == "a")
+				{
+					shipsPlaced[spaceOneNum][spaceTwo] = "X";
+				}
+				if (shipsPlaced[spaceOneNum][spaceTwo] == "X")
+				{
 
-			if (blank[spaceOneNum][spaceTwo] == "O")
-			{
-				displayMiss(count, difficulty);
-				Sleep(2000);
-			}
-			if (blank[spaceOneNum][spaceTwo] == "X")
-			{
-				allShips++;
-				displayHit(count, difficulty);
-				Sleep(2000);
-			}
+					if (blank[spaceOneNum][spaceTwo] == "~")
+					{
+						hitCheck = true;
+						allShips++;
+						displayHit(count, difficulty);
+						Sleep(2000);
+					}
+					else if (blank[spaceOneNum][spaceTwo] == "X")
+					{
+						cout << red << "THIS SPACE HAS ALREADY BEEN HIT" << endl;
+						Sleep(2000);
+					}
+				}
+				else if (shipsPlaced[spaceOneNum][spaceTwo] == "O")
+				{
+					hitCheck = true;
+				}
+			} while (!hitCheck);
+
+				blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
+
+				if (blank[spaceOneNum][spaceTwo] == "O")
+				{
+					displayMiss(count, difficulty);
+					Sleep(2000);
+				}
+				
 
 			system("cls");
 			displayBlankOne(blank);
@@ -3221,14 +3258,25 @@ void onePlayer(int difficulty)
 	{
 		for (int count = 0; count < difficulty; count++)
 		{
+			
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
-			blank[spaceOneNum][spaceTwo] = boardTwo[spaceOneNum][spaceTwo];
+			if (boardTwo[spaceOneNum][spaceTwo] == "d" || boardTwo[spaceOneNum][spaceTwo] == "c" || boardTwo[spaceOneNum][spaceTwo] == "s" || boardTwo[spaceOneNum][spaceTwo] == "b" || boardTwo[spaceOneNum][spaceTwo] == "a")
+			{
+				shipsPlaced[spaceOneNum][spaceTwo] = "X";
+			}
+			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
 			{
 				displayMiss(count, difficulty);
 				Sleep(1500);
+			}
+			if (blank[spaceOneNum][spaceTwo] == "X")
+			{
+				allShips++;
+				displayHit(count, difficulty);
+				Sleep(2000);
 			}
 
 
@@ -3256,12 +3304,22 @@ void onePlayer(int difficulty)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
-			blank[spaceOneNum][spaceTwo] = boardThree[spaceOneNum][spaceTwo];
+			if (boardThree[spaceOneNum][spaceTwo] == "d" || boardThree[spaceOneNum][spaceTwo] == "c" || boardThree[spaceOneNum][spaceTwo] == "s" || boardThree[spaceOneNum][spaceTwo] == "b" || boardThree[spaceOneNum][spaceTwo] == "a")
+			{
+				shipsPlaced[spaceOneNum][spaceTwo] = "X";
+			}
+			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
 			{
 				displayMiss(count, difficulty);
 				Sleep(1500);
+			}
+			if (blank[spaceOneNum][spaceTwo] == "X")
+			{
+				allShips++;
+				displayHit(count, difficulty);
+				Sleep(2000);
 			}
 
 
@@ -3289,12 +3347,22 @@ void onePlayer(int difficulty)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
-			blank[spaceOneNum][spaceTwo] = boardFour[spaceOneNum][spaceTwo];
+			if (boardFour[spaceOneNum][spaceTwo] == "d" || boardFour[spaceOneNum][spaceTwo] == "c" || boardFour[spaceOneNum][spaceTwo] == "s" || boardFour[spaceOneNum][spaceTwo] == "b" || boardFour[spaceOneNum][spaceTwo] == "a")
+			{
+				shipsPlaced[spaceOneNum][spaceTwo] = "X";
+			}
+			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
 			{
 				displayMiss(count, difficulty);
 				Sleep(1500);
+			}
+			if (blank[spaceOneNum][spaceTwo] == "X")
+			{
+				allShips++;
+				displayHit(count, difficulty);
+				Sleep(2000);
 			}
 
 
@@ -3322,12 +3390,22 @@ void onePlayer(int difficulty)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
-			blank[spaceOneNum][spaceTwo] = boardFive[spaceOneNum][spaceTwo];
+			if (boardFive[spaceOneNum][spaceTwo] == "d" || boardFive[spaceOneNum][spaceTwo] == "c" || boardFive[spaceOneNum][spaceTwo] == "s" || boardFive[spaceOneNum][spaceTwo] == "b" || boardFive[spaceOneNum][spaceTwo] == "a")
+			{
+				shipsPlaced[spaceOneNum][spaceTwo] = "X";
+			}
+			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
 			{
 				displayMiss(count, difficulty);
 				Sleep(1500);
+			}
+			if (blank[spaceOneNum][spaceTwo] == "X")
+			{
+				allShips++;
+				displayHit(count, difficulty);
+				Sleep(2000);
 			}
 
 
@@ -3355,12 +3433,22 @@ void onePlayer(int difficulty)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
-			blank[spaceOneNum][spaceTwo] = boardSix[spaceOneNum][spaceTwo];
+			if (boardSix[spaceOneNum][spaceTwo] == "d" || boardSix[spaceOneNum][spaceTwo] == "c" || boardSix[spaceOneNum][spaceTwo] == "s" || boardSix[spaceOneNum][spaceTwo] == "b" || boardSix[spaceOneNum][spaceTwo] == "a")
+			{
+				shipsPlaced[spaceOneNum][spaceTwo] = "X";
+			}
+			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
 			{
 				displayMiss(count, difficulty);
 				Sleep(1500);
+			}
+			if (blank[spaceOneNum][spaceTwo] == "X")
+			{
+				allShips++;
+				displayHit(count, difficulty);
+				Sleep(2000);
 			}
 
 
@@ -3388,12 +3476,22 @@ void onePlayer(int difficulty)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
-			blank[spaceOneNum][spaceTwo] = boardSeven[spaceOneNum][spaceTwo];
+			if (boardSeven[spaceOneNum][spaceTwo] == "d" || boardSeven[spaceOneNum][spaceTwo] == "c" || boardSeven[spaceOneNum][spaceTwo] == "s" || boardSeven[spaceOneNum][spaceTwo] == "b" || boardSeven[spaceOneNum][spaceTwo] == "a")
+			{
+				shipsPlaced[spaceOneNum][spaceTwo] = "X";
+			}
+			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
 			{
 				displayMiss(count, difficulty);
 				Sleep(1500);
+			}
+			if (blank[spaceOneNum][spaceTwo] == "X")
+			{
+				allShips++;
+				displayHit(count, difficulty);
+				Sleep(2000);
 			}
 
 
@@ -3421,13 +3519,22 @@ void onePlayer(int difficulty)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
-			blank[spaceOneNum][spaceTwo] = boardEight[spaceOneNum][spaceTwo];
+			if (boardEight[spaceOneNum][spaceTwo] == "d" || boardEight[spaceOneNum][spaceTwo] == "c" || boardEight[spaceOneNum][spaceTwo] == "s" || boardEight[spaceOneNum][spaceTwo] == "b" || boardEight[spaceOneNum][spaceTwo] == "a")
+			{
+				shipsPlaced[spaceOneNum][spaceTwo] = "X";
+			}
+			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
 			{
 				displayMiss(count, difficulty);
 				Sleep(1500);
-
+			}
+			if (blank[spaceOneNum][spaceTwo] == "X")
+			{
+				allShips++;
+				displayHit(count, difficulty);
+				Sleep(2000);
 			}
 
 
@@ -3455,12 +3562,22 @@ void onePlayer(int difficulty)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
-			blank[spaceOneNum][spaceTwo] = boardNine[spaceOneNum][spaceTwo];
+			if (boardNine[spaceOneNum][spaceTwo] == "d" || boardNine[spaceOneNum][spaceTwo] == "c" || boardNine[spaceOneNum][spaceTwo] == "s" || boardNine[spaceOneNum][spaceTwo] == "b" || boardNine[spaceOneNum][spaceTwo] == "a")
+			{
+				shipsPlaced[spaceOneNum][spaceTwo] = "X";
+			}
+			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
 			{
 				displayMiss(count, difficulty);
 				Sleep(1500);
+			}
+			if (blank[spaceOneNum][spaceTwo] == "X")
+			{
+				allShips++;
+				displayHit(count, difficulty);
+				Sleep(2000);
 			}
 
 
@@ -3488,12 +3605,22 @@ void onePlayer(int difficulty)
 		{
 			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
 			secCoordOne(spaceTwo, promptCheck, blank);
+			if (boardTen[spaceOneNum][spaceTwo] == "d" || boardTen[spaceOneNum][spaceTwo] == "c" || boardTen[spaceOneNum][spaceTwo] == "s" || boardTen[spaceOneNum][spaceTwo] == "b" || boardTen[spaceOneNum][spaceTwo] == "a")
+			{
+				shipsPlaced[spaceOneNum][spaceTwo] = "X";
+			}
 			blank[spaceOneNum][spaceTwo] = boardTen[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
 			{
 				displayMiss(count, difficulty);
 				Sleep(1500);
+			}
+			if (blank[spaceOneNum][spaceTwo] == "X")
+			{
+				allShips++;
+				displayHit(count, difficulty);
+				Sleep(2000);
 			}
 
 
