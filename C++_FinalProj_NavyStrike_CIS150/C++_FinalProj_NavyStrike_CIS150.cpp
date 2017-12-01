@@ -53,9 +53,9 @@ int mainMenu(); //In order to display the main menu, and not the ENTIRE intro ev
 				//void board_intilization();
 void placeShipsPlayerOne();
 
-void onePlayer(int);
+void onePlayer(int, int, bool);
 void TwoPlayer(int);
-void Options(int&);
+void Options(int&, int&, bool&);
 void firstCoordOne(string, int&, string[][11], bool&);
 void firstCoordTwo(string, int&, bool&, string[], int&, string[][11], string[][11], bool&); //Needed to change this to "firstCoordTwo" because you use more variables than Single Player
 void secCoord(int&, bool&, string[][11], string[], int&, string[][11], bool&);
@@ -99,6 +99,7 @@ void boardRESET(string[][11]);
 
 //void cleaningSlate(string[][11]); //obsolete function Erik 11/28/17
 void playerTwoTakeOver();
+void singlePlayerTakeOver();
 void missiles(string[][11], string[][11], string&, int&, int&, bool&, int&, bool&);
 void firstMissileYAxis(string&, int&, string[][11], string[][11], int&, bool&, bool&, int&);
 void secondMissileXAxis(int&, string[][11], string[][11], int&, bool&, bool&, int&);
@@ -350,6 +351,8 @@ int mainMenu()
 {
 	int players = 0;
 	static int difficulty = 50; //How many guesses the player has before losing the game
+	static int boardNum;
+	static bool boardChoose = false;
 	bool menuNumber = false;
 	//MENU
 
@@ -434,7 +437,7 @@ int mainMenu()
 
 	if (players == 1)//1 player vs ai.
 	{
-		onePlayer(difficulty);
+		onePlayer(difficulty, boardNum, boardChoose);
 
 	}
 	else if (players == 2)//2 players - Primary Focus
@@ -445,7 +448,7 @@ int mainMenu()
 	}
 	else if (players == 3)//Options
 	{
-		Options(difficulty);
+		Options(difficulty, boardNum, boardChoose);
 	}
 	else
 	{
@@ -2007,9 +2010,9 @@ void errorRefresh(bool &validInput, bool &continu3)
 {
 	system("cls");
 	cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
-	cout << setw(85) << lightred << "-----------------------------------------------" << endl;
-	cout << setw(85) << "Theirs a ship here already, redo your ship placement." << endl;
-	cout << setw(85) << "-----------------------------------------------" << endl;
+	cout << setw(85) << lightred << "---------------------------------" << endl;
+	cout << setw(85) <<	"You can not place your ship here." << endl;
+	cout << setw(85) <<	"---------------------------------" << endl;
 	Sleep(1500);
 	validInput = false;
 	continu3 = false;
@@ -3198,7 +3201,7 @@ void placeShipsPlayerOne()
 		cout << endl << endl << endl << endl << endl << endl << endl << endl;
 		cout << setw(40) << white << "Mission Report:                  " << date << endl;
 		cout << darkgrey <<"===========================================================" << endl;
-		cout << white << "Captain, this area will be a rough area to navigate through, " << endl;
+		cout << white << "Captain, this area will be a rough one to navigate through, " << endl;
 		cout << white << "there have been scout reports of enemy activity in the area." << endl;
 		cout << white << "Make sure you place your ships so that they will take the " << endl;
 		cout << white << "least amount of damage." << endl;
@@ -3253,7 +3256,7 @@ void sinkSound()
 
 //=====================TRISTAN'S FUNCTIONS BELOW=========================================
 
-void onePlayer(int difficulty)
+void onePlayer(int difficulty, int boardNum, bool boardChoose)
 {
 	srand(time(NULL));
 	string div = "===============================================================================================================";
@@ -3420,11 +3423,20 @@ void onePlayer(int difficulty)
 								{ "H", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 								{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 								{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
+	singlePlayerTakeOver();
 
-	do
+	if (boardChoose)
 	{
-	random = (rand() % maxNum);
-	} while (random == 0);
+		random = boardNum;
+	}
+
+	else if (!boardChoose)
+	{
+		do
+		{
+			random = (rand() % maxNum);
+		} while (random == 0);
+	}
 
 	for (int count = 0; count < 3; count++)
 	{
@@ -4583,15 +4595,51 @@ void HPsystemOne(string board[][11], string shipsPlaced[][11], int& dCounter, in
 		}
 	}
 
+void singlePlayerTakeOver() //Simply taken from Erik's function and deleted the word "two" after "Waiting for player " line
+{
+	string readyStatus;
+	bool notReady = false;
+
+	//http://www.cplusplus.com/forum/beginner/6397/ wanted to use current date in the mission report found this. user: Corpus
+	char date[9];
+	_strdate(date);
+
+	do
+	{
+		system("cls");
+		cout << endl << endl << endl << endl << endl << endl << endl << endl;
+		cout << setw(40) << white << "Mission Report:                  " << date << endl;
+		cout << left << darkgrey << "======================================================" << endl;
+		cout << left << white << "There are five enemy ships about to enter your border." << endl;
+		cout << left << white << "Set a trap for them." << endl;
+		cout << left << white << "Don't let them escape!" << endl;
+		cout << left << white << "                                  Admiral Gial Ackbar~" << endl;
+		cout << left << darkgrey << "======================================================" << endl;
+		cout << endl << endl << endl << endl << endl << endl << endl << endl;
+		cout << setw(75) << right << white << "Waiting for player to enter, 'Ready' " << endl << endl;
+		cout << setw(55) << right << "Enter: ";
+		cin >> readyStatus;
+		if (readyStatus == "Ready" || readyStatus == "ready" || readyStatus == "r" || readyStatus == "R")
+		{
+			notReady = true;
+		}
+
+	} while (notReady == false);
+
+	cout << endl;
+	system("cls");
+	// beat your last time, score or change message, Erik 11/29/17
+
+}
 
 
 
-
-void Options(int &difficulty)
+void Options(int &difficulty, int& boardNum, bool& boardChoose)
 {
 	bool exitInput = false;
 	bool valInput = false;
 	bool difInput = false;
+	bool boardInput = false;
 	int optionSelect;
 	int diffSelect;
 
@@ -4605,6 +4653,7 @@ void Options(int &difficulty)
 		cout << setw(72) << "WELCOME TO THE OPTIONS SCREEN" << endl;
 		cout << setw(72) << "-----------------------------" << endl;
 		cout << setw(67) << "1. Change Difficulty" << endl;
+		cout << setw(67) << "2. Set Board Number " << endl;
 		cout << setw(67) << "4. Back to main menu" << endl;
 
 		cout << "Please choose 1-4: ";
@@ -4613,10 +4662,11 @@ void Options(int &difficulty)
 		{
 			while (!difInput)
 			{
+				system("cls");
 				cout << white << setw(67) << "1. Easy (70 guesses)\n";
 				cout << white << setw(69) << "2. Normal (50 guesses)\n";
 				cout << white << setw(67) << "3. Hard (30 guesses)\n";
-				cout << setw(69) << white << "4. Extreme (20 guesses;" << lightred << " ALL GUESSES MUST BE HITS" << white << ")\n";
+				cout << setw(70) << white << "4. Extreme (20 guesses)\n";
 				cout << setw(65) << white << "5. Back to options\n";
 
 
@@ -4652,13 +4702,34 @@ void Options(int &difficulty)
 				}
 				else if (diffSelect == 5)
 				{
-					Options(difficulty);
+					Options(difficulty, boardNum, boardChoose);
 				}
 				else
 				{
 					invalidInputRefresh();
 					Sleep(2000);
 					system("cls");
+				}
+			}
+		}
+		else if (optionSelect == 2)
+		{
+			while (!boardInput)
+			{
+				cout << endl << endl << endl << white << "Enter the board number you wish to play on " << lightred << "(SINGLE-PLAYER ONLY): " << white;
+				cin >> boardNum;
+				if (boardNum > 10 || boardNum < 1)
+				{
+					invalidInputRefresh();
+					Sleep(2000);
+					system("cls");
+				}
+				else
+				{
+					cout << endl << "Board number set to: " << lightred << boardNum << endl;
+					Sleep(2000);
+					boardChoose = true;
+					boardInput = true;
 				}
 			}
 		}
