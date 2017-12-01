@@ -82,6 +82,7 @@ void carrierHP(int&, int&, int&, int&, int&, int&, int&, string[][11], string&);
 void shipDestroyed();
 
 void shipHPCounter(string[][11], string[][11]);
+void HPsystemOne(string[][11], string[][11], int&, int&, int&, int&, int&, int, int);
 void displayBlankTwoa(string[][11], string[][11]);
 
 //ship Placement
@@ -126,7 +127,7 @@ int main()
 
 				//board_intilization(); //board intilization will go into the functions OnePlayer(), TwoPlayer() // board intilization is completely replaced with, displayBlank.
 
-	cout << lightgreen << endl;
+	cout << white << endl << endl << endl;
 	system("pause");
 	return 0;
 }
@@ -3030,6 +3031,11 @@ void onePlayer(int difficulty)
 	int maxNum = 10;     //Setting the random number not to exceed 10
 	int allShips = 0;    //Variable used to count how many hits have been detected. There are a total of 17 hits before all ships are sunk. So, if this number reaches 17, the game is won. Most likely a placeholder for whenever we get
 						 //Hit detection properly
+	int dCounter = 2;//}
+	int sCounter = 3;//}
+	int cCounter = 3;//} COUNTERS FOR SINGLE PLAYER HP-SYSTEM
+	int bCounter = 4;//}
+	int aCounter = 5;//}
 	bool validInput = false; //Making sure their guess stays within bounds of the board
 
 							 //int shotsLeft = 30; see its in 'count'
@@ -3178,10 +3184,10 @@ void onePlayer(int difficulty)
 	{ "I", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
 	{ "J", "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
 
-	//do
-	//{
-	random = 1; //(rand() % maxNum);
-	//} while (random == 0);
+	do
+	{
+	random = (rand() % maxNum);
+	} while (random == 0);
 
 	for (int count = 0; count < 3; count++)
 	{
@@ -3211,6 +3217,7 @@ void onePlayer(int difficulty)
 					allShips++;
 					displayHit(count, difficulty);
 					Sleep(2000);
+					HPsystemOne(boardOne, shipsPlaced, dCounter, sCounter, cCounter, bCounter, aCounter, spaceOneNum, spaceTwo);
 				}					
 				else if (blank[spaceOneNum][spaceTwo] == "X" || blank[spaceOneNum][spaceTwo] == "O")
 				{
@@ -3243,15 +3250,16 @@ void onePlayer(int difficulty)
 			{
 				system("cls");
 				count = difficulty - 1;
-				cout << white << "==========================================" << endl;
-				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
-				cout << white << "==========================================" << endl;
+				cout << endl << endl << endl << endl << endl << endl;
+				cout << setw(70) << lightgreen << "==========================================" << endl;
+				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << setw(70) << "==========================================" << endl;
 			}
 		}
 		if (allShips != 17)
 		{
 			cout << setw(35) << white << "=====================" << endl;
-			cout << setw(35) << white << "TARGETS EVADED ATTACK\n" << setw(20) << red << "YOU LOSE" << endl;
+			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
 			cout << setw(35) << white << "=====================" << endl;
 		}
 	}
@@ -3260,13 +3268,39 @@ void onePlayer(int difficulty)
 	{
 		for (int count = 0; count < difficulty; count++)
 		{
-			
-			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoordOne(spaceTwo, promptCheck, blank);
-			if (boardTwo[spaceOneNum][spaceTwo] == "d" || boardTwo[spaceOneNum][spaceTwo] == "c" || boardTwo[spaceOneNum][spaceTwo] == "s" || boardTwo[spaceOneNum][spaceTwo] == "b" || boardTwo[spaceOneNum][spaceTwo] == "a")
+			do
 			{
-				shipsPlaced[spaceOneNum][spaceTwo] = "X";
-			}
+				hitCheck = false;
+				firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+				secCoordOne(spaceTwo, promptCheck, blank);
+				if (boardTwo[spaceOneNum][spaceTwo] == "d" || boardTwo[spaceOneNum][spaceTwo] == "c" || boardTwo[spaceOneNum][spaceTwo] == "s" || boardTwo[spaceOneNum][spaceTwo] == "b" || boardTwo[spaceOneNum][spaceTwo] == "a")
+				{
+					shipsPlaced[spaceOneNum][spaceTwo] = "X";
+				}
+			
+				if (shipsPlaced[spaceOneNum][spaceTwo] == "X" && blank[spaceOneNum][spaceTwo] != "X")
+				{
+					hitCheck = true;
+					allShips++;
+					displayHit(count, difficulty);
+					Sleep(2000);
+					HPsystemOne(boardTwo, shipsPlaced, dCounter, sCounter, cCounter, bCounter, aCounter, spaceOneNum, spaceTwo);
+				}
+				else if (blank[spaceOneNum][spaceTwo] == "X" || blank[spaceOneNum][spaceTwo] == "O")
+				{
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(77) << red << "===================================" << endl;
+					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
+					cout << setw(77) << "===================================" << endl;
+					Sleep(2000);
+				}
+				else
+				{
+					hitCheck = true;
+				}
+
+			} while (!hitCheck);
 			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
@@ -3274,12 +3308,7 @@ void onePlayer(int difficulty)
 				displayMiss(count, difficulty);
 				Sleep(1500);
 			}
-			if (blank[spaceOneNum][spaceTwo] == "X")
-			{
-				allShips++;
-				displayHit(count, difficulty);
-				Sleep(2000);
-			}
+			
 
 
 			system("cls");
@@ -3288,41 +3317,63 @@ void onePlayer(int difficulty)
 			{
 				system("cls");
 				count = difficulty - 1;
-				cout << white << "==========================================" << endl;
-				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
-				cout << white << "==========================================" << endl;
+				cout << endl << endl << endl << endl << endl << endl;
+				cout << setw(70) << lightgreen << "==========================================" << endl;
+				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << setw(70) << "==========================================" << endl;
 			}
 		}
 		if (allShips != 17)
 		{
-			cout << white << "=====================================" << endl;
-			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-			cout << white << "=====================================" << endl;
+			cout << setw(35) << white << "=====================" << endl;
+			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
+			cout << setw(35) << white << "=====================" << endl;
 		}
 	}
 	else if (random == 3)
 	{
 		for (int count = 0; count < difficulty; count++)
 		{
-			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoordOne(spaceTwo, promptCheck, blank);
-			if (boardThree[spaceOneNum][spaceTwo] == "d" || boardThree[spaceOneNum][spaceTwo] == "c" || boardThree[spaceOneNum][spaceTwo] == "s" || boardThree[spaceOneNum][spaceTwo] == "b" || boardThree[spaceOneNum][spaceTwo] == "a")
+			do
 			{
-				shipsPlaced[spaceOneNum][spaceTwo] = "X";
-			}
-			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
+				hitCheck = false;
+				firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+				secCoordOne(spaceTwo, promptCheck, blank);
+				if (boardThree[spaceOneNum][spaceTwo] == "d" || boardThree[spaceOneNum][spaceTwo] == "c" || boardThree[spaceOneNum][spaceTwo] == "s" || boardThree[spaceOneNum][spaceTwo] == "b" || boardThree[spaceOneNum][spaceTwo] == "a")
+				{
+					shipsPlaced[spaceOneNum][spaceTwo] = "X";
+				}
+				if (shipsPlaced[spaceOneNum][spaceTwo] == "X" && blank[spaceOneNum][spaceTwo] != "X")
+				{
+					hitCheck = true;
+					allShips++;
+					displayHit(count, difficulty);
+					Sleep(2000);
+					HPsystemOne(boardThree, shipsPlaced, dCounter, sCounter, cCounter, bCounter, aCounter, spaceOneNum, spaceTwo);
+				}
+				else if (blank[spaceOneNum][spaceTwo] == "X" || blank[spaceOneNum][spaceTwo] == "O")
+				{
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(77) << red << "===================================" << endl;
+					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
+					cout << setw(77) << "===================================" << endl;
+					Sleep(2000);
+				}
+				else
+				{
+					hitCheck = true;
+				}
 
+			} while (!hitCheck);
+
+			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 			if (blank[spaceOneNum][spaceTwo] == "O")
 			{
 				displayMiss(count, difficulty);
 				Sleep(1500);
 			}
-			if (blank[spaceOneNum][spaceTwo] == "X")
-			{
-				allShips++;
-				displayHit(count, difficulty);
-				Sleep(2000);
-			}
+			
 
 
 			system("cls");
@@ -3331,28 +3382,55 @@ void onePlayer(int difficulty)
 			{
 				system("cls");
 				count = difficulty - 1;
-				cout << white << "==========================================" << endl;
-				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
-				cout << white << "==========================================" << endl;
+				cout << endl << endl << endl << endl << endl << endl;
+				cout << setw(70) << lightgreen << "==========================================" << endl;
+				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << setw(70) << "==========================================" << endl;
 			}
 		}
 		if (allShips != 17)
 		{
-			cout << white << "=====================================" << endl;
-			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-			cout << white << "=====================================" << endl;
+			cout << setw(35) << white << "=====================" << endl;
+			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
+			cout << setw(35) << white << "=====================" << endl;
 		}
 	}
 	else if (random == 4)
 	{
 		for (int count = 0; count < difficulty; count++)
 		{
-			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoordOne(spaceTwo, promptCheck, blank);
-			if (boardFour[spaceOneNum][spaceTwo] == "d" || boardFour[spaceOneNum][spaceTwo] == "c" || boardFour[spaceOneNum][spaceTwo] == "s" || boardFour[spaceOneNum][spaceTwo] == "b" || boardFour[spaceOneNum][spaceTwo] == "a")
+			do
 			{
-				shipsPlaced[spaceOneNum][spaceTwo] = "X";
-			}
+				hitCheck = false;
+				firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+				secCoordOne(spaceTwo, promptCheck, blank);
+				if (boardFour[spaceOneNum][spaceTwo] == "d" || boardFour[spaceOneNum][spaceTwo] == "c" || boardFour[spaceOneNum][spaceTwo] == "s" || boardFour[spaceOneNum][spaceTwo] == "b" || boardFour[spaceOneNum][spaceTwo] == "a")
+				{
+					shipsPlaced[spaceOneNum][spaceTwo] = "X";
+				}
+				if (shipsPlaced[spaceOneNum][spaceTwo] == "X" && blank[spaceOneNum][spaceTwo] != "X")
+				{
+					hitCheck = true;
+					allShips++;
+					displayHit(count, difficulty);
+					Sleep(2000);
+					HPsystemOne(boardFour, shipsPlaced, dCounter, sCounter, cCounter, bCounter, aCounter, spaceOneNum, spaceTwo);
+				}
+				else if (blank[spaceOneNum][spaceTwo] == "X" || blank[spaceOneNum][spaceTwo] == "O")
+				{
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(77) << red << "===================================" << endl;
+					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
+					cout << setw(77) << "===================================" << endl;
+					Sleep(2000);
+				}
+				else
+				{
+					hitCheck = true;
+				}
+
+			} while (!hitCheck);
 			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
@@ -3360,12 +3438,7 @@ void onePlayer(int difficulty)
 				displayMiss(count, difficulty);
 				Sleep(1500);
 			}
-			if (blank[spaceOneNum][spaceTwo] == "X")
-			{
-				allShips++;
-				displayHit(count, difficulty);
-				Sleep(2000);
-			}
+			
 
 
 			system("cls");
@@ -3374,28 +3447,55 @@ void onePlayer(int difficulty)
 			{
 				system("cls");
 				count = difficulty - 1;
-				cout << white << "==========================================" << endl;
-				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
-				cout << white << "==========================================" << endl;
+				cout << endl << endl << endl << endl << endl << endl;
+				cout << setw(70) << lightgreen << "==========================================" << endl;
+				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << setw(70) << "==========================================" << endl;
 			}
 		}
 		if (allShips != 17)
 		{
-			cout << white << "=====================================" << endl;
-			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-			cout << white << "=====================================" << endl;
+			cout << setw(35) << white << "=====================" << endl;
+			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
+			cout << setw(35) << white << "=====================" << endl;
 		}
 	}
 	else if (random == 5)
 	{
 		for (int count = 0; count < difficulty; count++)
 		{
-			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoordOne(spaceTwo, promptCheck, blank);
-			if (boardFive[spaceOneNum][spaceTwo] == "d" || boardFive[spaceOneNum][spaceTwo] == "c" || boardFive[spaceOneNum][spaceTwo] == "s" || boardFive[spaceOneNum][spaceTwo] == "b" || boardFive[spaceOneNum][spaceTwo] == "a")
+			do
 			{
-				shipsPlaced[spaceOneNum][spaceTwo] = "X";
-			}
+				hitCheck = false;
+				firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+				secCoordOne(spaceTwo, promptCheck, blank);
+				if (boardFive[spaceOneNum][spaceTwo] == "d" || boardFive[spaceOneNum][spaceTwo] == "c" || boardFive[spaceOneNum][spaceTwo] == "s" || boardFive[spaceOneNum][spaceTwo] == "b" || boardFive[spaceOneNum][spaceTwo] == "a")
+				{
+					shipsPlaced[spaceOneNum][spaceTwo] = "X";
+				}
+				if (shipsPlaced[spaceOneNum][spaceTwo] == "X" && blank[spaceOneNum][spaceTwo] != "X")
+				{
+					hitCheck = true;
+					allShips++;
+					displayHit(count, difficulty);
+					Sleep(2000);
+					HPsystemOne(boardFive, shipsPlaced, dCounter, sCounter, cCounter, bCounter, aCounter, spaceOneNum, spaceTwo);
+				}
+				else if (blank[spaceOneNum][spaceTwo] == "X" || blank[spaceOneNum][spaceTwo] == "O")
+				{
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(77) << red << "===================================" << endl;
+					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
+					cout << setw(77) << "===================================" << endl;
+					Sleep(2000);
+				}
+				else
+				{
+					hitCheck = true;
+				}
+
+			} while (!hitCheck);
 			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
@@ -3403,12 +3503,7 @@ void onePlayer(int difficulty)
 				displayMiss(count, difficulty);
 				Sleep(1500);
 			}
-			if (blank[spaceOneNum][spaceTwo] == "X")
-			{
-				allShips++;
-				displayHit(count, difficulty);
-				Sleep(2000);
-			}
+			
 
 
 			system("cls");
@@ -3417,28 +3512,55 @@ void onePlayer(int difficulty)
 			{
 				system("cls");
 				count = difficulty - 1;
-				cout << white << "==========================================" << endl;
-				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
-				cout << white << "==========================================" << endl;
+				cout << endl << endl << endl << endl << endl << endl;
+				cout << setw(70) << lightgreen << "==========================================" << endl;
+				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << setw(70) << "==========================================" << endl;
 			}
 		}
 		if (allShips != 17)
 		{
-			cout << white << "=====================================" << endl;
-			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-			cout << white << "=====================================" << endl;
+			cout << setw(35) << white << "=====================" << endl;
+			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
+			cout << setw(35) << white << "=====================" << endl;
 		}
 	}
 	else if (random == 6)
 	{
 		for (int count = 0; count < difficulty; count++)
 		{
-			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoordOne(spaceTwo, promptCheck, blank);
-			if (boardSix[spaceOneNum][spaceTwo] == "d" || boardSix[spaceOneNum][spaceTwo] == "c" || boardSix[spaceOneNum][spaceTwo] == "s" || boardSix[spaceOneNum][spaceTwo] == "b" || boardSix[spaceOneNum][spaceTwo] == "a")
+			do
 			{
-				shipsPlaced[spaceOneNum][spaceTwo] = "X";
-			}
+				hitCheck = false;
+				firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+				secCoordOne(spaceTwo, promptCheck, blank);
+				if (boardSix[spaceOneNum][spaceTwo] == "d" || boardSix[spaceOneNum][spaceTwo] == "c" || boardSix[spaceOneNum][spaceTwo] == "s" || boardSix[spaceOneNum][spaceTwo] == "b" || boardSix[spaceOneNum][spaceTwo] == "a")
+				{
+					shipsPlaced[spaceOneNum][spaceTwo] = "X";
+				}
+				if (shipsPlaced[spaceOneNum][spaceTwo] == "X" && blank[spaceOneNum][spaceTwo] != "X")
+				{
+					hitCheck = true;
+					allShips++;
+					displayHit(count, difficulty);
+					Sleep(2000);
+					HPsystemOne(boardSix, shipsPlaced, dCounter, sCounter, cCounter, bCounter, aCounter, spaceOneNum, spaceTwo);
+				}
+				else if (blank[spaceOneNum][spaceTwo] == "X" || blank[spaceOneNum][spaceTwo] == "O")
+				{
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(77) << red << "===================================" << endl;
+					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
+					cout << setw(77) << "===================================" << endl;
+					Sleep(2000);
+				}
+				else
+				{
+					hitCheck = true;
+				}
+
+			} while (!hitCheck);
 			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
@@ -3446,12 +3568,7 @@ void onePlayer(int difficulty)
 				displayMiss(count, difficulty);
 				Sleep(1500);
 			}
-			if (blank[spaceOneNum][spaceTwo] == "X")
-			{
-				allShips++;
-				displayHit(count, difficulty);
-				Sleep(2000);
-			}
+			
 
 
 			system("cls");
@@ -3460,28 +3577,55 @@ void onePlayer(int difficulty)
 			{
 				system("cls");
 				count = difficulty - 1;
-				cout << white << "==========================================" << endl;
-				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
-				cout << white << "==========================================" << endl;
+				cout << endl << endl << endl << endl << endl << endl;
+				cout << setw(70) << lightgreen << "==========================================" << endl;
+				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << setw(70) << "==========================================" << endl;
 			}
 		}
 		if (allShips != 17)
 		{
-			cout << white << "=====================================" << endl;
-			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-			cout << white << "=====================================" << endl;
+			cout << setw(35) << white << "=====================" << endl;
+			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
+			cout << setw(35) << white << "=====================" << endl;
 		}
 	}
 	else if (random == 7)
 	{
 		for (int count = 0; count < difficulty; count++)
 		{
-			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoordOne(spaceTwo, promptCheck, blank);
-			if (boardSeven[spaceOneNum][spaceTwo] == "d" || boardSeven[spaceOneNum][spaceTwo] == "c" || boardSeven[spaceOneNum][spaceTwo] == "s" || boardSeven[spaceOneNum][spaceTwo] == "b" || boardSeven[spaceOneNum][spaceTwo] == "a")
+			do
 			{
-				shipsPlaced[spaceOneNum][spaceTwo] = "X";
-			}
+				hitCheck = false;
+				firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+				secCoordOne(spaceTwo, promptCheck, blank);
+				if (boardSeven[spaceOneNum][spaceTwo] == "d" || boardSeven[spaceOneNum][spaceTwo] == "c" || boardSeven[spaceOneNum][spaceTwo] == "s" || boardSeven[spaceOneNum][spaceTwo] == "b" || boardSeven[spaceOneNum][spaceTwo] == "a")
+				{
+					shipsPlaced[spaceOneNum][spaceTwo] = "X";
+				}
+				if (shipsPlaced[spaceOneNum][spaceTwo] == "X" && blank[spaceOneNum][spaceTwo] != "X")
+				{
+					hitCheck = true;
+					allShips++;
+					displayHit(count, difficulty);
+					Sleep(2000);
+					HPsystemOne(boardSeven, shipsPlaced, dCounter, sCounter, cCounter, bCounter, aCounter, spaceOneNum, spaceTwo);
+				}
+				else if (blank[spaceOneNum][spaceTwo] == "X" || blank[spaceOneNum][spaceTwo] == "O")
+				{
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(77) << red << "===================================" << endl;
+					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
+					cout << setw(77) << "===================================" << endl;
+					Sleep(2000);
+				}
+				else
+				{
+					hitCheck = true;
+				}
+
+			} while (!hitCheck);
 			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
@@ -3489,42 +3633,62 @@ void onePlayer(int difficulty)
 				displayMiss(count, difficulty);
 				Sleep(1500);
 			}
-			if (blank[spaceOneNum][spaceTwo] == "X")
-			{
-				allShips++;
-				displayHit(count, difficulty);
-				Sleep(2000);
-			}
-
-
+			
 			system("cls");
 			displayBlankOne(blank);
 			if (allShips == 17)
 			{
 				system("cls");
 				count = difficulty - 1;
-				cout << white << "==========================================" << endl;
-				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
-				cout << white << "==========================================" << endl;
+				cout << endl << endl << endl << endl << endl << endl;
+				cout << setw(70) << lightgreen << "==========================================" << endl;
+				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << setw(70) << "==========================================" << endl;
 			}
 		}
 		if (allShips != 17)
 		{
-			cout << white << "=====================================" << endl;
-			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-			cout << white << "=====================================" << endl;
+			cout << setw(35) << white << "=====================" << endl;
+			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
+			cout << setw(35) << white << "=====================" << endl;
 		}
 	}
 	else if (random == 8)
 	{
 		for (int count = 0; count < difficulty; count++)
 		{
-			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoordOne(spaceTwo, promptCheck, blank);
-			if (boardEight[spaceOneNum][spaceTwo] == "d" || boardEight[spaceOneNum][spaceTwo] == "c" || boardEight[spaceOneNum][spaceTwo] == "s" || boardEight[spaceOneNum][spaceTwo] == "b" || boardEight[spaceOneNum][spaceTwo] == "a")
+			do
 			{
-				shipsPlaced[spaceOneNum][spaceTwo] = "X";
-			}
+				hitCheck = false;
+				firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+				secCoordOne(spaceTwo, promptCheck, blank);
+				if (boardEight[spaceOneNum][spaceTwo] == "d" || boardEight[spaceOneNum][spaceTwo] == "c" || boardEight[spaceOneNum][spaceTwo] == "s" || boardEight[spaceOneNum][spaceTwo] == "b" || boardEight[spaceOneNum][spaceTwo] == "a")
+				{
+					shipsPlaced[spaceOneNum][spaceTwo] = "X";
+				}
+				if (shipsPlaced[spaceOneNum][spaceTwo] == "X" && blank[spaceOneNum][spaceTwo] != "X")
+				{
+					hitCheck = true;
+					allShips++;
+					displayHit(count, difficulty);
+					Sleep(2000);
+					HPsystemOne(boardEight, shipsPlaced, dCounter, sCounter, cCounter, bCounter, aCounter, spaceOneNum, spaceTwo);
+				}
+				else if (blank[spaceOneNum][spaceTwo] == "X" || blank[spaceOneNum][spaceTwo] == "O")
+				{
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(77) << red << "===================================" << endl;
+					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
+					cout << setw(77) << "===================================" << endl;
+					Sleep(2000);
+				}
+				else
+				{
+					hitCheck = true;
+				}
+
+			} while (!hitCheck);
 			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
@@ -3532,12 +3696,7 @@ void onePlayer(int difficulty)
 				displayMiss(count, difficulty);
 				Sleep(1500);
 			}
-			if (blank[spaceOneNum][spaceTwo] == "X")
-			{
-				allShips++;
-				displayHit(count, difficulty);
-				Sleep(2000);
-			}
+			
 
 
 			system("cls");
@@ -3546,28 +3705,55 @@ void onePlayer(int difficulty)
 			{
 				system("cls");
 				count = difficulty - 1;
-				cout << white << "==========================================" << endl;
-				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
-				cout << white << "==========================================" << endl;
+				cout << endl << endl << endl << endl << endl << endl;
+				cout << setw(70) << lightgreen << "==========================================" << endl;
+				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << setw(70) << "==========================================" << endl;
 			}
 		}
 		if (allShips != 17)
 		{
-			cout << white << "=====================================" << endl;
-			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-			cout << white << "=====================================" << endl;
+			cout << setw(35) << white << "=====================" << endl;
+			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
+			cout << setw(35) << white << "=====================" << endl;
 		}
 	}
 	else if (random == 9)
 	{
 		for (int count = 0; count < difficulty; count++)
 		{
-			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoordOne(spaceTwo, promptCheck, blank);
-			if (boardNine[spaceOneNum][spaceTwo] == "d" || boardNine[spaceOneNum][spaceTwo] == "c" || boardNine[spaceOneNum][spaceTwo] == "s" || boardNine[spaceOneNum][spaceTwo] == "b" || boardNine[spaceOneNum][spaceTwo] == "a")
+			do
 			{
-				shipsPlaced[spaceOneNum][spaceTwo] = "X";
-			}
+				hitCheck = false;
+				firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+				secCoordOne(spaceTwo, promptCheck, blank);
+				if (boardNine[spaceOneNum][spaceTwo] == "d" || boardNine[spaceOneNum][spaceTwo] == "c" || boardNine[spaceOneNum][spaceTwo] == "s" || boardNine[spaceOneNum][spaceTwo] == "b" || boardNine[spaceOneNum][spaceTwo] == "a")
+				{
+					shipsPlaced[spaceOneNum][spaceTwo] = "X";
+				}
+				if (shipsPlaced[spaceOneNum][spaceTwo] == "X" && blank[spaceOneNum][spaceTwo] != "X")
+				{
+					hitCheck = true;
+					allShips++;
+					displayHit(count, difficulty);
+					Sleep(2000);
+					HPsystemOne(boardNine, shipsPlaced, dCounter, sCounter, cCounter, bCounter, aCounter, spaceOneNum, spaceTwo);
+				}
+				else if (blank[spaceOneNum][spaceTwo] == "X" || blank[spaceOneNum][spaceTwo] == "O")
+				{
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(77) << red << "===================================" << endl;
+					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
+					cout << setw(77) << "===================================" << endl;
+					Sleep(2000);
+				}
+				else
+				{
+					hitCheck = true;
+				}
+
+			} while (!hitCheck);
 			blank[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
@@ -3575,42 +3761,62 @@ void onePlayer(int difficulty)
 				displayMiss(count, difficulty);
 				Sleep(1500);
 			}
-			if (blank[spaceOneNum][spaceTwo] == "X")
-			{
-				allShips++;
-				displayHit(count, difficulty);
-				Sleep(2000);
-			}
-
-
+			
 			system("cls");
 			displayBlankOne(blank);
 			if (allShips == 17)
 			{
 				system("cls");
 				count = difficulty - 1;
-				cout << white << "==========================================" << endl;
-				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
-				cout << white << "==========================================" << endl;
+				cout << endl << endl << endl << endl << endl << endl;
+				cout << setw(70) << lightgreen << "==========================================" << endl;
+				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << setw(70) << "==========================================" << endl;
 			}
 		}
 		if (allShips != 17)
 		{
-			cout << white << "=====================================" << endl;
-			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-			cout << white << "=====================================" << endl;
+			cout << setw(35) << white << "=====================" << endl;
+			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
+			cout << setw(35) << white << "=====================" << endl;
 		}
 	}
 	else if (random == 10)
 	{
 		for (int count = 0; count < difficulty; count++)
 		{
-			firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
-			secCoordOne(spaceTwo, promptCheck, blank);
-			if (boardTen[spaceOneNum][spaceTwo] == "d" || boardTen[spaceOneNum][spaceTwo] == "c" || boardTen[spaceOneNum][spaceTwo] == "s" || boardTen[spaceOneNum][spaceTwo] == "b" || boardTen[spaceOneNum][spaceTwo] == "a")
+			do
 			{
-				shipsPlaced[spaceOneNum][spaceTwo] = "X";
-			}
+				hitCheck = false;
+				firstCoordOne(spaceOne, spaceOneNum, blank, promptCheck);
+				secCoordOne(spaceTwo, promptCheck, blank);
+				if (boardTen[spaceOneNum][spaceTwo] == "d" || boardTen[spaceOneNum][spaceTwo] == "c" || boardTen[spaceOneNum][spaceTwo] == "s" || boardTen[spaceOneNum][spaceTwo] == "b" || boardTen[spaceOneNum][spaceTwo] == "a")
+				{
+					shipsPlaced[spaceOneNum][spaceTwo] = "X";
+				}
+				if (shipsPlaced[spaceOneNum][spaceTwo] == "X" && blank[spaceOneNum][spaceTwo] != "X")
+				{
+					hitCheck = true;
+					allShips++;
+					displayHit(count, difficulty);
+					Sleep(2000);
+					HPsystemOne(boardTen, shipsPlaced, dCounter, sCounter, cCounter, bCounter, aCounter, spaceOneNum, spaceTwo);
+				}
+				else if (blank[spaceOneNum][spaceTwo] == "X" || blank[spaceOneNum][spaceTwo] == "O")
+				{
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(77) << red << "===================================" << endl;
+					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
+					cout << setw(77) << "===================================" << endl;
+					Sleep(2000);
+				}
+				else
+				{
+					hitCheck = true;
+				}
+
+			} while (!hitCheck);
 			blank[spaceOneNum][spaceTwo] = boardTen[spaceOneNum][spaceTwo];
 
 			if (blank[spaceOneNum][spaceTwo] == "O")
@@ -3618,30 +3824,25 @@ void onePlayer(int difficulty)
 				displayMiss(count, difficulty);
 				Sleep(1500);
 			}
-			if (blank[spaceOneNum][spaceTwo] == "X")
-			{
-				allShips++;
-				displayHit(count, difficulty);
-				Sleep(2000);
-			}
-
-
+			
 			system("cls");
 			displayBlankOne(blank);
+			
 			if (allShips == 17)
 			{
 				system("cls");
 				count = difficulty - 1;
-				cout << white << "==========================================" << endl;
-				cout << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
-				cout << white << "==========================================" << endl;
+				cout << endl << endl << endl << endl << endl << endl;
+				cout << setw(70) << lightgreen << "==========================================" << endl;
+				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+				cout << setw(70) << "==========================================" << endl;
 			}
 		}
 		if (allShips != 17)
 		{
-			cout << white << "=====================================" << endl;
-			cout << white << "Sorry, you have taken too many turns.\n" << setw(20) << red << "YOU LOSE" << endl;
-			cout << white << "=====================================" << endl;
+			cout << setw(35) << white << "=====================" << endl;
+			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
+			cout << setw(35) << white << "=====================" << endl;
 		}
 	}
 
@@ -4066,6 +4267,67 @@ void setPos(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, string &
 
 }
 
+void HPsystemOne(string board[][11], string shipsPlaced[][11], int& dCounter, int& sCounter, int& cCounter, int& bCounter, int& aCounter, int y, int x)
+{
+
+		if (shipsPlaced[y][x] == "X" && board[y][x] == "d") // not counting correctly
+		{
+			dCounter--;
+			if (dCounter == 0)
+			{
+				shipDestroyed();
+				cout << "You have sunk the Destroyer";
+				Sleep(2000);
+			}
+		}
+
+		else if (shipsPlaced[y][x] == "X" && board[y][x] == "s")
+		{
+			sCounter--;
+			if (sCounter == 0)
+			{
+				shipDestroyed();
+				cout << "You have sunk the Submarine";
+				Sleep(2000);
+			}
+		}
+
+		else if (shipsPlaced[y][x] == "X" && board[y][x] == "c")
+		{
+			cCounter--;
+			if (cCounter == 0)
+			{
+				shipDestroyed();
+				cout << "You have sunk the Cruiser";
+				Sleep(2000);
+			}
+		}
+
+		else if (shipsPlaced[y][x] == "X" && board[y][x] == "b")
+		{
+			bCounter--;
+			if (bCounter == 0)
+			{
+				shipDestroyed();
+				cout << "You have sunk the BattleShip";
+				Sleep(2000);
+			}
+		}
+
+		else if (shipsPlaced[y][x] == "X" && board[y][x] == "a")
+		{
+			aCounter--;
+				if (aCounter == 0)
+			{
+				shipDestroyed();
+				cout << "You have sunk the Carrier";
+				Sleep(2000);
+			}
+		}
+}
+
+
+
 
 void Options(int &difficulty)
 {
@@ -4087,7 +4349,7 @@ void Options(int &difficulty)
 		cout << setw(67) << "1. Change Difficulty" << endl;
 		cout << setw(67) << "4. Back to main menu" << endl;
 
-		cout << "Please choose 1-*: ";
+		cout << "Please choose 1-4: ";
 		cin >> optionSelect;
 		if (optionSelect == 1)
 		{
