@@ -57,19 +57,19 @@ void onePlayer(int, int, bool);
 void TwoPlayer(int);
 void Options(int&, int&, bool&);
 void firstCoordOne(string, int&, string[][11], bool&);
-void firstCoordTwo(string, int&, bool&, string[], int&, string[][11], string[][11], bool&); //Needed to change this to "firstCoordTwo" because you use more variables than Single Player
-void secCoord(int&, bool&, string[][11], string[], int&, string[][11], bool&);
+void firstCoordTwo(string, int&, bool&, string[], int&, string[][11], string[][11], bool&, bool&); //Needed to change this to "firstCoordTwo" because you use more variables than Single Player
+void secCoord(int&, bool&, string[][11], string[], int&, string[][11], bool&, bool&);
 void secCoordOne(int&, bool&, string[][11]);
 bool refresh(int&, string[][11], string[][11], int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, string[][11], string[][11], string[][11], string[][11], string[][11], bool&, string[][11], string[][11]);
 void errorRefresh(bool&, bool&);
 void invalidInputRefresh();
-void displayBlankTwo(string[][11], string[][11], bool&);
+void displayBlankTwo(string[][11], string[][11], bool&, bool&);
 void displayBlankOne(string[][11]);
 void displayMiss(int, int);
 void displayHit(int, int);
 
 //movement positions.
-void setPos(int&, int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, string[][11], string[], bool&, string[][11], bool&);
+void setPos(int&, int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, string[][11], string[], bool&, string[][11], bool&, bool&);
 void up(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 void down(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 void left(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
@@ -83,16 +83,16 @@ void battleshipHP(int&, int&, int&, int&, int&, int&, string[][11], string&);
 void carrierHP(int&, int&, int&, int&, int&, int&, int&, string[][11], string&);
 void shipDestroyed();
 
-void shipHPCounter(string[][11], string[][11], bool&);
+void shipHPCounter(string[][11], string[][11], bool&, bool&);
 void HPsystemOne(string[][11], string[][11], int&, int&, int&, int&, int&, int, int);
-void displayBlankTwoa(string[][11], string[][11], bool&);
+void displayBlankTwoa(string[][11], string[][11], bool&, bool&);
 
 //ship Placement
 
 //bool chkPlacement(bool&, string[][11], int&, int&, int&, int&, string[][11]); //obsolete I believe, 11/28/17 Erik.
 
 //Happy with the placement? or reset/redo > then turn controls to player two
-bool happyPlacement(bool&, string[][11], string[][11]);
+bool happyPlacement(bool&, string[][11], string[][11], bool&);
 void boardRESET(string[][11]);
 
 //start of missile strikes / player2
@@ -100,9 +100,9 @@ void boardRESET(string[][11]);
 //void cleaningSlate(string[][11]); //obsolete function Erik 11/28/17
 void playerTwoTakeOver();
 void singlePlayerTakeOver();
-void missiles(string[][11], string[][11], string&, int&, int&, bool&, int&, bool&);
-void firstMissileYAxis(string&, int&, string[][11], string[][11], int&, bool&, bool&, int&);
-void secondMissileXAxis(int&, string[][11], string[][11], int&, bool&, bool&, int&);
+void missiles(string[][11], string[][11], string&, int&, int&, bool&, int&, bool&, bool&);
+void firstMissileYAxis(string&, int&, string[][11], string[][11], int&, bool&, bool&, int&, bool&);
+void secondMissileXAxis(int&, string[][11], string[][11], int&, bool&, bool&, int&, bool&);
 
 //sounds
 void startSound();
@@ -523,6 +523,8 @@ void TwoPlayer(int difficulty)
 	bool happy = false;
 	int redoShipsPlace = 0;
 
+	 static bool victoryScreen = false;
+
 	//11.14.17 observation Erik
 	// our ships arent actually tied to anything in our arrays..
 	// were replacing ~ with Xs for place holders of the ships but they dont actually represent Destroyer equals 3 spots
@@ -704,11 +706,11 @@ void TwoPlayer(int difficulty)
 			//dowhile and valid input are work on progress for ship placement to avoid stacking and ship placement over the board. Erik 11/26/17
 			do {
 				validInput = false;
-				firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced, happy); // count and ships could go into here to move the cout prompt down?
-				secCoord(spaceTwo, promptCheck, board, shipName, count, shipsPlaced, happy);
+				firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced, happy, victoryScreen); // count and ships could go into here to move the cout prompt down?
+				secCoord(spaceTwo, promptCheck, board, shipName, count, shipsPlaced, happy, victoryScreen);
 
 
-				setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck, shipsPlaced, happy);
+				setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck, shipsPlaced, happy, victoryScreen);
 				cout << endl << endl;
 				validInput = refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, destroyerBOARD, subBOARD, cruiserBOARD, battleshipBOARD, carrierBOARD, validInput, cleanSlate, shipHits);
 			} while (validInput == false);
@@ -717,7 +719,7 @@ void TwoPlayer(int difficulty)
 
 
 		redoShipsPlace++;
-		happy = happyPlacement(happy, shipsPlaced, board);
+		happy = happyPlacement(happy, shipsPlaced, board, victoryScreen);
 
 	} while (happy == false);
 
@@ -790,7 +792,7 @@ void TwoPlayer(int difficulty)
 
 
 	playerTwoTakeOver();
-	missiles(board, shipsPlaced, spaceOne, spaceTwo, spaceOneNum, promptCheck, difficulty, happy);
+	missiles(board, shipsPlaced, spaceOne, spaceTwo, spaceOneNum, promptCheck, difficulty, happy, victoryScreen);
 
 
 
@@ -2029,7 +2031,7 @@ void invalidInputRefresh()
 
 }
 
-void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
+void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy, bool &victoryScreen)
 {
 	//code in destHP etc to fill in here to point to the asci art on hits etc. Erik 11/29/17
 
@@ -2129,7 +2131,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 						sunkUnsunk = true;
 						dSunk = true;
 						system("cls");
-						displayBlankTwoa(board, shipsPlaced, happy);
+						displayBlankTwoa(board, shipsPlaced, happy, victoryScreen);
 						totalCounterUnlock = true; //have to destroy at LEAST one ship to unlock game over scenario
 
 
@@ -2150,7 +2152,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 						sunkUnsunk = true;
 						sSunk = true; 
 						system("cls");
-						displayBlankTwoa(board, shipsPlaced, happy);
+						displayBlankTwoa(board, shipsPlaced, happy, victoryScreen);
 						totalCounterUnlock = true; //have to destroy at LEAST one ship to unlock game over scenario
 
 					}
@@ -2170,7 +2172,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 						sunkUnsunk = true;
 						cSunk = true; 
 						system("cls");
-						displayBlankTwoa(board, shipsPlaced, happy);
+						displayBlankTwoa(board, shipsPlaced, happy, victoryScreen);
 						totalCounterUnlock = true; //have to destroy at LEAST one ship to unlock game over scenario
 					}
 				}
@@ -2189,7 +2191,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 						sunkUnsunk = true;
 						bSunk = true;
 						system("cls");
-						displayBlankTwoa(board, shipsPlaced, happy);
+						displayBlankTwoa(board, shipsPlaced, happy, victoryScreen);
 						totalCounterUnlock = true; //have to destroy at LEAST one ship to unlock game over scenario
 					}
 				}
@@ -2208,7 +2210,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 						sunkUnsunk = true;
 						aSunk = true;
 						system("cls");
-						displayBlankTwoa(board, shipsPlaced, happy);
+						displayBlankTwoa(board, shipsPlaced, happy, victoryScreen);
 						totalCounterUnlock = true; //have to destroy at LEAST one ship to unlock game over scenario
 					}
 				}
@@ -2234,6 +2236,8 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 			cout << setw(75) << white << "==========================================" << endl;
 			cout << setw(75) << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 			cout << setw(75) << white << "==========================================" << endl;
+			victoryScreen = true;
+			cout << victoryScreen; //testing
 
 		}
 
@@ -2744,7 +2748,7 @@ return validInput;
 
 }*/
 
-bool happyPlacement(bool &happy, string shipsPlaced[][11], string board[][11])
+bool happyPlacement(bool &happy, string shipsPlaced[][11], string board[][11], bool &victoryScreen)
 {
 	string yesNo;
 	bool noYes = false;
@@ -2752,7 +2756,7 @@ bool happyPlacement(bool &happy, string shipsPlaced[][11], string board[][11])
 	do
 	{
 		system("cls");
-		displayBlankTwo(board, shipsPlaced, happy);
+		displayBlankTwo(board, shipsPlaced, happy, victoryScreen);
 		cout << endl << endl << setw(65) << white << "Are you happy with your ships placement? (y/n): ";
 		cin >> yesNo;
 		if (yesNo == "yes" || yesNo == "YES" || yesNo == "Yes" || yesNo == "y" || yesNo == "Y" || yesNo == "no" || yesNo == "NO" || yesNo == "No" || yesNo == "n" || yesNo == "N")
@@ -2830,65 +2834,68 @@ cout << setw(115) << darkgrey << div << endl;
 
 }*/
 
-void missiles(string board[][11], string shipsPlaced[][11], string &spaceOne, int &spaceTwo, int &spaceOneNum, bool &promptCheck, int &difficulty, bool &happy)
+void missiles(string board[][11], string shipsPlaced[][11], string &spaceOne, int &spaceTwo, int &spaceOneNum, bool &promptCheck, int &difficulty, bool &happy, bool &victoryScreen)
 {
 	bool hitCheck = false;
 
-
-	//change 100 to difficulty base that into options then difficulty will equal easy, normal or hard and each of those will have their own variables.
-	for (int count = 0; count < difficulty; count++)
+	//cout << victoryScreen; //testing
+	while (!victoryScreen) // not working >< argh
 	{
-
-		do
+		//change 100 to difficulty base that into options then difficulty will equal easy, normal or hard and each of those will have their own variables.
+		for (int count = 0; count < difficulty; count++)
 		{
-			hitCheck = false;
-			//system("cls");
-			//displayBlankTwoa(board, shipsPlaced);
 
-			firstMissileYAxis(spaceOne, spaceOneNum, board, shipsPlaced, count, promptCheck, happy, difficulty);
-			secondMissileXAxis(spaceTwo, board, shipsPlaced, count, promptCheck, happy, difficulty);
-
-			if (board[spaceOneNum][spaceTwo] == "X" || board[spaceOneNum][spaceTwo] == "O")
+			do
 			{
-				system("cls");
-				cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
-				cout << setw(75) << lightred << "===================================" << endl;
-				cout << setw(75) << lightred << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
-				cout << setw(75) << lightred << "===================================" << endl;
-				Sleep(1500);
-			}
-
-
-			if (board[spaceOneNum][spaceTwo] == "~")
-			{
-				board[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
-
-				if (board[spaceOneNum][spaceTwo] == "d" || board[spaceOneNum][spaceTwo] == "s" || board[spaceOneNum][spaceTwo] == "c" || board[spaceOneNum][spaceTwo] == "b" || board[spaceOneNum][spaceTwo] == "a")
+				hitCheck = false;
+				//system("cls");
+				//displayBlankTwoa(board, shipsPlaced);
+				
+					firstMissileYAxis(spaceOne, spaceOneNum, board, shipsPlaced, count, promptCheck, happy, difficulty, victoryScreen);
+					secondMissileXAxis(spaceTwo, board, shipsPlaced, count, promptCheck, happy, difficulty, victoryScreen);
+				
+				if (board[spaceOneNum][spaceTwo] == "X" || board[spaceOneNum][spaceTwo] == "O")
 				{
-
-					board[spaceOneNum][spaceTwo] = "X";
-					hitCheck = true;
-					displayHit(count, difficulty);
+					system("cls");
+					cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+					cout << setw(75) << lightred << "===================================" << endl;
+					cout << setw(75) << lightred << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
+					cout << setw(75) << lightred << "===================================" << endl;
 					Sleep(1500);
 				}
-				else if (board[spaceOneNum][spaceTwo] == "O")
+
+
+				if (board[spaceOneNum][spaceTwo] == "~")
 				{
-					displayMiss(count, difficulty);
-					Sleep(1500);
-					hitCheck = true;
+					board[spaceOneNum][spaceTwo] = shipsPlaced[spaceOneNum][spaceTwo];
+
+					if (board[spaceOneNum][spaceTwo] == "d" || board[spaceOneNum][spaceTwo] == "s" || board[spaceOneNum][spaceTwo] == "c" || board[spaceOneNum][spaceTwo] == "b" || board[spaceOneNum][spaceTwo] == "a")
+					{
+
+						board[spaceOneNum][spaceTwo] = "X";
+						hitCheck = true;
+						displayHit(count, difficulty);
+						Sleep(1500);
+					}
+					else if (board[spaceOneNum][spaceTwo] == "O")
+					{
+						displayMiss(count, difficulty);
+						Sleep(1500);
+						hitCheck = true;
+					}
 				}
-			}
-			
 
-			
-		} while (hitCheck == false);
 
-		
+
+			} while (hitCheck == false);
+
+
+		}
 	}
 
 }
 
-void firstMissileYAxis(string &spaceOne, int &spaceOneNum, string board[][11], string shipsPlaced[][11], int &count, bool &promptCheck, bool &happy, int &difficulty)
+void firstMissileYAxis(string &spaceOne, int &spaceOneNum, string board[][11], string shipsPlaced[][11], int &count, bool &promptCheck, bool &happy, int &difficulty, bool &victoryScreen)
 {
 	//variables
 	const int ROWS = 11;
@@ -2896,120 +2903,128 @@ void firstMissileYAxis(string &spaceOne, int &spaceOneNum, string board[][11], s
 	string sLETTER = "A";
 	char letter;
 	char cLETTER;
+	
 
 	//===========FOR TWO PLAYER==========================================================================
-	do
-	{
-		do 
+
+		do
 		{
-			//board_intilization(spaceOneNum, spaceTwo);
-			system("cls");
-			displayBlankTwoa(board, shipsPlaced, happy); //board // lets you visualize the board when placing the ships cord on the X - ROWS axis
+			do
+			{
+				//board_intilization(spaceOneNum, spaceTwo);
+				system("cls");
+				displayBlankTwoa(board, shipsPlaced, happy, victoryScreen); //board // lets you visualize the board when placing the ships cord on the X - ROWS axis
 
-			cout << endl;
-			cout << white << setw(55) << "Player two, you have " << (difficulty - count) << " missiles left" << endl; //change this to be like st, nd, rd, th on count
+				cout << endl;
+				cout << white << setw(55) << "Player two, you have " << (difficulty - count) << " missiles left" << endl; //change this to be like st, nd, rd, th on count
 
-			cout << setw(75) << white << "Using letters A-J, enter your coordinates: ";
-			cin >> spaceOne;
-		} while (spaceOne.length() != 1);
+				cout << setw(75) << white << "Using letters A-J, enter your coordinates: ";
+				cin >> spaceOne;
+			} while (spaceOne.length() != 1);
 
-		//check to see if input is a-j or A-J before sending it on.
-		if ((spaceOne >= "a" && spaceOne <= "j") || (spaceOne >= "A" && spaceOne <= "J"))
+			//check to see if input is a-j or A-J before sending it on.
+			if ((spaceOne >= "a" && spaceOne <= "j") || (spaceOne >= "A" && spaceOne <= "J"))
+			{
+				promptCheck = true;
+
+
+
+			}
+			else
+			{
+				cout << endl;
+				cout << setw(74) << lightred << "=========================================================" << endl;
+				cout << setw(75) << "This is not a valid input. Try again, using a letter a-j. " << endl;
+				cout << setw(74) << "=========================================================" << endl;
+				Sleep(1500);
+				cin.clear();
+				cin.ignore(10000, '\n');
+				system("cls");
+
+			}
+		} while (promptCheck == false);
+		//============================END TWO PLAYER==============================================================
+
+		//talking about the loop below not above.
+		//Now this loops through ROWS which is not dynamic at the moment, with the function 
+		//in board_intilization(); so if we change one manually has to do both inless
+		//we change board_intilization(); from a void into an int and carry it over; or use &
+
+		//'i' will cycle through the number of rows, and increment i, i will only add
+		//to spaceonenum if the letter equals spaceOne. should catch before hand if
+		//their is a letter that is not a-j before here. adding +1 to i as my board
+		// will be including A-J and the 1-9 will also carry a plus 1; oh and 0 == 10 inless
+		// we can figure out a way to implement that char into a string? to carry more than one value.
+
+
+
+
+		for (int i = 0; i < ROWS; i++) //once a char has been chosen highlight it another color to help the user see the change on the board? cyan > red?
 		{
-			promptCheck = true;
+			if ((spaceOne == sletter) || (spaceOne == sLETTER))
+			{
+				spaceOneNum = (i + 1);
+			}
 
+			//new conversion for ++ on the letter.
+			letter = sletter.at(0);
+			letter++;
+			sletter = letter;
 
+			cLETTER = sLETTER.at(0);
+			cLETTER++;
+			sLETTER = cLETTER;
 
+			//old conversion that worked with the char boards.
+			//letter++;
+			//cLETTER++;
 		}
-		else
-		{
-			cout << endl;
-			cout << setw(74) << lightred << "=========================================================" << endl;
-			cout << setw(75) << "This is not a valid input. Try again, using a letter a-j. " << endl;
-			cout << setw(74) << "=========================================================" << endl;
-			Sleep(1500);
-			system("cls");
 
-		}
-	} while (promptCheck == false);
-	//============================END TWO PLAYER==============================================================
-
-	//talking about the loop below not above.
-	//Now this loops through ROWS which is not dynamic at the moment, with the function 
-	//in board_intilization(); so if we change one manually has to do both inless
-	//we change board_intilization(); from a void into an int and carry it over; or use &
-
-	//'i' will cycle through the number of rows, and increment i, i will only add
-	//to spaceonenum if the letter equals spaceOne. should catch before hand if
-	//their is a letter that is not a-j before here. adding +1 to i as my board
-	// will be including A-J and the 1-9 will also carry a plus 1; oh and 0 == 10 inless
-	// we can figure out a way to implement that char into a string? to carry more than one value.
-
-
-
-
-	for (int i = 0; i < ROWS; i++) //once a char has been chosen highlight it another color to help the user see the change on the board? cyan > red?
-	{
-		if ((spaceOne == sletter) || (spaceOne == sLETTER))
-		{
-			spaceOneNum = (i + 1);
-		}
-
-		//new conversion for ++ on the letter.
-		letter = sletter.at(0);
-		letter++;
-		sletter = letter;
-
-		cLETTER = sLETTER.at(0);
-		cLETTER++;
-		sLETTER = cLETTER;
-
-		//old conversion that worked with the char boards.
-		//letter++;
-		//cLETTER++;
-	}
-
-
+	
 }
 
-void secondMissileXAxis(int &spaceTwo, string board[][11], string shipsPlaced[][11], int &count, bool &promptCheck, bool &happy, int &difficulty)
+void secondMissileXAxis(int &spaceTwo, string board[][11], string shipsPlaced[][11], int &count, bool &promptCheck, bool &happy, int &difficulty, bool &victoryScreen)
 {
 	promptCheck = false;
-	while (!promptCheck)
-	{
-
-		system("cls");
-		//board_intilization(spaceOneNum, spaceTwo);
-		displayBlankTwoa(board, shipsPlaced, happy); //board // lets you visualize the board when placing the ships cord on the Y - COlS axis
-
-		cout << endl;
-		cout << white << setw(55) << "Player two, you have " << (difficulty - count) << " missiles left." << endl;
-		cout << setw(75) << white << "Using numbers 1-10, enter your second coordinate: ";
-		cin >> spaceTwo;
-
-
-		if (spaceTwo >= 1 && spaceTwo <= 10)
+	
+	
+		while (!promptCheck)
 		{
-			promptCheck = true;
-			spaceTwo = (spaceTwo);
 
-		}
-		else
-		{
-			cout << endl;
-			cout << setw(75) << lightred << "============================================================" << endl;
-			cout << setw(75) << "This is not a valid input. Try again, using the numbers 1-10." << endl;
-			cout << setw(75) << "============================================================" << endl;
-			//cout << setw(60) << white << "Using numbers 1-10, enter your second coordinate: ";
-			cout << endl;
-			Sleep(1500);
 			system("cls");
+			//board_intilization(spaceOneNum, spaceTwo);
+			displayBlankTwoa(board, shipsPlaced, happy, victoryScreen); //board // lets you visualize the board when placing the ships cord on the Y - COlS axis
+
+			cout << endl;
+			cout << white << setw(55) << "Player two, you have " << (difficulty - count) << " missiles left." << endl;
+			cout << setw(75) << white << "Using numbers 1-10, enter your second coordinate: ";
+			cin >> spaceTwo;
+
+
+			if (spaceTwo >= 1 && spaceTwo <= 10)
+			{
+				promptCheck = true;
+				spaceTwo = (spaceTwo);
+
+			}
+			else
+			{
+				cout << endl;
+				cout << setw(75) << lightred << "============================================================" << endl;
+				cout << setw(75) << "This is not a valid input. Try again, using the numbers 1-10." << endl;
+				cout << setw(75) << "============================================================" << endl;
+				//cout << setw(60) << white << "Using numbers 1-10, enter your second coordinate: ";
+				cout << endl;
+				cin.clear();
+				cin.ignore(10000, '\n');
+				Sleep(1500);
+				system("cls");
+
+			}
 
 		}
-
-	}
-	promptCheck = false;
-
+		promptCheck = false;
+	
 
 }
 
@@ -3101,7 +3116,7 @@ void shipDestroyed()
 	// you blew up // you lost your // x ship.				 
 }
 
-void displayBlankTwoa(string board[][11], string shipsPlaced[][11], bool &happy)
+void displayBlankTwoa(string board[][11], string shipsPlaced[][11], bool &happy, bool &victoryScreen)
 {
 	string div = "===============================================================================================================";
 	string between = "---------------------------------------------------------------------------------------------------------------";
@@ -3145,7 +3160,7 @@ void displayBlankTwoa(string board[][11], string shipsPlaced[][11], bool &happy)
 	cout << setw(115) << darkgrey << div << endl;
 
 
-	shipHPCounter(board, shipsPlaced, happy);
+	shipHPCounter(board, shipsPlaced, happy, victoryScreen);
 
 }
 
@@ -4300,7 +4315,7 @@ void displayBlankOne(string board[][11])
 }
 
 //2player
-void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string shipName[], int &count, string board[][11], string shipsPlaced[][11], bool &happy)
+void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string shipName[], int &count, string board[][11], string shipsPlaced[][11], bool &happy, bool &victoryScreen)
 {
 	//variables
 	const int ROWS = 11;
@@ -4315,7 +4330,7 @@ void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string 
 		do {
 			//board_intilization(spaceOneNum, spaceTwo);
 			system("cls");
-			displayBlankTwo(board, shipsPlaced, happy); //board // lets you visualize the board when placing the ships cord on the X - ROWS axis
+			displayBlankTwo(board, shipsPlaced, happy, victoryScreen); //board // lets you visualize the board when placing the ships cord on the X - ROWS axis
 
 			cout << endl;
 			cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
@@ -4385,7 +4400,7 @@ void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string 
 
 }
 
-void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipName[], int &count, string shipsPlaced[][11], bool &happy)
+void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipName[], int &count, string shipsPlaced[][11], bool &happy, bool &victoryScreen)
 {
 
 	promptCheck = false;
@@ -4394,7 +4409,7 @@ void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipN
 
 		system("cls");
 		//board_intilization(spaceOneNum, spaceTwo);
-		displayBlankTwo(board, shipsPlaced, happy); //board // lets you visualize the board when placing the ships cord on the Y - COlS axis
+		displayBlankTwo(board, shipsPlaced, happy, victoryScreen); //board // lets you visualize the board when placing the ships cord on the Y - COlS axis
 
 		cout << endl;
 		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
@@ -4431,7 +4446,7 @@ void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipN
 
 }
 
-void displayBlankTwo(string board[][11], string shipsPlaced[][11], bool &happy)
+void displayBlankTwo(string board[][11], string shipsPlaced[][11], bool &happy, bool &victoryScreen)
 {
 
 	//board is catching shipsPlaced the board string is
@@ -4481,18 +4496,18 @@ void displayBlankTwo(string board[][11], string shipsPlaced[][11], bool &happy)
 	cout << setw(115) << darkgrey << div << endl;
 
 
-	shipHPCounter(board, shipsPlaced, happy);
+	shipHPCounter(board, shipsPlaced, happy, victoryScreen);
 
 }
 
-void setPos(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, string &userDirectionalInput, int &sub1, int &sub2, int &cruis1, int &cruis2, int &battleship1, int &battleship2, int &battleship3, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &sub, int &cruis, int &battleship, int &carrier, int &destroy, string board[][11], string shipName[], bool &promptCheck, string shipsPlaced[][11], bool &happy) // board
+void setPos(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, string &userDirectionalInput, int &sub1, int &sub2, int &cruis1, int &cruis2, int &battleship1, int &battleship2, int &battleship3, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &sub, int &cruis, int &battleship, int &carrier, int &destroy, string board[][11], string shipName[], bool &promptCheck, string shipsPlaced[][11], bool &happy, bool &victoryScreen) // board
 {
 	promptCheck = false;
 
 	do
 	{
 		system("cls");
-		displayBlankTwo(board, shipsPlaced, happy);  //board
+		displayBlankTwo(board, shipsPlaced, happy, victoryScreen);  //board
 		cout << endl;
 		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
 		cout << setw(75) << white << "How would you like to place your ship: (Up, Down, Left or Right) ";
