@@ -4312,6 +4312,8 @@ void displayBlankOne(string board[][11])
 	}
 	cout << setw(115) << darkgrey << div << endl;
 
+	
+
 }
 
 //2player
