@@ -4545,7 +4545,7 @@ void HPsystemOne(string board[][11], string shipsPlaced[][11], int& dCounter, in
 		if (dCounter == 0)
 			 {
 			shipDestroyed();
-			cout << "You have sunk the Destroyer";
+			cout << setw(65) << "You have sunk the Destroyer!";
 			Sleep(2000);
 			}
 		}
@@ -4556,7 +4556,7 @@ void HPsystemOne(string board[][11], string shipsPlaced[][11], int& dCounter, in
 		if (sCounter == 0)
 			 {
 			shipDestroyed();
-			cout << "You have sunk the Submarine";
+			cout << setw(65) << "You have sunk the Submarine!";
 			Sleep(2000);
 			}
 		}
@@ -4567,7 +4567,7 @@ void HPsystemOne(string board[][11], string shipsPlaced[][11], int& dCounter, in
 		if (cCounter == 0)
 			 {
 			shipDestroyed();
-			cout << "You have sunk the Cruiser";
+			cout << setw(65) << "You have sunk the Cruiser!";
 			Sleep(2000);
 			}
 		}
@@ -4578,7 +4578,7 @@ void HPsystemOne(string board[][11], string shipsPlaced[][11], int& dCounter, in
 		if (bCounter == 0)
 			 {
 			shipDestroyed();
-			cout << "You have sunk the BattleShip";
+			cout << setw(65) << "You have sunk the BattleShip!";
 			Sleep(2000);
 			}
 		}
@@ -4589,7 +4589,7 @@ void HPsystemOne(string board[][11], string shipsPlaced[][11], int& dCounter, in
 		if (aCounter == 0)
 			 {
 			shipDestroyed();
-			cout << "You have sunk the Carrier";
+			cout << setw(65) << "You have sunk the Carrier!";
 			Sleep(2000);
 			}
 		}
