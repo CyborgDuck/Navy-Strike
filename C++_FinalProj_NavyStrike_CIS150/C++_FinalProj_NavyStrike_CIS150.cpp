@@ -2241,9 +2241,9 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 		{
 			system("cls");
 			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
-			cout << setw(75) << white << "==========================================" << endl;
-			cout << setw(75) << white << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
-			cout << setw(75) << white << "==========================================" << endl;
+			cout << setw(75) << lightgreen << "==========================================" << endl;
+			cout << setw(75) << lightgreen << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
+			cout << setw(75) << lightgreen << "==========================================" << endl;
 			victoryScreen = true;
 			//cout << victoryScreen; //testing
 
