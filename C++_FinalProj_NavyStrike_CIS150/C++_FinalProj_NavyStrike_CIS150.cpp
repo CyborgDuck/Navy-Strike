@@ -3333,6 +3333,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 	string between = "---------------------------------------------------------------------------------------------------------------";
 	bool promptCheck = false;
 	bool hitCheck = false;
+	bool exitInput = false;
 	const int size = 11;
 	string spaceOne = " "; //letter that player enters for coordinate 1
 	int spaceTwo = 0;    //Number that player enters for coordinate 2
@@ -3346,7 +3347,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 	int cCounter = 3;//} COUNTERS FOR SINGLE PLAYER HP-SYSTEM
 	int bCounter = 4;//}
 	int aCounter = 5;//}
-	string exitVar;
+	string exitVal;
 	bool validInput = false; //Making sure their guess stays within bounds of the board
 
 							 //int shotsLeft = 30; see its in 'count'
@@ -4178,17 +4179,28 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 			cout << setw(35) << white << "=====================" << endl;
 		}
 	}
-	cout << white << setw(65) << "DO YOU WISH TO PLAY AGAIN? y/n: ";
-	cin >> exitVar;
-
-	if (exitVar == "N" || exitVar == "n" || exitVar == "No" || exitVar == "no" || exitVar == "NO")
+	while (!exitInput)
 	{
-		endInput = true;
-		mainMenu();
-	}
-	else
-	{
-		mainMenu();
+		cout << endl << endl << endl;
+		cout << setw(65) << white << "DO YOU WISH TO PLAY AGAIN? y/n: ";
+		cin >> exitVal;
+		if (exitVal == "N" || exitVal == "n" || exitVal == "No" || exitVal == "no" || exitVal == "NO")
+		{
+			exitInput = true;
+			endInput = true;
+			mainMenu();
+		}
+		else if (exitVal == "Y" || exitVal == "y" || exitVal == "Yes" || exitVal == "yes" || exitVal == "YES")
+		{
+			exitInput = true;
+			mainMenu();
+		}
+		else
+		{
+			invalidInputRefresh();
+			Sleep(2000);
+			system("cls");
+		}
 	}
 }
 
