@@ -2070,6 +2070,8 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 
 	//if (twoPlayerCounter < sevenTeen) // may need to adjust the less than or the != in the else if statement will see once hit is up.
 	//{
+	if (victoryScreen == false)
+	{
 		for (int i = 0; i < 11; i++)
 		{
 			for (int z = 0; z < 11; z++)
@@ -2102,17 +2104,17 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 
 
 		}
-		
 
-	//}
-	//else if (twoPlayerCounter > sevenTeen)
-	//{
-		//dCounter = 2;
-		//sCounter = 3;
-		//cCounter = 3;
-		//bCounter = 4;
-		//aCounter = 5;
-		
+
+		//}
+		//else if (twoPlayerCounter > sevenTeen)
+		//{
+			//dCounter = 2;
+			//sCounter = 3;
+			//cCounter = 3;
+			//bCounter = 4;
+			//aCounter = 5;
+
 
 		for (int y = 0; y < 11; y++)
 		{
@@ -2126,7 +2128,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 
 					if (dCounter == 0 && dSunk == false)
 					{
-						
+
 						shipDestroyed();
 						cout << setw(65) << "You sunk my destroyer!" << endl;
 						Sleep(1500);
@@ -2140,7 +2142,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 					}
 				}
 
-				 if (board[y][x] == "X" &&  shipsPlaced[y][x] == "s")
+				if (board[y][x] == "X" &&  shipsPlaced[y][x] == "s")
 				{
 					sCounter--;
 
@@ -2152,7 +2154,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 						cout << setw(65) << "You sunk my submarine!" << endl;
 						Sleep(1500);
 						sunkUnsunk = true;
-						sSunk = true; 
+						sSunk = true;
 						system("cls");
 						displayBlankTwoa(board, shipsPlaced, happy);
 						totalCounterUnlock = true; //have to destroy at LEAST one ship to unlock game over scenario
@@ -2160,7 +2162,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 					}
 				}
 
-				 if (board[y][x] == "X" && shipsPlaced[y][x] == "c")
+				if (board[y][x] == "X" && shipsPlaced[y][x] == "c")
 				{
 					cCounter--;
 
@@ -2172,14 +2174,14 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 						cout << setw(65) << "You sunk my cruiser!" << endl;
 						Sleep(1500);
 						sunkUnsunk = true;
-						cSunk = true; 
+						cSunk = true;
 						system("cls");
 						displayBlankTwoa(board, shipsPlaced, happy);
 						totalCounterUnlock = true; //have to destroy at LEAST one ship to unlock game over scenario
 					}
 				}
 
-				 if (board[y][x] == "X" && shipsPlaced[y][x] == "b")
+				if (board[y][x] == "X" && shipsPlaced[y][x] == "b")
 				{
 					bCounter--;
 
@@ -2198,7 +2200,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 					}
 				}
 
-				 if (board[y][x] == "X" && shipsPlaced[y][x] == "a")
+				if (board[y][x] == "X" && shipsPlaced[y][x] == "a")
 				{
 					aCounter--;
 
@@ -2221,11 +2223,11 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 
 		totalCounter = (dCounter + sCounter + cCounter + bCounter + aCounter);
 
-	//}
-	//twoPlayerCounter++;
-	//cout << twoPlayerCounter; //testing where the counters were at and for the boolean, pay no mind to these.
-	//cout << " " << happy;
-	//cout << totalCounter;
+		//}
+		//twoPlayerCounter++;
+		//cout << twoPlayerCounter; //testing where the counters were at and for the boolean, pay no mind to these.
+		//cout << " " << happy;
+		//cout << totalCounter;
 		if (sunkUnsunk == false)
 		{
 			cout << setw(25) << white << "Destroyer: " << lightgreen << dCounter << white << "   Sub: " << lightgreen << sCounter << white << "   Cruiser: " << lightgreen << cCounter << white << "   Battleship: " << lightgreen << bCounter << white << "   Air-carrier: " << lightgreen << aCounter << endl;
@@ -2243,6 +2245,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 
 		}
 
+	}
 
 }
 
@@ -2847,10 +2850,11 @@ void missiles(string board[][11], string shipsPlaced[][11], string &spaceOne, in
 	
 		for (int count = 0; count < difficulty; count++)
 		{
+			shipHPCounter(board, shipsPlaced, happy);
 			if (victoryScreen == true)
 			{
 				count = difficulty - 1;
-				break;
+				//break;
 				//hitCheck = true;
 			}
 			else if (victoryScreen == false)
@@ -2862,23 +2866,14 @@ void missiles(string board[][11], string shipsPlaced[][11], string &spaceOne, in
 			//hitCheck = false;
 				do 
 				{
-					if (victoryScreen == true)
-					{
-						break;
-					}
 						hitCheck = false;
 						//system("cls");
 						//displayBlankTwoa(board, shipsPlaced);
 
-						if (victoryScreen == false && hitCheck == false)
-						{
+						
 							firstMissileYAxis(spaceOne, spaceOneNum, board, shipsPlaced, count, promptCheck, happy, difficulty);
 							secondMissileXAxis(spaceTwo, board, shipsPlaced, count, promptCheck, happy, difficulty);
-						}
-						else
-						{
-							hitCheck = true;
-						}
+					
 						if (board[spaceOneNum][spaceTwo] == "X" || board[spaceOneNum][spaceTwo] == "O")
 						{
 							system("cls");
@@ -2931,7 +2926,10 @@ void firstMissileYAxis(string &spaceOne, int &spaceOneNum, string board[][11], s
 	
 
 	//===========FOR TWO PLAYER==========================================================================
-
+	cin.clear();
+	cin.ignore(10000, '\n');
+	if (victoryScreen == false)
+	{
 		do
 		{
 			do
@@ -2968,6 +2966,7 @@ void firstMissileYAxis(string &spaceOne, int &spaceOneNum, string board[][11], s
 
 			}
 		} while (promptCheck == false);
+	}
 		//============================END TWO PLAYER==============================================================
 
 		//talking about the loop below not above.
@@ -3011,8 +3010,11 @@ void firstMissileYAxis(string &spaceOne, int &spaceOneNum, string board[][11], s
 void secondMissileXAxis(int &spaceTwo, string board[][11], string shipsPlaced[][11], int &count, bool &promptCheck, bool &happy, int &difficulty)
 {
 	promptCheck = false;
-	
-	
+	cin.clear();
+	cin.ignore(10000, '\n');
+
+	if (victoryScreen == false)
+	{
 		while (!promptCheck)
 		{
 
@@ -3049,7 +3051,7 @@ void secondMissileXAxis(int &spaceTwo, string board[][11], string shipsPlaced[][
 
 		}
 		promptCheck = false;
-	
+	}
 
 }
 
@@ -3075,7 +3077,7 @@ void displayHit(int count, int difficulty) // not set to anything yet.
 	cout << setw(100) << "  | |    / _ \\ |   /  | (_ | _|  | |      / _ \\  | (_| (_) | |_| || ||   / _|| |) | " << endl;
 	cout << setw(100) << "  |_|   /_/ \\_\\|_|_\\   \\___|___| |_|     /_/ \\_\\  \\___\\__\\_\\\\___/|___|_|_\\___|___/  " << endl;
 
-
+	//cout << victoryScreen; //testing
 
 
 	//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
@@ -3101,7 +3103,7 @@ void displayMiss(int count, int difficulty) //Still unable to get displayed prop
 
 	//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
 	count = (difficulty - 1) - count; // change 30 to 'difficulty' and adjust difficulty to amount of shots
-
+	//cout << victoryScreen; //testing
 	cout << endl << setw(55) << "You have, " << count << " shots left." << endl;
 	cout << endl << endl << endl << endl;
 
