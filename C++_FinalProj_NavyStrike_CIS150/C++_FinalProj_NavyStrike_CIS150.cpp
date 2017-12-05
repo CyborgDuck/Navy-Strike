@@ -47,6 +47,7 @@ ostream& operator<<(ostream &stm, const COLOR &c)
 
 //global variables
 static bool victoryScreen = false;
+static bool endInput = false;
 
 //==================Function Prototypes==============
 void intro(int&);
@@ -129,8 +130,8 @@ int main()
 
 				 //Functions
 
-				 //intro(players);  //currently to test deeper code comment this out, set players = 2;
-	mainMenu(); //Skip past the intro straight into the main menu;
+	intro(players);  //currently to test deeper code comment this out, set players = 2;
+	//mainMenu(); //Skip past the intro straight into the main menu;
 
 				//board_intilization(); //board intilization will go into the functions OnePlayer(), TwoPlayer() // board intilization is completely replaced with, displayBlank.
 
@@ -351,18 +352,20 @@ void intro(int &players)
 
 int mainMenu()
 {
-	int players = 0;
-	static int difficulty = 50; //How many guesses the player has before losing the game
-	static int boardNum;
-	static bool boardChoose = false;
-	bool menuNumber = false;
-	//MENU
+	while (!endInput)
+	{
+		int players = 0;
+		static int difficulty = 50; //How many guesses the player has before losing the game
+		static int boardNum;
+		static bool boardChoose = false;
+		bool menuNumber = false;
+		//MENU
 
-	//players = mainMenu();
-	//players = 2; //comment this out on release. and uncomment players = intro();
-	//players = 1; //comment this out on release and uncomment players = 2 or players = intro();
-	//players = 3; //comment this out on release and uncomment players = 2 or players = intro();
-	
+		//players = mainMenu();
+		//players = 2; //comment this out on release. and uncomment players = intro();
+		//players = 1; //comment this out on release and uncomment players = 2 or players = intro();
+		//players = 3; //comment this out on release and uncomment players = 2 or players = intro();
+
 		do
 		{
 			//Run this at least once
@@ -405,61 +408,62 @@ int mainMenu()
 			cout << endl << setw(62) << white << "Enter 1 - 3: ";
 
 			//keep running until the player gives an appropriate number
-			
+
 			cin >> players;
-		
 
 
-		//players has to equal 1-3 if it does not, run it again.
-		if (players == 1 || players == 2 || players == 3)//HERE doesnt seem to want to loop for some reason also need an array for the player choice since this is staying a void function to pass on the choice 1 or 2 Maybe an OPTION button to change the colors? that would be cool. maybe a few presets
+
+			//players has to equal 1-3 if it does not, run it again.
+			if (players == 1 || players == 2 || players == 3)//HERE doesnt seem to want to loop for some reason also need an array for the player choice since this is staying a void function to pass on the choice 1 or 2 Maybe an OPTION button to change the colors? that would be cool. maybe a few presets
+			{
+				menuNumber = true;
+			}
+			else if (players != 1 || players != 2 || players != 3)
+			{
+				system("cls");
+				cout << endl << endl << endl << endl << endl << endl << endl;
+				cout << setw(75) << lightred << "Invalid Input, please try a number 1-3" << endl;
+				cin.clear();
+				cin.ignore(10000, '\n'); // cin clear and cin.ignore was important to have to stop a infinite loop if someone puts a character into the main menu. and not 1-3
+				//players = 0;
+				Sleep(1000);
+				//menuNumber = false;
+				//break;
+			}
+			else
+			{
+				cout << "Your trying to break my program, are you? I can do that myself, try again." << endl;
+				Sleep(1000);
+			}
+
+
+		} while (menuNumber == false);
+		system("cls");
+
+		if (players == 1)//1 player vs ai.
 		{
-			menuNumber = true;
+			onePlayer(difficulty, boardNum, boardChoose);
+
 		}
-		else if (players != 1 || players != 2 || players != 3)
+		else if (players == 2)//2 players - Primary Focus
 		{
-			system("cls");
-			cout << endl << endl << endl << endl << endl << endl << endl;
-			cout << setw(75) << lightred << "Invalid Input, please try a number 1-3" << endl;
-			cin.clear();
-			cin.ignore(10000, '\n'); // cin clear and cin.ignore was important to have to stop a infinite loop if someone puts a character into the main menu. and not 1-3
-			//players = 0;
-			Sleep(1000);
-			//menuNumber = false;
-			//break;
+
+			TwoPlayer(difficulty);
+
+		}
+		else if (players == 3)//Options
+		{
+			Options(difficulty, boardNum, boardChoose);
 		}
 		else
 		{
-			cout << "Your trying to break my program, are you? I can do that myself, try again." << endl;
-			Sleep(1000);
+			cout << "How'd you get here? Your not supposed to be here." << endl;
+
+
 		}
 
-
-	} while (menuNumber == false);
-	system("cls");
-
-	if (players == 1)//1 player vs ai.
-	{
-		onePlayer(difficulty, boardNum, boardChoose);
-
+		return players;
 	}
-	else if (players == 2)//2 players - Primary Focus
-	{
-
-		TwoPlayer(difficulty);
-
-	}
-	else if (players == 3)//Options
-	{
-		Options(difficulty, boardNum, boardChoose);
-	}
-	else
-	{
-		cout << "How'd you get here? Your not supposed to be here." << endl;
-
-
-	}
-
-	return players;
 }
 
 void TwoPlayer(int difficulty)
@@ -2842,7 +2846,9 @@ cout << setw(115) << darkgrey << div << endl;
 void missiles(string board[][11], string shipsPlaced[][11], string &spaceOne, int &spaceTwo, int &spaceOneNum, bool &promptCheck, int &difficulty, bool &happy)
 {
 	bool hitCheck = false;
-	
+	string exitVal;
+	bool exitInput = false;
+	victoryScreen = false;
 	//cout << victoryScreen; //testing
 	//while (!victoryScreen) // not working >< argh
 	//{
@@ -2912,7 +2918,29 @@ void missiles(string board[][11], string shipsPlaced[][11], string &spaceOne, in
 
 			} 
 		}
-
+		while (!exitInput)
+		{
+			cout << endl << endl << endl;
+			cout << setw(65) << white << "DO YOU WISH TO PLAY AGAIN? y/n: ";
+			cin >> exitVal;
+			if (exitVal == "N" || exitVal == "n" || exitVal == "No" || exitVal == "no" || exitVal == "NO")
+			{
+				exitInput = true;
+				endInput = true;
+				mainMenu();
+			}
+			else if (exitVal == "Y" || exitVal == "y" || exitVal == "Yes" || exitVal == "yes" || exitVal == "YES")
+			{
+				exitInput = true;
+				mainMenu();
+			}
+			else
+			{
+				invalidInputRefresh();
+				Sleep(2000);
+				system("cls");
+			}
+		}
 }
 
 void firstMissileYAxis(string &spaceOne, int &spaceOneNum, string board[][11], string shipsPlaced[][11], int &count, bool &promptCheck, bool &happy, int &difficulty)
@@ -3318,6 +3346,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 	int cCounter = 3;//} COUNTERS FOR SINGLE PLAYER HP-SYSTEM
 	int bCounter = 4;//}
 	int aCounter = 5;//}
+	string exitVar;
 	bool validInput = false; //Making sure their guess stays within bounds of the board
 
 							 //int shotsLeft = 30; see its in 'count'
@@ -3818,6 +3847,8 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
 			cout << setw(35) << white << "=====================" << endl;
 		}
+
+
 	}
 	else if (random == 6)
 	{
@@ -4147,7 +4178,18 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 			cout << setw(35) << white << "=====================" << endl;
 		}
 	}
+	cout << white << setw(65) << "DO YOU WISH TO PLAY AGAIN? y/n: ";
+	cin >> exitVar;
 
+	if (exitVar == "N" || exitVar == "n" || exitVar == "No" || exitVar == "no" || exitVar == "NO")
+	{
+		endInput = true;
+		mainMenu();
+	}
+	else
+	{
+		mainMenu();
+	}
 }
 
 
