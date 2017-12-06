@@ -3706,9 +3706,6 @@ void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string 
 		cLETTER++;
 		sLETTER = cLETTER;
 
-		//old conversion that worked with the char boards.
-		//letter++;
-		//cLETTER++;
 	}
 
 	//cout << spaceOneNum; //testing to see if it counts right.
@@ -3764,12 +3761,10 @@ void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipN
 			cout << setw(85) << lightred << "============================================================" << endl;
 			cout << setw(85) << "This is not a valid input. Try again, using the numbers 1-10." << endl;
 			cout << setw(85) << "============================================================" << endl;
-			//cout << setw(60) << white << "Using numbers 1-10, enter your second coordinate: ";
 			cout << endl;
 			cin.clear();
 			cin.ignore(10000, '\n');
 			Sleep(1500);
-			//system("cls");
 
 		}
 
