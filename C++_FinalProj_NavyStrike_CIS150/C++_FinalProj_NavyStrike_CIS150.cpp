@@ -63,13 +63,14 @@ void firstCoordOne(string, int&, string[][11], bool&);
 void firstCoordTwo(string, int&, bool&, string[], int&, string[][11], string[][11], bool&); //Needed to change this to "firstCoordTwo" because you use more variables than Single Player
 void secCoord(int&, bool&, string[][11], string[], int&, string[][11], bool&);
 void secCoordOne(int&, bool&, string[][11]);
-bool refresh(int&, string[][11], string[][11], int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, string[][11], string[][11], string[][11], string[][11], string[][11], bool&, string[][11], string[][11]);
+bool refresh(int&, string[][11], string[][11], int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, bool&);
 void errorRefresh(bool&, bool&);
 void invalidInputRefresh();
 void displayBlankTwo(string[][11], string[][11], bool&);
 void displayBlankOne(string[][11]);
 void displayMiss(int, int);
 void displayHit(int, int);
+void exit();
 
 //movement positions.
 void setPos(int&, int&, int&, int&, string&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, string[][11], string[], bool&, string[][11], bool&);
@@ -79,11 +80,7 @@ void left(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&
 void right(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 
 //ship Hp
-void destroyerHP(int&, int&, int&, int&, string[][11], string&);
-void submarineHP(int&, int&, int&, int&, int&, string[][11], string&);
-void cruiserHP(int&, int&, int&, int&, int&, string[][11], string&);
-void battleshipHP(int&, int&, int&, int&, int&, int&, string[][11], string&);
-void carrierHP(int&, int&, int&, int&, int&, int&, int&, string[][11], string&);
+
 void shipDestroyed();
 
 void shipHPCounter(string[][11], string[][11], bool&);
@@ -130,8 +127,8 @@ int main()
 
 				 //Functions
 
-	intro(players);  //currently to test deeper code comment this out, set players = 2;
-	//mainMenu(); //Skip past the intro straight into the main menu;
+	//intro(players);  //currently to test deeper code comment this out, set players = 2;
+	mainMenu(); //Skip past the intro straight into the main menu;
 
 				//board_intilization(); //board intilization will go into the functions OnePlayer(), TwoPlayer() // board intilization is completely replaced with, displayBlank.
 
@@ -146,62 +143,6 @@ int main()
 
 
 //================================ERIK'S FUNCTIONS BELOW==============================================================================
-
-//void board_intilization()
-//{
-//
-//	//this function is being used to give the player a prompt on where they should place the board.
-//	//May be possible to use this one to highlight the color of the letter that is currently being selected and then the number, Erik 11/15/2017
-//
-//	//const int victorVec = 2; // possible idea for a 3d array
-//	const int ROWS = 11;
-//	const int COLUMNS = 11;
-//
-//	//variables
-//	string div = "===============================================================================================================";
-//	string between = "---------------------------------------------------------------------------------------------------------------";
-//	
-//	//       \/ [victorVec] 3d array
-//	char board[ROWS][COLUMNS] = {	{ ' ',  '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '0'  },
-//									{ 'A',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'B',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'C',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'D',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'E',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'F',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'G',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'H',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'I',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' },
-//									{ 'J',  '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' , '~' } };
-//
-//
-//
-//	//This will be the board that the player uses to place and will look similar to the player guessing. except will be rewritten over the hidden spots
-//	//2 for loops for making the board
-//	cout << setw(115) << darkgrey << div << endl; // divider ' === '
-//	for (int i = 0; i < ROWS; i++)
-//	{
-//		cout << darkgrey << setw(5) << "|";
-//		for (int s = 0; s < COLUMNS; s++)
-//		{
-//			cout << setw(5) << lightcyan << board[i][s] << setw(5) << darkgrey << "|";
-//		}
-//		if (i != ROWS - 1)
-//		{
-//			cout << endl << setw(115) << between << endl;
-//		}
-//		else
-//		{
-//			cout << endl;
-//		}
-//	}
-//	cout << setw(115) << darkgrey << div << endl;
-//
-//	//was considering sending a few variables to displayblank.. but wouldnt this also call displayBlank within the current function? I dont want that.
-//	//displayBlank();
-//
-//
-//}
 
 void intro(int &players)
 {
@@ -322,7 +263,7 @@ void intro(int &players)
 	cout << "                      ~               ~                ~               ~                ~               " << endl;
 	//ascii art, SOURCE: http://ascii.co.uk/art/battleship
 	cout << endl << endl;
-	Sleep(5500);  //if returning to the color switch change the timer to something less than 5.5seconds
+	Sleep(3500);  //if returning to the color switch change the timer to something less than 5.5seconds
 	system("cls");
 	// very sensitive to spaces and tabs do not change.
 
@@ -338,7 +279,7 @@ void intro(int &players)
 		Sleep(10);
 	}
 
-	cout << setw(65) << white << "Created By," << endl << setw(70) << "Erik, Tristan and Chuck" << endl << setw(65) << "Version 0.03" << endl; //update version count, for every day in class? we will be at 0.08 on Dec 6, 2017 	
+	cout << setw(65) << white << "Created By," << endl << setw(70) << "Erik, Tristan and Chuck" << endl << setw(65) << "Version 0.91" << endl; //update version count, for every day in class? we will be at 0.08 on Dec 6, 2017 	
 	for (int i = 0; i < 16; i++)
 	{
 		cout << endl;
@@ -388,7 +329,7 @@ int mainMenu()
 			cout << endl << setw(65) << "1. ONE PLAYER \n";
 			cout << setw(66) << "2. TWO PLAYERS \n"; //Only two player will work for the time being, 1 player will require an ai.
 			cout << setw(62) << "3. OPTIONS \n"; //If time allows, come back to try to edit colors.
-
+			cout << setw(59) << "4. EXIT \n"; 
 
 
 
@@ -405,7 +346,7 @@ int mainMenu()
 			//SOURCE: http://ascii.co.uk/art/lighthouse Made originally by: unknown
 			// very sensitive to spaces and tabs do not change.
 
-			cout << endl << setw(62) << white << "Enter 1 - 3: ";
+			cout << endl << setw(62) << white << "Enter 1 - 4: ";
 
 			//keep running until the player gives an appropriate number
 
@@ -414,15 +355,15 @@ int mainMenu()
 
 
 			//players has to equal 1-3 if it does not, run it again.
-			if (players == 1 || players == 2 || players == 3)//HERE doesnt seem to want to loop for some reason also need an array for the player choice since this is staying a void function to pass on the choice 1 or 2 Maybe an OPTION button to change the colors? that would be cool. maybe a few presets
+			if (players == 1 || players == 2 || players == 3 || players == 4)//HERE doesnt seem to want to loop for some reason also need an array for the player choice since this is staying a void function to pass on the choice 1 or 2 Maybe an OPTION button to change the colors? that would be cool. maybe a few presets
 			{
 				menuNumber = true;
 			}
-			else if (players != 1 || players != 2 || players != 3)
+			else if (players != 1 || players != 2 || players != 3 || players != 4)
 			{
 				system("cls");
 				cout << endl << endl << endl << endl << endl << endl << endl;
-				cout << setw(75) << lightred << "Invalid Input, please try a number 1-3" << endl;
+				cout << setw(75) << lightred << "Invalid Input, please try a number 1-4" << endl;
 				cin.clear();
 				cin.ignore(10000, '\n'); // cin clear and cin.ignore was important to have to stop a infinite loop if someone puts a character into the main menu. and not 1-3
 				//players = 0;
@@ -454,6 +395,10 @@ int mainMenu()
 		else if (players == 3)//Options
 		{
 			Options(difficulty, boardNum, boardChoose);
+		}
+		else if (players == 4)
+		{
+			exit();
 		}
 		else
 		{
@@ -543,20 +488,6 @@ void TwoPlayer(int difficulty)
 	int shipsLeft = ships;
 
 
-
-	string cleanSlate[ROWS][COLUMNS] = {	{ " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-											{ "A",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
-											{ "B",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
-											{ "C",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },		//obsolete board
-											{ "D",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },		//need to remove where their located/sent to before commenting out.	
-											{ "E",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
-											{ "F",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
-											{ "G",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
-											{ "H",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
-											{ "I",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
-											{ "J",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" } };
-
-
 	string board[ROWS][COLUMNS] = { { " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
 									{ "A",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
 									{ "B",  "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" , "~" },
@@ -587,105 +518,6 @@ void TwoPlayer(int difficulty)
 	//new individual ship boards, Erik 11/27/17 this will replace shipsPlaced
 
 	//Obsolete boards, Erik 11/28/17, need to remove where their being sent to before deleting / commenting out.
-
-	string destroyerBOARD[ROWS][COLUMNS] = {	{ " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-												{ "A",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "B",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "C",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "D",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "E",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "F",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "G",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "H",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "I",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "J",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
-
-	string subBOARD[ROWS][COLUMNS] = {  { " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-										{ "A",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-										{ "B",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-										{ "C",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-										{ "D",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-										{ "E",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-										{ "F",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-										{ "G",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-										{ "H",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-										{ "I",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-										{ "J",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
-
-	string cruiserBOARD[ROWS][COLUMNS] = {  { " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-											{ "A",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "B",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "C",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "D",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "E",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "F",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "G",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "H",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "I",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "J",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
-
-	string battleshipBOARD[ROWS][COLUMNS] = {	{ " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-												{ "A",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "B",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "C",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "D",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "E",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "F",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "G",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "H",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "I",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-												{ "J",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
-
-	string carrierBOARD[ROWS][COLUMNS] = {  { " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-											{ "A",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "B",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "C",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "D",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "E",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "F",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "G",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "H",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "I",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" },
-											{ "J",  "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" , "O" } };
-
-
-
-	string shipHits[ROWS][COLUMNS] = {  { " ",  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10" },
-										{ "A",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
-										{ "B",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
-										{ "C",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
-										{ "D",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
-										{ "E",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
-										{ "F",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
-										{ "G",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
-										{ "H",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
-										{ "I",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" },
-										{ "J",  "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" , "X" } };
-
-
-
-
-	//come back to this if i can figure out the position marker.
-	//Still want to try to make this go back and forth like a real battleship game, player one goes then player two for placing ships and taking turns.
-	//work on player 2 after player one is fully working, will be easier. Erik 11/15/2017
-
-	//for (int x = 0; x < 2; x++)
-	//{
-	//	if (x == 0)
-	//	{
-	//		PlayerX = "One ";
-	//	}
-	//	else if (x == 1)
-	//	{
-	//		PlayerX = "Two ";
-	//	}
-	//	cout << "Enter your positions player " << PlayerX;
-	//	Sleep(3000);
-	//	system("cls");
-	//	board_intilization();
-	//}
-
-
 
 	placeShipsPlayerOne();
 
@@ -718,7 +550,7 @@ void TwoPlayer(int difficulty)
 
 				setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck, shipsPlaced, happy);
 				cout << endl << endl;
-				validInput = refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, destroyerBOARD, subBOARD, cruiserBOARD, battleshipBOARD, carrierBOARD, validInput, cleanSlate, shipHits);
+				validInput = refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, validInput);
 			} while (validInput == false);
 
 		}
@@ -729,85 +561,8 @@ void TwoPlayer(int difficulty)
 
 	} while (happy == false);
 
-
-	//destroyerHP(); // idea to break this up so that each ship has its own function...
-	//if this doesnt work break the if else chain keep the functions within this, 'for loop'.
-
-	//}
-	/*else if (count == 1)
-	{
-	firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
-	secCoord(spaceTwo, promptCheck, board, shipName, count);
-
-
-	setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck);
-	cout << endl << endl;
-	refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
-	//submarineHP();
-
-	}
-	else if (count == 2)
-	{
-	firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
-	secCoord(spaceTwo, promptCheck, board, shipName, count);
-
-
-	setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck);
-	cout << endl << endl;
-	refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
-	//cruiserHP();
-
-	}
-	else if (count == 3)
-	{
-	firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
-	secCoord(spaceTwo, promptCheck, board, shipName, count);
-
-
-	setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck);
-	cout << endl << endl;
-	refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
-	//battleshipHP();
-
-	}
-	else if (count == 4)
-	{
-	firstCoordTwo(spaceOne, spaceOneNum, promptCheck, shipName, count, board, shipsPlaced); // count and ships could go into here to move the cout prompt down?
-	secCoord(spaceTwo, promptCheck, board, shipName, count);
-
-
-	setPos(spaceOneNum, spaceTwo, count, destroy1, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy, board, shipName, promptCheck);
-	cout << endl << endl;
-	refresh(spaceOneNum, board, shipsPlaced, spaceTwo, destroy1, count, userDirectionalInput, sub1, sub2, cruis1, cruis2, battleship1, battleship2, battleship3, carrier1, carrier2, carrier3, carrier4, sub, cruis, battleship, carrier, destroy);
-	//carrierHP();
-
-	}*/
-	//replacing the shipsplaced on to the board making it visible to player one to see where their placed.
-	//This does not update with every placed ship though. perhaps make this a function. Erik - 11/15/2017
-	//maybe can use board intilization to refresh. what the board looks like, from placement to placement.
-
-
-
-
-	//a prompt here confirming player 1s ship placement? or something to let player two to take over
-	// player two starts to set ships? 11/26/17 Erik.
-
-	//player two starts to attack
-	//system("cls");  // class 11/27/17
-	//cleaningSlate(cleanSlate);
-
-
 	playerTwoTakeOver();
 	missiles(board, shipsPlaced, spaceOne, spaceTwo, spaceOneNum, promptCheck, difficulty, happy);
-
-
-
-
-
-
-
-
-
 
 }
 
@@ -985,8 +740,7 @@ void right(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, int &sub1
 
 }
 
-
-bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int &spaceTwo, int &destroy1, int &count, string &userDirectionalInput, int &sub1, int &sub2, int &cruis1, int &cruis2, int &battleship1, int &battleship2, int &battleship3, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &sub, int &cruis, int &battleship, int &carrier, int &destroy, string destroyerBOARD[][11], string subBOARD[][11], string cruiserBOARD[][11], string battleshipBOARD[][11], string carrierBOARD[][11], bool &validInput, string cleanSlate[][11], string shipHits[][11])
+bool refresh(int &spaceOneNum, string board[][11], string shipsPlaced[][11], int &spaceTwo, int &destroy1, int &count, string &userDirectionalInput, int &sub1, int &sub2, int &cruis1, int &cruis2, int &battleship1, int &battleship2, int &battleship3, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &sub, int &cruis, int &battleship, int &carrier, int &destroy, bool &validInput)
 {
 	//reduced 500 lines of code in refresh(); by making error messages a function. Erik 11/29/17
 
@@ -2253,510 +2007,6 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 
 }
 
-void destroyerHP(int &destroy, int &destroy1, int &spaceOneNum, int &spaceTwo, string board[][11], string &userDirectionalInput)
-{
-	int destHP = 2;
-
-	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up" || userDirectionalInput == "U" || userDirectionalInput == "u")
-	{
-		if (board[spaceOneNum][spaceTwo] == "X")  //before i get ahead of myself destroyerBOARD possibly rewrite in board.
-		{
-			destHP = destHP - 1;
-		}
-		else if (board[destroy1][spaceTwo] == "X")
-		{
-			destHP = destHP - 1;
-		}
-
-	}
-	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down" || userDirectionalInput == "D" || userDirectionalInput == "d")
-	{
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			destHP = destHP - 1;
-		}
-		else if (board[destroy1][spaceTwo] == "X")
-		{
-			destHP = destHP - 1;
-		}
-
-	}
-	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left" || userDirectionalInput == "L" || userDirectionalInput == "l")
-	{
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			destHP = destHP - 1;
-		}
-		else if (board[spaceOneNum][destroy1] == "X")
-		{
-			destHP = destHP - 1;
-		}
-
-	}
-	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right" || userDirectionalInput == "R" || userDirectionalInput == "r")
-	{
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			destHP = destHP - 1;
-		}
-		else if (board[spaceOneNum][destroy1] == "X")
-		{
-			destHP = destHP - 1;
-		}
-
-	}
-
-	if (destHP == 0)
-	{
-
-		shipDestroyed();
-		cout << "You lost your destroyer." << endl;
-		Sleep(1500);
-	}
-
-}
-
-void submarineHP(int &sub, int &sub1, int &sub2, int &spaceOneNum, int &spaceTwo, string board[][11], string &userDirectionalInput)
-{
-	int subHP = 3;
-
-	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up" || userDirectionalInput == "U" || userDirectionalInput == "u")
-	{
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			subHP = subHP - 1;
-		}
-		else if (board[sub1][spaceTwo] == "X")
-		{
-			subHP = subHP - 1;
-		}
-		else if (board[sub2][spaceTwo] == "X")
-		{
-			subHP = subHP - 1;
-		}
-
-	}
-
-	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down" || userDirectionalInput == "D" || userDirectionalInput == "d")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			subHP = subHP - 1;
-		}
-		else if (board[sub1][spaceTwo] == "X")
-		{
-			subHP = subHP - 1;
-		}
-		else if (board[sub2][spaceTwo] == "X")
-		{
-			subHP = subHP - 1;
-		}
-
-	}
-
-	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left" || userDirectionalInput == "L" || userDirectionalInput == "l")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			subHP = subHP - 1;
-		}
-
-		else if (board[spaceOneNum][sub1] == "X")
-		{
-			subHP = subHP - 1;
-		}
-
-		else if (board[spaceOneNum][sub2] == "X")
-		{
-			subHP = subHP - 1;
-		}
-
-
-	}
-
-	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right" || userDirectionalInput == "R" || userDirectionalInput == "r")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			subHP = subHP - 1;
-		}
-
-		else if (board[spaceOneNum][sub1] == "X")
-		{
-			subHP = subHP - 1;
-		}
-
-		else if (board[spaceOneNum][sub2] == "X")
-		{
-			subHP = subHP - 1;
-		}
-
-	}
-
-	if (subHP == 0)
-	{
-
-		shipDestroyed();
-		cout << "You lost your submarine." << endl;
-		Sleep(1500);
-	}
-
-}
-
-
-void cruiserHP(int &cruis, int &cruis1, int &cruis2, int &spaceOneNum, int &spaceTwo, string board[][11], string &userDirectionalInput)
-{
-	int cruisHP = 3;
-
-	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up" || userDirectionalInput == "U" || userDirectionalInput == "u")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			cruisHP = cruisHP - 1;
-		}
-		else if (board[cruis1][spaceTwo] == "X")
-		{
-			cruisHP = cruisHP - 1;
-		}
-		else if (board[cruis2][spaceTwo] == "X")
-		{
-			cruisHP = cruisHP - 1;
-		}
-
-
-	}
-
-	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down" || userDirectionalInput == "D" || userDirectionalInput == "d")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			cruisHP = cruisHP - 1;
-		}
-		else if (board[cruis1][spaceTwo] == "X")
-		{
-			cruisHP = cruisHP - 1;
-		}
-		else if (board[cruis2][spaceTwo] == "X")
-		{
-			cruisHP = cruisHP - 1;
-		}
-
-	}
-
-	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left" || userDirectionalInput == "L" || userDirectionalInput == "l")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			cruisHP = cruisHP - 1;
-		}
-		else if (board[spaceOneNum][cruis1] == "X")
-		{
-			cruisHP = cruisHP - 1;
-		}
-		else if (board[spaceOneNum][cruis2] == "X")
-		{
-			cruisHP = cruisHP - 1;
-		}
-
-	}
-
-	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right" || userDirectionalInput == "R" || userDirectionalInput == "r")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			cruisHP = cruisHP - 1;
-		}
-		else if (board[spaceOneNum][cruis1] == "X")
-		{
-			cruisHP = cruisHP - 1;
-		}
-		else if (board[spaceOneNum][cruis2] == "X")
-		{
-			cruisHP = cruisHP - 1;
-		}
-
-
-	}
-
-	if (cruisHP == 0)
-	{
-
-		shipDestroyed();
-		cout << "You lost your cruiser." << endl;
-		Sleep(1500);
-	}
-
-}
-
-void battleshipHP(int &battleship, int &battleship1, int &battleship2, int &battleship3, int &spaceOneNum, int &spaceTwo, string board[][11], string &userDirectionalInput)
-{
-	int battleHP = 4;
-
-	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up" || userDirectionalInput == "U" || userDirectionalInput == "u")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-		else if (board[battleship1][spaceTwo] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-		else if (board[battleship2][spaceTwo] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-		else if (board[battleship3][spaceTwo] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-
-	}
-
-	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down" || userDirectionalInput == "D" || userDirectionalInput == "d")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-		else if (board[battleship1][spaceTwo] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-		else if (board[battleship2][spaceTwo] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-		else if (board[battleship3][spaceTwo] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-
-	}
-
-	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left" || userDirectionalInput == "L" || userDirectionalInput == "l")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-		else if (board[spaceOneNum][battleship1] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-		else if (board[spaceOneNum][battleship2] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-		else if (board[spaceOneNum][battleship3] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-
-	}
-
-	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right" || userDirectionalInput == "R" || userDirectionalInput == "r")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-		else if (board[spaceOneNum][battleship1] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-		else if (board[spaceOneNum][battleship2] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-		else if (board[spaceOneNum][battleship3] == "X")
-		{
-			battleHP = battleHP - 1;
-		}
-
-	}
-
-	if (battleHP == 0)
-	{
-
-		shipDestroyed();
-		cout << "You lost your battleship." << endl;
-		Sleep(1500);
-	}
-
-}
-
-void carrierHP(int &carrier, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &spaceOneNum, int &spaceTwo, string board[][11], string &userDirectionalInput)
-{
-	int carriHP = 5;
-
-	if (userDirectionalInput == "up" || userDirectionalInput == "UP" || userDirectionalInput == "Up" || userDirectionalInput == "U" || userDirectionalInput == "u")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[carrier1][spaceTwo] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[carrier2][spaceTwo] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[carrier3][spaceTwo] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[carrier4][spaceTwo] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-
-	}
-
-	else if (userDirectionalInput == "down" || userDirectionalInput == "DOWN" || userDirectionalInput == "Down" || userDirectionalInput == "D" || userDirectionalInput == "d")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[carrier1][spaceTwo] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[carrier2][spaceTwo] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[carrier3][spaceTwo] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[carrier4][spaceTwo] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-
-	}
-
-	else if (userDirectionalInput == "left" || userDirectionalInput == "LEFT" || userDirectionalInput == "Left" || userDirectionalInput == "L" || userDirectionalInput == "l")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[spaceOneNum][carrier1] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[spaceOneNum][carrier2] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[spaceOneNum][carrier3] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[spaceOneNum][carrier4] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-
-	}
-
-	else if (userDirectionalInput == "right" || userDirectionalInput == "RIGHT" || userDirectionalInput == "Right" || userDirectionalInput == "R" || userDirectionalInput == "r")
-	{
-
-		if (board[spaceOneNum][spaceTwo] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[spaceOneNum][carrier1] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[spaceOneNum][carrier2] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[spaceOneNum][carrier3] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-		else if (board[spaceOneNum][carrier4] == "X")
-		{
-			carriHP = carriHP - 1;
-		}
-
-	}
-
-	if (carriHP == 0)
-	{
-
-		shipDestroyed();
-		cout << "You lost your carrier." << endl;
-		Sleep(1500);
-	}
-
-}
-
-/*bool chkPlacement(bool &validInput, string board[][11], int &destroy, int &destroy1, int &spaceOneNum, int &spaceTwo, string cleanSlate[][11])
-{
-
-//checks the placement with all the ships that they are okay to be placed where the user says, otherwise redo that ship placement.
-const int ROWS = 11;
-const int COLS = 11;
-
-
-if (board[spaceOneNum][spaceTwo] == "~" || board[spaceOneNum][spaceTwo] == "O") // or "O"
-{
-
-
-validInput = true;
-}
-else
-{
-system("cls");
-cout << "There's a ship here already, redo your ship placement." << endl;
-Sleep(1000);
-
-for (int i = 0; i < ROWS; i++)
-{
-for (int y = 0; y < COLS; y++)
-{
-board[i][y] = cleanSlate[i][y];
-
-}
-
-}
-
-validInput = false;
-}
-
-
-
-
-
-
-return validInput;
-
-}*/
-
 bool happyPlacement(bool &happy, string shipsPlaced[][11], string board[][11])
 {
 	string yesNo;
@@ -2766,7 +2016,7 @@ bool happyPlacement(bool &happy, string shipsPlaced[][11], string board[][11])
 	{
 		system("cls");
 		displayBlankTwo(board, shipsPlaced, happy);
-		cout << endl << endl << setw(65) << white << "Are you happy with your ships placement? (y/n): ";
+		cout << endl << endl << setw(60) << white << "Are you happy with your ships placement? (" << yellow << "y" << white << "/" << yellow << "n" << white << "): ";
 		cin >> yesNo;
 		if (yesNo == "yes" || yesNo == "YES" || yesNo == "Yes" || yesNo == "y" || yesNo == "Y" || yesNo == "no" || yesNo == "NO" || yesNo == "No" || yesNo == "n" || yesNo == "N")
 		{
@@ -2800,48 +2050,6 @@ void boardRESET(string shipsPlaced[][11])
 	}
 
 }
-
-/*void cleaningSlate(string cleanSlate[][11])
-{
-//obsolete function now i think. 11/28/17 Erik.
-string div = "===============================================================================================================";
-string between = "---------------------------------------------------------------------------------------------------------------";
-const int ROWS = 11;
-const int COLUMNS = 11;
-
-cout << setw(115) << darkgrey << div << endl; // divider ' === '
-for (int i = 0; i < ROWS; i++)
-{
-cout << darkgrey << setw(5) << "|";
-for (int s = 0; s < COLUMNS; s++)
-{
-//if else added by Tristan to make our X equal red & O equal white.
-if (cleanSlate[i][s] == "X")
-{
-cout << setw(5) << red << cleanSlate[i][s] << setw(5) << darkgrey << "|";
-}
-else if (cleanSlate[i][s] == "O")
-{
-cout << setw(5) << white << cleanSlate[i][s] << setw(5) << darkgrey << "|";
-}
-else
-{
-cout << setw(5) << cyan << cleanSlate[i][s] << setw(5) << darkgrey << "|";
-}
-}
-if (i != ROWS - 1)
-{
-cout << endl << setw(115) << between << endl;
-}
-else
-{
-cout << endl;
-}
-}
-cout << setw(115) << darkgrey << div << endl;
-
-
-}*/
 
 void missiles(string board[][11], string shipsPlaced[][11], string &spaceOne, int &spaceTwo, int &spaceOneNum, bool &promptCheck, int &difficulty, bool &happy)
 {
@@ -2921,7 +2129,7 @@ void missiles(string board[][11], string shipsPlaced[][11], string &spaceOne, in
 		while (!exitInput)
 		{
 			cout << endl << endl << endl;
-			cout << setw(65) << white << "DO YOU WISH TO PLAY AGAIN? y/n: ";
+			cout << setw(65) << white << "DO YOU WISH TO PLAY AGAIN? "<< yellow << "y" << white << "/" << yellow << "n" << white <<": ";
 			cin >> exitVal;
 			if (exitVal == "N" || exitVal == "n" || exitVal == "No" || exitVal == "no" || exitVal == "NO")
 			{
@@ -2967,9 +2175,9 @@ void firstMissileYAxis(string &spaceOne, int &spaceOneNum, string board[][11], s
 				displayBlankTwoa(board, shipsPlaced, happy); //board // lets you visualize the board when placing the ships cord on the X - ROWS axis
 
 				cout << endl;
-				cout << white << setw(55) << "Player two, you have " << (difficulty - count) << " missiles left" << endl; //change this to be like st, nd, rd, th on count
+				cout << white << setw(55) << "Player two, you have " << yellow << (difficulty - count) << white << " missiles left" << endl; //change this to be like st, nd, rd, th on count
 
-				cout << setw(75) << white << "Using letters A-J, enter your coordinates: ";
+				cout << setw(45) << white << "Using letters "<< yellow << "A" << white << "-" << yellow << "J" << white << ", enter your coordinates: ";
 				cin >> spaceOne;
 			} while (spaceOne.length() != 1);
 
@@ -3051,8 +2259,8 @@ void secondMissileXAxis(int &spaceTwo, string board[][11], string shipsPlaced[][
 			displayBlankTwoa(board, shipsPlaced, happy); //board // lets you visualize the board when placing the ships cord on the Y - COlS axis
 
 			cout << endl;
-			cout << white << setw(55) << "Player two, you have " << (difficulty - count) << " missiles left." << endl;
-			cout << setw(75) << white << "Using numbers 1-10, enter your second coordinate: ";
+			cout << white << setw(55) << "Player two, you have " << yellow << (difficulty - count) << white << " missiles left." << endl;
+			cout << setw(40) << white << "Using numbers " << yellow << "1" << white << "-" << yellow << "10" << white << ", enter your second coordinate: ";
 			cin >> spaceTwo;
 
 
@@ -3114,7 +2322,6 @@ void displayHit(int count, int difficulty) // not set to anything yet.
 	cout << endl << setw(54) << "You have, " << count << " shots left." << endl;
 	cout << endl << endl << endl << endl;
 }
-
 
 void displayMiss(int count, int difficulty) //Still unable to get displayed properly in command window
 {
@@ -3240,7 +2447,7 @@ void playerTwoTakeOver()
 		cout << left << white << "                                  Admiral Gial Ackbar~" << endl;
 		cout << left << darkgrey << "======================================================" << endl;
 		cout << endl << endl << endl << endl << endl << endl << endl << endl;
-		cout << setw(75) << right << white << "Waiting for player two to enter, 'Ready' " << endl << endl;
+		cout << setw(70) << right << white << "Waiting for player two to enter, '" << yellow << "R" << white << "eady' " << endl << endl;
 		cout << setw(55) << right << "Enter: ";
 		cin >> readyStatus;
 		if (readyStatus == "Ready" || readyStatus == "ready" || readyStatus == "r" || readyStatus == "R")
@@ -3278,7 +2485,7 @@ void placeShipsPlayerOne()
 		cout << white << "                                        President Skroob~" << endl;
 		cout << darkgrey << "===========================================================" << endl;
 		cout << endl << endl << endl << endl;
-		cout << setw(75) << right << white << "Waiting for player one to enter, 'Ready' " << endl << endl;
+		cout << setw(75) << right << white << "Waiting for player one to enter, '"<< yellow << "R" << white << "eady' " << endl << endl;
 		cout << setw(55) << right << "Enter: ";
 		cin >> readyStatusOne;
 
@@ -3290,6 +2497,12 @@ void placeShipsPlayerOne()
 	} while (notReadyOne == false);
 }
 
+void exit()
+{
+	cout << endl << endl << endl << endl << endl << endl << endl << endl;
+	cout << setw(65) << white << "Come back soon!" << endl;
+	Sleep(2000);
+}
 
 //================================ERIK'S FUNCTIONS ABOVE==============================================================================
 
@@ -4182,7 +3395,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 	while (!exitInput)
 	{
 		cout << endl << endl << endl;
-		cout << setw(65) << white << "DO YOU WISH TO PLAY AGAIN? y/n: ";
+		cout << setw(65) << white << "DO YOU WISH TO PLAY AGAIN? " << yellow << "y" << white << "/" << yellow << "n" << white << ": ";
 		cin >> exitVal;
 		if (exitVal == "N" || exitVal == "n" || exitVal == "No" || exitVal == "no" || exitVal == "NO")
 		{
@@ -4203,7 +3416,6 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 		}
 	}
 }
-
 
 //1player
 void firstCoordOne(string spaceOne, int& spaceOneNum, string blank[][11], bool& promptCheck)
@@ -4406,19 +3618,39 @@ void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string 
 	string sLETTER = "A";
 	char letter;
 	char cLETTER;
+	string visualHelper;
 
 	//===========FOR TWO PLAYER==========================================================================
+
 	do
 	{
 		do {
+			visualHelper = " ";
+			if (count == 0)
+			{
+				visualHelper = "Two";
+			}
+			else if (count == 1 || count == 2)
+			{
+				visualHelper = "Three";
+			}
+			else if (count == 3)
+			{
+				visualHelper = "Four";
+			}
+			else if (count == 4)
+			{
+				visualHelper = "Five";
+			}
+
 			//board_intilization(spaceOneNum, spaceTwo);
 			system("cls");
 			displayBlankTwo(board, shipsPlaced, happy); //board // lets you visualize the board when placing the ships cord on the X - ROWS axis
 
-			cout << endl;
-			cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
+			cout << endl << setw(20) << white << "The " << yellow << shipName[count] << white << " has " << yellow << visualHelper << white << " places it can be placed along the board." << endl;
+			cout << white << setw(59) << "Player one, enter your coordinates for the " << yellow << shipName[count] << endl;
 			//cout << setw(75) << white << "Using letters A-J, and then a number 1-10, enter your coordinates: ";
-			cout << setw(75) << white << "Using letters A-J, enter your coordinates: ";
+			cout << setw(40) << white << "Using letters "<< yellow <<"A"<< white << "-" << yellow << "J" << white <<"," << "enter your coordinates: ";
 			cin >> spaceOne;
 		} while (spaceOne.length() != 1);
 
@@ -4485,18 +3717,37 @@ void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string 
 
 void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipName[], int &count, string shipsPlaced[][11], bool &happy)
 {
-
+	string visualHelper; 
 	promptCheck = false;
 	while (!promptCheck)
 	{
+		visualHelper = " ";
+
+		if (count == 0)
+		{
+			visualHelper = "Two";
+		}
+		else if (count == 1 || count == 2)
+		{
+			visualHelper = "Three";
+		}
+		else if (count == 3)
+		{
+			visualHelper = "Four";
+		}
+		else if (count == 4)
+		{
+			visualHelper = "Five";
+		}
+
 
 		system("cls");
 		//board_intilization(spaceOneNum, spaceTwo);
 		displayBlankTwo(board, shipsPlaced, happy); //board // lets you visualize the board when placing the ships cord on the Y - COlS axis
 
-		cout << endl;
-		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
-		cout << setw(75) << white << "Using numbers 1-10, enter your second coordinate: ";
+		cout << endl << setw(20) << white << "The " << yellow << shipName[count] << white << " has " << yellow << visualHelper << white << " places it can be placed along the board." << endl;
+		cout << white << setw(59) << "Player one, enter your coordinates for the " << yellow << shipName[count] << endl;
+		cout << setw(40) << white << "Using numbers "<< yellow << "1" << white << "-" << yellow << "10" << white <<", enter your second coordinate: ";
 		cin >> spaceTwo;
 
 
@@ -4587,14 +3838,38 @@ void displayBlankTwo(string board[][11], string shipsPlaced[][11], bool &happy)
 void setPos(int &spaceOneNum, int &spaceTwo, int &count, int &destroy1, string &userDirectionalInput, int &sub1, int &sub2, int &cruis1, int &cruis2, int &battleship1, int &battleship2, int &battleship3, int &carrier1, int &carrier2, int &carrier3, int &carrier4, int &sub, int &cruis, int &battleship, int &carrier, int &destroy, string board[][11], string shipName[], bool &promptCheck, string shipsPlaced[][11], bool &happy) // board
 {
 	promptCheck = false;
+	string visualHelper;
+
+	
 
 	do
 	{
+		visualHelper = " ";
+
+		if (count == 0)
+		{
+			visualHelper = "Two";
+		}
+		else if (count == 1 || count == 2)
+		{
+			visualHelper = "Three";
+		}
+		else if (count == 3)
+		{
+			visualHelper = "Four";
+		}
+		else if (count == 4)
+		{
+			visualHelper = "Five";
+		}
+
+		
+
 		system("cls");
 		displayBlankTwo(board, shipsPlaced, happy);  //board
-		cout << endl;
-		cout << white << setw(55) << "Player one, enter coordinates for the " << shipName[count] << endl;
-		cout << setw(75) << white << "How would you like to place your ship: (Up, Down, Left or Right) ";
+		cout << endl << setw(20) << white << "The " << yellow << shipName[count] << white << " has " << yellow << visualHelper << white << " places it can be placed along the board." << endl;
+		cout << white << setw(59) << "Player one, enter your coordinates for the " << yellow << shipName[count] << endl;
+		cout << setw(58) << white << "How would you like to place your ship: (" << yellow << "U" << white << "p, " << yellow << "D" << white << "own, " << yellow << "L" << white << "eft or " << yellow << "R" << white << "ight) ";
 		cin >> userDirectionalInput;
 		//getline(cin, userDirectionalInput);
 		//system("pause");
@@ -4730,8 +4005,6 @@ void singlePlayerTakeOver() //Simply taken from Erik's function and deleted the 
 	// beat your last time, score or change message, Erik 11/29/17
 
 }
-
-
 
 void Options(int &difficulty, int& boardNum, bool& boardChoose)
 {
