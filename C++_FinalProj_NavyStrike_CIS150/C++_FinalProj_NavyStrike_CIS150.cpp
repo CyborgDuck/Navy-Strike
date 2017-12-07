@@ -17,7 +17,8 @@
 #include <Windows.h>   // To use Sleep
 #include <Ctime>       // To use the random number generator for onePlayer.
 //#include <sstream>	   // to convert a string to a integer to raise its ascii value and then change it back to a string. 'a' ++ now == 'b' https://www.youtube.com/watch?v=LM6EDIKS5Pk
-#include "vector"
+//#include "vector" //In case we use vectors in the future
+#include "MMSystem.h" //To play sound
 #include <time.h> //to use time and date
 
 using namespace std;
@@ -109,6 +110,7 @@ void startSound();
 void missSound();
 void hitSound();
 void sinkSound();
+void vicSound();
 
 
 
@@ -1802,6 +1804,8 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 	int aCounter = 0;
 	int totalCounter;
 
+	static bool onceThrough = false;
+
 	bool sunkUnsunk = false;
 	static bool totalCounterUnlock = false;
 
@@ -1889,6 +1893,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 
 						shipDestroyed();
 						cout << setw(65) << "You sunk my destroyer!" << endl;
+						sinkSound();
 						Sleep(1500);
 						sunkUnsunk = true;
 						dSunk = true;
@@ -1910,6 +1915,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 
 						shipDestroyed();
 						cout << setw(65) << "You sunk my submarine!" << endl;
+						sinkSound();
 						Sleep(1500);
 						sunkUnsunk = true;
 						sSunk = true;
@@ -1930,6 +1936,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 
 						shipDestroyed();
 						cout << setw(65) << "You sunk my cruiser!" << endl;
+						sinkSound();
 						Sleep(1500);
 						sunkUnsunk = true;
 						cSunk = true;
@@ -1949,6 +1956,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 
 						shipDestroyed();
 						cout << setw(65) << "You sunk my battleship!" << endl;
+						sinkSound();
 						Sleep(1500);
 						sunkUnsunk = true;
 						bSunk = true;
@@ -1968,6 +1976,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 
 						shipDestroyed();
 						cout << setw(65) << "You sunk my air-carrier!" << endl;
+						sinkSound();
 						Sleep(1500);
 						sunkUnsunk = true;
 						aSunk = true;
@@ -1998,6 +2007,11 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 			cout << setw(75) << lightgreen << "==========================================" << endl;
 			cout << setw(75) << lightgreen << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 			cout << setw(75) << lightgreen << "==========================================" << endl;
+			if (onceThrough == false)
+			{
+				onceThrough = true;
+				vicSound();
+			}
 			victoryScreen = true;
 			//cout << victoryScreen; //testing
 
@@ -2321,6 +2335,7 @@ void displayHit(int count, int difficulty) // not set to anything yet.
 
 	cout << endl << setw(54) << "You have, " << count << " shots left." << endl;
 	cout << endl << endl << endl << endl;
+	hitSound();
 }
 
 void displayMiss(int count, int difficulty) //Still unable to get displayed properly in command window
@@ -2341,7 +2356,7 @@ void displayMiss(int count, int difficulty) //Still unable to get displayed prop
 	//cout << victoryScreen; //testing
 	cout << endl << setw(55) << "You have, " << count << " shots left." << endl;
 	cout << endl << endl << endl << endl;
-
+	missSound();
 	
 	if (count == 0)
 	{
@@ -2512,34 +2527,45 @@ void exit()
 //===========================CHUCK'S FUNCTIONS BELOW===================================================
 void startSound()
 {
-	Beep(576.65, 598.3); Beep(576.65, 598.3); Beep(576.65, 598.3); Beep(796.74, 448.2); Beep(1153, 299.1); Beep(2054.95, 167.9); Beep(1939.61, 177.9); Beep(1728, 199.7); Beep(1539.47, 224.1); Beep(2306.6, 149.6);
-	Sleep(100);
-	Beep(1027.47, 335.8); Beep(969.81, 355.7); Beep(864, 399.3); Beep(769.74, 448.2); Beep(1153.3, 299.1); Beep(513.74, 671.5); Beep(969.81, 355.7); Beep(1027.47, 335.8); Beep(432, 798.6);
-	Sleep(100);
-	Beep(576.65, 598.3); Beep(576.65, 598.3); Beep(576.65, 598.3); Beep(796.74, 448.2); Beep(1153, 299.1); Beep(2054.95, 167.9); Beep(1939.61, 177.9); Beep(1728, 199.7); Beep(1539.47, 224.1); Beep(2306.6, 149.6);
-	Sleep(100);
-	Beep(1027.47, 335.8); Beep(969.81, 355.7); Beep(864, 399.3); Beep(769.74, 448.2); Beep(1153.3, 299.1); Beep(513.74, 671.5); Beep(969.81, 355.7); Beep(1027.47, 335.8); Beep(432, 798.6);
-	Sleep(100);
-	Beep(576.65, 598.3); Beep(576.65, 598.3); Beep(576.65, 598.3); Beep(796.74, 448.2); Beep(1153, 299.1); Beep(2054.95, 167.9); Beep(1939.61, 177.9); Beep(1728, 199.7); Beep(1539.47, 224.1); Beep(2306.6, 149.6);
-	Sleep(100);
-	Beep(1027.47, 335.8); Beep(969.81, 355.7); Beep(864, 399.3); Beep(769.74, 448.2); Beep(1153.3, 299.1); Beep(513.74, 671.5); Beep(969.81, 355.7); Beep(1027.47, 335.8); Beep(432, 798.6);
+	/*Beep(576.65, 598.3); Beep(576.65, 598.3); Beep(576.65, 598.3); 
+	Beep(796.74, 448.2); Beep(1153, 299.1); Beep(2054.95, 167.9); Beep(1939.61, 177.9); Beep(1728, 199.7); Beep(1539.47, 224.1); Beep(2306.6, 149.6);
+	Sleep(10);
+	Beep(1027.47, 335.8); Beep(969.81, 355.7); Beep(864, 399.3); 
+	Beep(769.74, 448.2); Beep(1153.3, 299.1); Beep(513.74, 671.5); Beep(969.81, 355.7); Beep(1027.47, 335.8); Beep(432, 798.6);
+	Sleep(10);
+	Beep(576.65, 598.3); Beep(576.65, 598.3); Beep(576.65, 598.3); 
+	Beep(796.74, 448.2); Beep(1153, 299.1); Beep(2054.95, 167.9); Beep(1939.61, 177.9); Beep(1728, 199.7); Beep(1539.47, 224.1); Beep(2306.6, 149.6);
+	Sleep(10);
+	Beep(1027.47, 335.8); Beep(969.81, 355.7); Beep(864, 399.3); Beep(769.74, 448.2); 
+	Beep(1153.3, 299.1); Beep(513.74, 671.5); Beep(969.81, 355.7); Beep(1027.47, 335.8); Beep(432, 798.6);
+	Sleep(10);
+	Beep(576.65, 598.3); Beep(576.65, 598.3); Beep(576.65, 598.3); 
+	Beep(796.74, 448.2); Beep(1153, 299.1); Beep(2054.95, 167.9); Beep(1939.61, 177.9); Beep(1728, 199.7); Beep(1539.47, 224.1); Beep(2306.6, 149.6);
+	Sleep(10);
+	Beep(1027.47, 335.8); Beep(969.81, 355.7); Beep(864, 399.3); Beep(769.74, 448.2); 
+	Beep(1153.3, 299.1); Beep(513.74, 671.5); Beep(969.81, 355.7); Beep(1027.47, 335.8); Beep(432, 798.6);*/
 
+}
+
+void vicSound()
+{
+	PlaySound(TEXT("victory.wav"), NULL, SND_SYNC);
 }
 
 void missSound()
 {
 
-
+	PlaySound(TEXT("misssound.wav"), NULL, SND_SYNC);
 }
 
 void hitSound()
 {
-
+	PlaySound(TEXT("hitsound.wav"), NULL, SND_SYNC);
 }
 
 void sinkSound()
 {
-
+	PlaySound(TEXT("sunksound.wav"), NULL, SND_SYNC);
 }
 
 //===========================CHUCK'S FUNCTIONS ABOVE===================================================
@@ -2800,6 +2826,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 				cout << setw(70) << lightgreen << "==========================================" << endl;
 				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << setw(70) << "==========================================" << endl;
+				vicSound();
 			}
 		}
 		if (allShips != 17)
@@ -2869,6 +2896,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 				cout << setw(70) << lightgreen << "==========================================" << endl;
 				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << setw(70) << "==========================================" << endl;
+				vicSound();
 			}
 		}
 		if (allShips != 17)
@@ -2933,6 +2961,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 				cout << setw(70) << lightgreen << "==========================================" << endl;
 				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << setw(70) << "==========================================" << endl;
+				vicSound();
 			}
 		}
 		if (allShips != 17)
@@ -2998,6 +3027,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 				cout << setw(70) << lightgreen << "==========================================" << endl;
 				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << setw(70) << "==========================================" << endl;
+				vicSound();
 			}
 		}
 		if (allShips != 17)
@@ -3063,6 +3093,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 				cout << setw(70) << lightgreen << "==========================================" << endl;
 				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << setw(70) << "==========================================" << endl;
+				vicSound();
 			}
 		}
 		if (allShips != 17)
@@ -3130,6 +3161,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 				cout << setw(70) << lightgreen << "==========================================" << endl;
 				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << setw(70) << "==========================================" << endl;
+				vicSound();
 			}
 		}
 		if (allShips != 17)
@@ -3195,6 +3227,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 				cout << setw(70) << lightgreen << "==========================================" << endl;
 				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << setw(70) << "==========================================" << endl;
+				vicSound();
 			}
 		}
 		if (allShips != 17)
@@ -3262,6 +3295,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 				cout << setw(70) << lightgreen << "==========================================" << endl;
 				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << setw(70) << "==========================================" << endl;
+				vicSound();
 			}
 		}
 		if (allShips != 17)
@@ -3327,6 +3361,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 				cout << setw(70) << lightgreen << "==========================================" << endl;
 				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << setw(70) << "==========================================" << endl;
+				vicSound();
 			}
 		}
 		if (allShips != 17)
@@ -3393,6 +3428,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 				cout << setw(70) << lightgreen << "==========================================" << endl;
 				cout << setw(70) << "ALL TARGETS ELIMINATED, MISSION SUCCESSFUL" << endl;
 				cout << setw(70) << "==========================================" << endl;
+				vicSound();
 			}
 		}
 		if (allShips != 17)
@@ -3925,6 +3961,7 @@ void HPsystemOne(string board[][11], string shipsPlaced[][11], int& dCounter, in
 			 {
 			shipDestroyed();
 			cout << setw(65) << "You have sunk the Destroyer!";
+			sinkSound();
 			Sleep(2000);
 			}
 		}
@@ -3936,6 +3973,7 @@ void HPsystemOne(string board[][11], string shipsPlaced[][11], int& dCounter, in
 			 {
 			shipDestroyed();
 			cout << setw(65) << "You have sunk the Submarine!";
+			sinkSound();
 			Sleep(2000);
 			}
 		}
@@ -3947,6 +3985,7 @@ void HPsystemOne(string board[][11], string shipsPlaced[][11], int& dCounter, in
 			 {
 			shipDestroyed();
 			cout << setw(65) << "You have sunk the Cruiser!";
+			sinkSound();
 			Sleep(2000);
 			}
 		}
@@ -3958,6 +3997,7 @@ void HPsystemOne(string board[][11], string shipsPlaced[][11], int& dCounter, in
 			 {
 			shipDestroyed();
 			cout << setw(65) << "You have sunk the BattleShip!";
+			sinkSound();
 			Sleep(2000);
 			}
 		}
@@ -3969,6 +4009,7 @@ void HPsystemOne(string board[][11], string shipsPlaced[][11], int& dCounter, in
 			 {
 			shipDestroyed();
 			cout << setw(65) << "You have sunk the Carrier!";
+			sinkSound();
 			Sleep(2000);
 			}
 		}
