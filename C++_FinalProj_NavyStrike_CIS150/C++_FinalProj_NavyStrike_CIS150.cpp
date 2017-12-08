@@ -2569,7 +2569,10 @@ void credits()
 		Sleep(100);
 	}
 
-	cout << setw(68) << white << "GAME PRODUCED BY \n \n" << setw(65) << "Chuck \n \n " << setw(63) << "Erik \n \n " << setw(62) << "Tristan \n" << endl;
+	cout << setw(68) << white << "GAME PRODUCED BY \n \n" 
+		<< setw(65) << "Chuck \n \n " 
+		<< setw(63) << "Erik \n \n " 
+		<< setw(62) << "Tristan \n" << endl;
 
 
 	for (int i = 0; i < 8; i++)
@@ -2583,7 +2586,8 @@ void credits()
 		}
 	}
 
-	cout << setw(65) << white << "SOUNDS BY \n \n" << setw(61) << "Chuck \n" << endl;
+	cout << setw(65) << white << "SOUNDS BY \n \n" 
+		<< setw(61) << "Chuck \n" << endl;
 	
 
 	for (int i = 0; i < 8; i++)
@@ -2597,7 +2601,14 @@ void credits()
 		}
 	}
 
-	cout << setw(65) << white << "SOUNDS FROM \n \n" << setw(70) << "Dark Souls - youLose \n \n " << setw(68) << "Mortal Kombat - Choose \n \n" << setw(68) << "Mortal Kombat - fight \n \n" << setw(68) << "Kung fury - Error \n \n" << setw(68) << "Bastion - intro \n \n" << setw(69) << "Team fortress 2 Announcer - victory \n \n" << setw(80) << "You sunk my battleship! - Jim Carrey in Batman \n \n" << endl;
+	cout << setw(65) << white << "SOUNDS FROM \n \n" 
+		<< setw(70) << "Dark Souls - youLose \n \n " 
+		<< setw(68) << "Mortal Kombat - Choose \n \n" 
+		<< setw(68) << "Mortal Kombat - fight \n \n" 
+		<< setw(68) << "Kung fury - Error \n \n" 
+		<< setw(68) << "Bastion - intro \n \n" 
+		<< setw(69) << "Team fortress 2 Announcer - victory \n \n" 
+		<< setw(80) << "You sunk my battleship! - Jim Carrey in Batman \n \n" << endl;
 
 
 	for (int i = 0; i < 8; i++)
@@ -2611,7 +2622,9 @@ void credits()
 		}
 	}
 
-	cout << setw(65) << white << "GRAPHICS BY \n \n" << setw(61) <<"Erik \n \n " << setw(59) << "Tristan \n" << endl;
+	cout << setw(65) << white << "GRAPHICS BY \n \n" 
+		<< setw(61) <<"Erik \n \n " 
+		<< setw(59) << "Tristan \n" << endl;
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -2625,11 +2638,17 @@ void credits()
 	}
 
 	cout << setw(65) << white << "ASCI ART FROM \n \n" << setw(78) << "http://www.kammerl.de/ascii/AsciiSignature.php - You missed \n \n " << setw(77) << "http://www.kammerl.de/ascii/AsciiSignature.php - Target Acquired \n" << endl;
+	Sleep(350);
 	cout << setw(75) << white << "http://www.chris.com/ascii/index.php?art=objects/explosives - ship destroyed \n \n" << endl;
+	Sleep(350);
 	cout << setw(80) << white << "http://www.kammerl.de/ascii/AsciiSignature.php - Welcome screen \n \n" << endl;
+	Sleep(350);
 	cout << setw(75) << white << "http://ascii.co.uk/art/lighthouse - light house \n \n" << endl;
+	Sleep(350);
 	cout << setw(77) << white << "http://ascii.co.uk/art/battleship - battleship \n \n" << endl;
+	Sleep(350);
 	cout << setw(76) << white << "http://www.kammerl.de/ascii/AsciiSignature.php - splash screen \n \n" << endl;
+	Sleep(350);
 	//cout << setw(65) << white << " \n \n" << endl;
 
 	for (int i = 0; i < 8; i++)
@@ -2643,16 +2662,25 @@ void credits()
 		}
 	}
 
-	cout << setw(75) << white << "MADE WITH THE HELP OF... \n \n" << endl;
-	cout << setw(75) << white << "For explaining a hard subject easier, \n \n" << setw(70) <<"Zackary Moore \n \n" << endl;
+	cout << setw(75) << white << "MADE WITH THE HELP OF... \n \n" << endl; Sleep(350);
+	cout << setw(75) << white << "For explaining a hard subject easier, \n \n" << setw(70) << "Zackary Moore \n \n" << endl;
+	Sleep(350);
 	cout << setw(75) << white << "For bringing Color to our project \n" << setw(75) << " http://www.cplusplus.com/forum/beginner/105484/ \n" << setw(70) << " User: Giblit \n \n" << endl;
+	Sleep(350);
 	cout << setw(75) << white << "Youtube for research  \n \n" << endl;
+	Sleep(350);
 	cout << setw(72) << white << "Family & Friends \n \n" << endl;
+	Sleep(350);
 	//cout << setw(75) << white << " \n \n" << endl;
+	//Sleep(350);
 	//cout << setw(75) << white << " \n \n" << endl;
+	//Sleep(350);
 	//cout << setw(75) << white << " \n \n" << endl;
+	//Sleep(350);
 	//cout << setw(75) << white << " \n \n" << endl;
+	//Sleep(350);
 	cout << setw(75) << white << "Valhalla Java (Coffee) \n \n" << endl;
+	Sleep(350);
 	cout << setw(67) << white << "Pizza \n \n" << endl;
 
 
