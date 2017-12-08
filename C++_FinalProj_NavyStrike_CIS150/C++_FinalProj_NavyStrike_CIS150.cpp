@@ -111,6 +111,13 @@ void missSound();
 void hitSound();
 void sinkSound();
 void vicSound();
+void introSound();
+void chooseSound();
+void fightSound();
+void youLoseSound();
+void errorSound();
+
+void credits();
 
 
 
@@ -129,8 +136,8 @@ int main()
 
 				 //Functions
 
-	//intro(players);  //currently to test deeper code comment this out, set players = 2;
-	mainMenu(); //Skip past the intro straight into the main menu;
+	intro(players);  //currently to test deeper code comment this out, set players = 2;
+	//mainMenu(); //Skip past the intro straight into the main menu;
 
 				//board_intilization(); //board intilization will go into the functions OnePlayer(), TwoPlayer() // board intilization is completely replaced with, displayBlank.
 
@@ -265,7 +272,8 @@ void intro(int &players)
 	cout << "                      ~               ~                ~               ~                ~               " << endl;
 	//ascii art, SOURCE: http://ascii.co.uk/art/battleship
 	cout << endl << endl;
-	Sleep(3500);  //if returning to the color switch change the timer to something less than 5.5seconds
+	introSound();
+	//Sleep(3500);  //if returning to the color switch change the timer to something less than 5.5seconds
 	system("cls");
 	// very sensitive to spaces and tabs do not change.
 
@@ -281,7 +289,7 @@ void intro(int &players)
 		Sleep(10);
 	}
 
-	cout << setw(65) << white << "Created By," << endl << setw(70) << "Erik, Tristan and Chuck" << endl << setw(65) << "Version 0.91" << endl; //update version count, for every day in class? we will be at 0.08 on Dec 6, 2017 	
+	cout << setw(65) << white << "Created By," << endl << setw(70) << "Erik, Tristan and Chuck" << endl << setw(65) << "Version 1.00a" << endl; //update version count, for every day in class? we will be at 0.08 on Dec 6, 2017 	
 	for (int i = 0; i < 16; i++)
 	{
 		cout << endl;
@@ -302,6 +310,7 @@ int mainMenu()
 		static int boardNum;
 		static bool boardChoose = false;
 		bool menuNumber = false;
+		static bool heardItonce = false;
 		//MENU
 
 		//players = mainMenu();
@@ -326,13 +335,13 @@ int mainMenu()
 
 
 
-			cout << endl << endl << endl << endl << endl;
+			cout << endl << endl << endl << endl;
 			cout << setw(76) << white << "Choose how you would like to play. \n";
 			cout << endl << setw(65) << "1. ONE PLAYER \n";
 			cout << setw(66) << "2. TWO PLAYERS \n"; //Only two player will work for the time being, 1 player will require an ai.
 			cout << setw(62) << "3. OPTIONS \n"; //If time allows, come back to try to edit colors.
 			cout << setw(59) << "4. EXIT \n"; 
-
+			cout << setw(62) << "5. CREDITS \n";
 
 
 
@@ -348,27 +357,32 @@ int mainMenu()
 			//SOURCE: http://ascii.co.uk/art/lighthouse Made originally by: unknown
 			// very sensitive to spaces and tabs do not change.
 
-			cout << endl << setw(62) << white << "Enter 1 - 4: ";
+			cout << endl << setw(62) << white << "Enter 1 - 5: ";
 
 			//keep running until the player gives an appropriate number
-			startSound();
+			if (heardItonce == false)
+			{
+				startSound();
+				heardItonce = true;
+			}
 			cin >> players;
 			
 
 
 			//players has to equal 1-3 if it does not, run it again.
-			if (players == 1 || players == 2 || players == 3 || players == 4)//HERE doesnt seem to want to loop for some reason also need an array for the player choice since this is staying a void function to pass on the choice 1 or 2 Maybe an OPTION button to change the colors? that would be cool. maybe a few presets
+			if (players == 1 || players == 2 || players == 3 || players == 4 || players == 5)//HERE doesnt seem to want to loop for some reason also need an array for the player choice since this is staying a void function to pass on the choice 1 or 2 Maybe an OPTION button to change the colors? that would be cool. maybe a few presets
 			{
 				menuNumber = true;
 			}
-			else if (players != 1 || players != 2 || players != 3 || players != 4)
+			else if (players != 1 || players != 2 || players != 3 || players != 4 || players != 5)
 			{
 				system("cls");
 				cout << endl << endl << endl << endl << endl << endl << endl;
-				cout << setw(75) << lightred << "Invalid Input, please try a number 1-4" << endl;
+				cout << setw(75) << lightred << "Invalid Input, please try a number 1-5" << endl;
 				cin.clear();
 				cin.ignore(10000, '\n'); // cin clear and cin.ignore was important to have to stop a infinite loop if someone puts a character into the main menu. and not 1-3
 				//players = 0;
+				errorSound();
 				Sleep(1000);
 				//menuNumber = false;
 				//break;
@@ -377,6 +391,7 @@ int mainMenu()
 			{
 				cout << "Your trying to break my program, are you? I can do that myself, try again." << endl;
 				Sleep(1000);
+				errorSound();
 			}
 
 
@@ -402,10 +417,14 @@ int mainMenu()
 		{
 			exit();
 		}
+		else if (players == 5)
+		{
+			credits();
+		}
 		else
 		{
 			cout << "How'd you get here? Your not supposed to be here." << endl;
-
+			errorSound();
 
 		}
 
@@ -1777,6 +1796,7 @@ void errorRefresh(bool &validInput, bool &continu3)
 	cout << setw(85) << lightred << "---------------------------------" << endl;
 	cout << setw(85) <<	"You can not place your ship here." << endl;
 	cout << setw(85) <<	"---------------------------------" << endl;
+	errorSound();
 	Sleep(1500);
 	validInput = false;
 	continu3 = false;
@@ -1790,7 +1810,7 @@ void invalidInputRefresh()
 	cout << setw(75) << lightred << "--------------------------" << endl;
 	cout << setw(75) << "Invalid input. Try again." << endl;
 	cout << setw(75) << "--------------------------" << endl;
-
+	errorSound();
 }
 
 void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
@@ -2013,6 +2033,7 @@ void shipHPCounter(string board[][11], string shipsPlaced[][11], bool &happy)
 				vicSound();
 			}
 			victoryScreen = true;
+			
 			//cout << victoryScreen; //testing
 
 		}
@@ -2109,6 +2130,7 @@ void missiles(string board[][11], string shipsPlaced[][11], string &spaceOne, in
 							cout << setw(75) << lightred << "===================================" << endl;
 							cout << setw(75) << lightred << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
 							cout << setw(75) << lightred << "===================================" << endl;
+							errorSound();
 							Sleep(1500);
 						}
 
@@ -2209,6 +2231,7 @@ void firstMissileYAxis(string &spaceOne, int &spaceOneNum, string board[][11], s
 				cout << setw(74) << lightred << "=========================================================" << endl;
 				cout << setw(75) << "This is not a valid input. Try again, using a letter a-j. " << endl;
 				cout << setw(74) << "=========================================================" << endl;
+				errorSound();
 				Sleep(1500);
 				cin.clear();
 				cin.ignore(10000, '\n');
@@ -2290,6 +2313,7 @@ void secondMissileXAxis(int &spaceTwo, string board[][11], string shipsPlaced[][
 				cout << setw(75) << lightred << "============================================================" << endl;
 				cout << setw(75) << "This is not a valid input. Try again, using the numbers 1-10." << endl;
 				cout << setw(75) << "============================================================" << endl;
+				errorSound();
 				//cout << setw(60) << white << "Using numbers 1-10, enter your second coordinate: ";
 				cout << endl;
 				cin.clear();
@@ -2336,6 +2360,18 @@ void displayHit(int count, int difficulty) // not set to anything yet.
 	cout << endl << setw(54) << "You have, " << count << " shots left." << endl;
 	cout << endl << endl << endl << endl;
 	hitSound();
+
+	if (count == 0)
+	{
+		system("cls");
+		cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+		cout << setw(70) << white << "=====================" << endl;
+		cout << setw(71) << white << "TARGETS EVADED ATTACK\n" << setw(64) << lightred << "YOU LOSE" << endl;
+		cout << setw(70) << white << "=====================" << endl;
+		//Sleep(2000);
+		youLoseSound();
+	}
+
 }
 
 void displayMiss(int count, int difficulty) //Still unable to get displayed properly in command window
@@ -2365,7 +2401,8 @@ void displayMiss(int count, int difficulty) //Still unable to get displayed prop
 		cout << setw(70) << white << "=====================" << endl;
 		cout << setw(71) << white << "TARGETS EVADED ATTACK\n" << setw(64) << lightred << "YOU LOSE" << endl;
 		cout << setw(70) << white << "=====================" << endl;
-		Sleep(2000);
+		//Sleep(2000);
+		youLoseSound();
 	}
 }
 
@@ -2471,7 +2508,7 @@ void playerTwoTakeOver()
 		}
 
 	} while (notReady == false);
-
+	fightSound();
 	cout << endl;
 
 	 // beat your last time, score or change message, Erik 11/29/17
@@ -2504,12 +2541,17 @@ void placeShipsPlayerOne()
 		cout << setw(55) << right << "Enter: ";
 		cin >> readyStatusOne;
 
+		
+
 		if (readyStatusOne == "Ready" || readyStatusOne == "ready" || readyStatusOne == "r" || readyStatusOne == "R")
 		{
 			notReadyOne = true;
 		}
 
 	} while (notReadyOne == false);
+
+	chooseSound();
+	
 }
 
 void exit()
@@ -2517,6 +2559,129 @@ void exit()
 	cout << endl << endl << endl << endl << endl << endl << endl << endl;
 	cout << setw(65) << white << "Come back soon!" << endl;
 	Sleep(2000);
+}
+
+void credits()
+{
+	for (int i = 0; i < 20; i++)
+	{
+		cout << endl;
+		Sleep(100);
+	}
+
+	cout << setw(68) << white << "GAME PRODUCED BY \n \n" << setw(65) << "Chuck \n \n " << setw(63) << "Erik \n \n " << setw(62) << "Tristan \n" << endl;
+
+
+	for (int i = 0; i < 8; i++)
+	{
+		cout << endl;
+		Sleep(150);
+
+		if (i == 8)
+		{
+			Sleep(1500);
+		}
+	}
+
+	cout << setw(65) << white << "SOUNDS BY \n \n" << setw(61) << "Chuck \n" << endl;
+	
+
+	for (int i = 0; i < 8; i++)
+	{
+		cout << endl;
+		Sleep(150);
+
+		if (i == 8)
+		{
+			Sleep(1500);
+		}
+	}
+
+	cout << setw(65) << white << "SOUNDS FROM \n \n" << setw(70) << "Dark Souls - youLose \n \n " << setw(68) << "Mortal Kombat - Choose \n \n" << setw(68) << "Mortal Kombat - fight \n \n" << setw(68) << "Kung fury - Error \n \n" << setw(68) << "Bastion - intro \n \n" << setw(69) << "Team fortress 2 Announcer - victory \n \n" << setw(80) << "You sunk my battleship! - Jim Carrey in Batman \n \n" << endl;
+
+
+	for (int i = 0; i < 8; i++)
+	{
+		cout << endl;
+		Sleep(150);
+
+		if (i == 8)
+		{
+			Sleep(1500);
+		}
+	}
+
+	cout << setw(65) << white << "GRAPHICS BY \n \n" << setw(61) <<"Erik \n \n " << setw(59) << "Tristan \n" << endl;
+
+	for (int i = 0; i < 8; i++)
+	{
+		cout << endl;
+		Sleep(150);
+
+		if (i == 8)
+		{
+			Sleep(1500);
+		}
+	}
+
+	cout << setw(65) << white << "ASCI ART FROM \n \n" << setw(78) << "http://www.kammerl.de/ascii/AsciiSignature.php - You missed \n \n " << setw(77) << "http://www.kammerl.de/ascii/AsciiSignature.php - Target Acquired \n" << endl;
+	cout << setw(75) << white << "http://www.chris.com/ascii/index.php?art=objects/explosives - ship destroyed \n \n" << endl;
+	cout << setw(80) << white << "http://www.kammerl.de/ascii/AsciiSignature.php - Welcome screen \n \n" << endl;
+	cout << setw(75) << white << "http://ascii.co.uk/art/lighthouse - light house \n \n" << endl;
+	cout << setw(77) << white << "http://ascii.co.uk/art/battleship - battleship \n \n" << endl;
+	cout << setw(76) << white << "http://www.kammerl.de/ascii/AsciiSignature.php - splash screen \n \n" << endl;
+	//cout << setw(65) << white << " \n \n" << endl;
+
+	for (int i = 0; i < 8; i++)
+	{
+		cout << endl;
+		Sleep(150);
+
+		if (i == 8)
+		{
+			Sleep(1500);
+		}
+	}
+
+	cout << setw(75) << white << "MADE WITH THE HELP OF... \n \n" << endl;
+	cout << setw(75) << white << "For explaining a hard subject easier, \n \n" << setw(70) <<"Zackary Moore \n \n" << endl;
+	cout << setw(75) << white << "For bringing Color to our project \n" << setw(75) << " http://www.cplusplus.com/forum/beginner/105484/ \n" << setw(70) << " User: Giblit \n \n" << endl;
+	cout << setw(75) << white << "Youtube for research  \n \n" << endl;
+	cout << setw(72) << white << "Family & Friends \n \n" << endl;
+	//cout << setw(75) << white << " \n \n" << endl;
+	//cout << setw(75) << white << " \n \n" << endl;
+	//cout << setw(75) << white << " \n \n" << endl;
+	//cout << setw(75) << white << " \n \n" << endl;
+	cout << setw(75) << white << "Valhalla Java (Coffee) \n \n" << endl;
+	cout << setw(67) << white << "Pizza \n \n" << endl;
+
+
+	for (int i = 0; i < 12; i++)
+	{
+		cout << endl;
+		Sleep(150);
+
+		if (i == 12)
+		{
+			Sleep(1500);
+		}
+	}
+	
+	cout << setw(71) << white << "Thank you! \n \n" << endl;
+
+	for (int i = 0; i < 10; i++)
+	{
+		cout << endl;
+		Sleep(150);
+
+		if (i == 10)
+		{
+			Sleep(1500);
+		}
+	}
+
+	Sleep(2000);
+	mainMenu();
 }
 
 //================================ERIK'S FUNCTIONS ABOVE==============================================================================
@@ -2527,7 +2692,7 @@ void exit()
 //===========================CHUCK'S FUNCTIONS BELOW===================================================
 void startSound()
 {
-	/*Beep(576.65, 598.3); Beep(576.65, 598.3); Beep(576.65, 598.3); 
+	Beep(576.65, 598.3); Beep(576.65, 598.3); Beep(576.65, 598.3); 
 	Beep(796.74, 448.2); Beep(1153, 299.1); Beep(2054.95, 167.9); Beep(1939.61, 177.9); Beep(1728, 199.7); Beep(1539.47, 224.1); Beep(2306.6, 149.6);
 	Sleep(10);
 	Beep(1027.47, 335.8); Beep(969.81, 355.7); Beep(864, 399.3); 
@@ -2543,7 +2708,7 @@ void startSound()
 	Beep(796.74, 448.2); Beep(1153, 299.1); Beep(2054.95, 167.9); Beep(1939.61, 177.9); Beep(1728, 199.7); Beep(1539.47, 224.1); Beep(2306.6, 149.6);
 	Sleep(10);
 	Beep(1027.47, 335.8); Beep(969.81, 355.7); Beep(864, 399.3); Beep(769.74, 448.2); 
-	Beep(1153.3, 299.1); Beep(513.74, 671.5); Beep(969.81, 355.7); Beep(1027.47, 335.8); Beep(432, 798.6);*/
+	Beep(1153.3, 299.1); Beep(513.74, 671.5); Beep(969.81, 355.7); Beep(1027.47, 335.8); Beep(432, 798.6);
 
 }
 
@@ -2566,6 +2731,33 @@ void hitSound()
 void sinkSound()
 {
 	PlaySound(TEXT("sunksound.wav"), NULL, SND_SYNC);
+}
+
+void introSound()
+{
+	PlaySound(TEXT("intro.wav"), NULL, SND_SYNC);
+
+}
+
+void chooseSound()
+{
+	PlaySound(TEXT("choose.wav"), NULL, SND_SYNC);
+}
+
+void fightSound()
+{
+	PlaySound(TEXT("fight.wav"), NULL, SND_SYNC);
+}
+
+void youLoseSound()
+{
+	PlaySound(TEXT("youLose.wav"), NULL, SND_SYNC);
+}
+
+void errorSound()
+{
+	PlaySound(TEXT("siren.wav"), NULL, SND_SYNC);
+	PlaySound(TEXT("denied.wav"), NULL, SND_SYNC);
 }
 
 //===========================CHUCK'S FUNCTIONS ABOVE===================================================
@@ -2799,6 +2991,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 						cout << setw(75) << lightred << "===================================" << endl;
 						cout << setw(75) << lightred << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
 						cout << setw(75) << lightred << "===================================" << endl;
+						errorSound();
 					}
 				}
 				else
@@ -2831,9 +3024,12 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 		}
 		if (allShips != 17)
 		{
+			system("cls");
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
 			cout << setw(35) << white << "=====================" << endl;
 			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << lightred << "YOU LOSE" << endl;
 			cout << setw(35) << white << "=====================" << endl;
+			youLoseSound();
 		}
 	}
 
@@ -2867,6 +3063,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 					cout << setw(77) << red << "===================================" << endl;
 					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
 					cout << setw(77) << "===================================" << endl;
+					errorSound();
 					Sleep(2000);
 					}
 				else
@@ -2901,9 +3098,12 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 		}
 		if (allShips != 17)
 		{
+			system("cls");
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
 			cout << setw(35) << white << "=====================" << endl;
 			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
 			cout << setw(35) << white << "=====================" << endl;
+			youLoseSound();
 		}
 	}
 	else if (random == 3)
@@ -2934,6 +3134,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 					cout << setw(77) << red << "===================================" << endl;
 					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
 					cout << setw(77) << "===================================" << endl;
+					errorSound();
 					Sleep(2000);
 					}
 				else
@@ -2966,9 +3167,12 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 		}
 		if (allShips != 17)
 		{
+			system("cls");
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
 			cout << setw(35) << white << "=====================" << endl;
 			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
 			cout << setw(35) << white << "=====================" << endl;
+			youLoseSound();
 		}
 	}
 	else if (random == 4)
@@ -2999,6 +3203,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 					cout << setw(77) << red << "===================================" << endl;
 					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
 					cout << setw(77) << "===================================" << endl;
+					errorSound();
 					Sleep(2000);
 					}
 				else
@@ -3032,9 +3237,12 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 		}
 		if (allShips != 17)
 		{
+			system("cls");
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
 			cout << setw(35) << white << "=====================" << endl;
 			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
 			cout << setw(35) << white << "=====================" << endl;
+			youLoseSound();
 		}
 	}
 	else if (random == 5)
@@ -3065,6 +3273,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 					cout << setw(77) << red << "===================================" << endl;
 					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
 					cout << setw(77) << "===================================" << endl;
+					errorSound();
 					Sleep(2000);
 					}
 				else
@@ -3098,9 +3307,12 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 		}
 		if (allShips != 17)
 		{
+			system("cls");
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
 			cout << setw(35) << white << "=====================" << endl;
 			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
 			cout << setw(35) << white << "=====================" << endl;
+			youLoseSound();
 		}
 
 
@@ -3133,6 +3345,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 					cout << setw(77) << red << "===================================" << endl;
 					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
 					cout << setw(77) << "===================================" << endl;
+					errorSound();
 					Sleep(2000);
 					}
 				else
@@ -3166,9 +3379,12 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 		}
 		if (allShips != 17)
 		{
+			system("cls");
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
 			cout << setw(35) << white << "=====================" << endl;
 			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
 			cout << setw(35) << white << "=====================" << endl;
+			youLoseSound();
 		}
 	}
 	else if (random == 7)
@@ -3199,6 +3415,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 					cout << setw(77) << red << "===================================" << endl;
 					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
 					cout << setw(77) << "===================================" << endl;
+					errorSound();
 					Sleep(2000);
 					}
 				else
@@ -3232,9 +3449,12 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 		}
 		if (allShips != 17)
 		{
+			system("cls");
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
 			cout << setw(35) << white << "=====================" << endl;
 			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
 			cout << setw(35) << white << "=====================" << endl;
+			youLoseSound();
 		}
 	}
 	else if (random == 8)
@@ -3265,6 +3485,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 				cout << setw(77) << red << "===================================" << endl;
 				cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
 				cout << setw(77) << "===================================" << endl;
+				errorSound();
 				Sleep(2000);
 				}
 			else
@@ -3300,9 +3521,12 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 		}
 		if (allShips != 17)
 		{
+			system("cls");
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
 			cout << setw(35) << white << "=====================" << endl;
 			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
 			cout << setw(35) << white << "=====================" << endl;
+			youLoseSound();
 		}
 	}
 	else if (random == 9)
@@ -3333,6 +3557,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 					cout << setw(77) << red << "===================================" << endl;
 					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
 					cout << setw(77) << "===================================" << endl;
+					errorSound();
 					Sleep(2000);
 					}
 				else
@@ -3366,9 +3591,12 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 		}
 		if (allShips != 17)
 		{
+			system("cls");
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
 			cout << setw(35) << white << "=====================" << endl;
 			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
 			cout << setw(35) << white << "=====================" << endl;
+			youLoseSound();
 		}
 	}
 	else if (random == 10)
@@ -3399,6 +3627,7 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 					cout << setw(77) << red << "===================================" << endl;
 					cout << setw(77) << "THIS SPACE HAS ALREADY BEEN GUESSED" << endl;
 					cout << setw(77) << "===================================" << endl;
+					errorSound();
 					Sleep(2000);
 					}
 				else
@@ -3433,9 +3662,12 @@ void onePlayer(int difficulty, int boardNum, bool boardChoose)
 		}
 		if (allShips != 17)
 		{
+			system("cls");
+			cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
 			cout << setw(35) << white << "=====================" << endl;
 			cout << setw(36) << white << "TARGETS EVADED ATTACK\n" << setw(27) << red << "YOU LOSE" << endl;
 			cout << setw(35) << white << "=====================" << endl;
+			youLoseSound();
 		}
 	}
 	while (!exitInput)
@@ -3497,6 +3729,7 @@ void firstCoordOne(string spaceOne, int& spaceOneNum, string blank[][11], bool& 
 			cout << setw(84) << lightred << "=========================================================" << endl;
 			cout << setw(85) << "This is not a valid input. Try again, using a letter a-j. " << endl;
 			cout << setw(84) << "=========================================================" << endl;
+			errorSound();
 			Sleep(1500);
 			
 		}
@@ -3514,6 +3747,7 @@ void firstCoordOne(string spaceOne, int& spaceOneNum, string blank[][11], bool& 
 			cout << setw(84) << lightred << "=========================================================" << endl;
 			cout << setw(85) << "This is not a valid input. Try again, using a letter a-j. " << endl;
 			cout << setw(84) << "=========================================================" << endl;
+			errorSound();
 			Sleep(1500);
 			
 
@@ -3584,6 +3818,7 @@ void secCoordOne(int &spaceTwo, bool &promptCheck, string board[][11])
 			cout << setw(85) << lightred << "============================================================" << endl;
 			cout << setw(85) << "This is not a valid input. Try again, using the numbers 1-10." << endl;
 			cout << setw(85) << "============================================================" << endl;
+			errorSound();
 			//cout << setw(60) << white << "Using numbers 1-10, enter your second coordinate: ";
 			cout << endl;
 			cin.clear();
@@ -3715,6 +3950,7 @@ void firstCoordTwo(string spaceOne, int &spaceOneNum, bool &promptCheck, string 
 			cout << setw(84) << lightred << "=========================================================" << endl;
 			cout << setw(85) << "This is not a valid input. Try again, using a letter a-j. " << endl;
 			cout << setw(84) << "=========================================================" << endl;
+			errorSound();
 			Sleep(1500);
 			//system("cls");
 
@@ -3807,6 +4043,7 @@ void secCoord(int &spaceTwo, bool &promptCheck, string board[][11], string shipN
 			cout << setw(85) << lightred << "============================================================" << endl;
 			cout << setw(85) << "This is not a valid input. Try again, using the numbers 1-10." << endl;
 			cout << setw(85) << "============================================================" << endl;
+			errorSound();
 			cout << endl;
 			cin.clear();
 			cin.ignore(10000, '\n');
@@ -4045,7 +4282,7 @@ void singlePlayerTakeOver() //Simply taken from Erik's function and deleted the 
 		}
 
 	} while (notReady == false);
-
+	fightSound();
 	cout << endl;
 	system("cls");
 	// beat your last time, score or change message, Erik 11/29/17
