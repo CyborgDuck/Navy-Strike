@@ -2558,7 +2558,7 @@ void exit()
 {
 	cout << endl << endl << endl << endl << endl << endl << endl << endl;
 	cout << setw(65) << white << "Come back soon!" << endl;
-	Sleep(2000);
+	Sleep(3000);
 }
 
 void credits()
@@ -2575,11 +2575,11 @@ void credits()
 	for (int i = 0; i < 8; i++)
 	{
 		cout << endl;
-		Sleep(150);
+		Sleep(350);
 
-		if (i == 8)
+		if (i == 7)
 		{
-			Sleep(1500);
+			Sleep(3500);
 		}
 	}
 
@@ -2589,11 +2589,11 @@ void credits()
 	for (int i = 0; i < 8; i++)
 	{
 		cout << endl;
-		Sleep(150);
+		Sleep(350);
 
-		if (i == 8)
+		if (i == 7)
 		{
-			Sleep(1500);
+			Sleep(3500);
 		}
 	}
 
@@ -2603,11 +2603,11 @@ void credits()
 	for (int i = 0; i < 8; i++)
 	{
 		cout << endl;
-		Sleep(150);
+		Sleep(350);
 
-		if (i == 8)
+		if (i == 7)
 		{
-			Sleep(1500);
+			Sleep(3500);
 		}
 	}
 
@@ -2616,11 +2616,11 @@ void credits()
 	for (int i = 0; i < 8; i++)
 	{
 		cout << endl;
-		Sleep(150);
+		Sleep(350);
 
-		if (i == 8)
+		if (i == 7)
 		{
-			Sleep(1500);
+			Sleep(3500);
 		}
 	}
 
@@ -2635,11 +2635,11 @@ void credits()
 	for (int i = 0; i < 8; i++)
 	{
 		cout << endl;
-		Sleep(150);
+		Sleep(350);
 
-		if (i == 8)
+		if (i == 7)
 		{
-			Sleep(1500);
+			Sleep(3500);
 		}
 	}
 
@@ -2659,11 +2659,11 @@ void credits()
 	for (int i = 0; i < 12; i++)
 	{
 		cout << endl;
-		Sleep(150);
+		Sleep(350);
 
-		if (i == 12)
+		if (i == 11)
 		{
-			Sleep(1500);
+			Sleep(3500);
 		}
 	}
 	
@@ -2672,15 +2672,15 @@ void credits()
 	for (int i = 0; i < 10; i++)
 	{
 		cout << endl;
-		Sleep(150);
+		Sleep(350);
 
 		if (i == 10)
 		{
-			Sleep(1500);
+			Sleep(3500);
 		}
 	}
 
-	Sleep(2000);
+	Sleep(3000);
 	mainMenu();
 }
 
