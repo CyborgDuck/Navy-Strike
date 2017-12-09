@@ -53,8 +53,7 @@ static bool endInput = false;
 //==================Function Prototypes==============
 void intro(int&);
 int mainMenu(); //In order to display the main menu, and not the ENTIRE intro every time, we need the menu part in a different function
-
-				//void board_intilization();
+				
 void placeShipsPlayerOne();
 
 void onePlayer(int, int, bool);
@@ -90,15 +89,13 @@ void displayBlankTwoa(string[][11], string[][11], bool&);
 
 //ship Placement
 
-//bool chkPlacement(bool&, string[][11], int&, int&, int&, int&, string[][11]); //obsolete I believe, 11/28/17 Erik.
+
 
 //Happy with the placement? or reset/redo > then turn controls to player two
 bool happyPlacement(bool&, string[][11], string[][11]);
 void boardRESET(string[][11]);
 
 //start of missile strikes / player2
-
-//void cleaningSlate(string[][11]); //obsolete function Erik 11/28/17
 void playerTwoTakeOver();
 void singlePlayerTakeOver();
 void missiles(string[][11], string[][11], string&, int&, int&, bool&, int&, bool&);
@@ -137,9 +134,7 @@ int main()
 				 //Functions
 
 	intro(players);  //currently to test deeper code comment this out, set players = 2;
-	//mainMenu(); //Skip past the intro straight into the main menu;
-
-				//board_intilization(); //board intilization will go into the functions OnePlayer(), TwoPlayer() // board intilization is completely replaced with, displayBlank.
+	//mainMenu(); //Skip past the intro straight into the main menu;		
 
 	cout << white << endl << endl << endl;
 	system("pause");
@@ -191,44 +186,7 @@ void intro(int &players)
 		}
 	}
 
-	//This, 'do while' was for changing color on one of the splash screens but i dont like it.
-	//May be able to use this in options though. - Erik
-
-	/*do
-	{
-
-	if (v == 0)
-	{
-	cout << white;
-	}
-	else if (v == 1)
-	{
-	cout << cyan;
-	}
-	else if (v == 2)
-	{
-	cout << blue;
-	}
-	else if (v == 3)
-	{
-	cout << white;
-	}
-	else if (v == 4)
-	{
-	cout << blue;
-	}
-	else if (v == 5)
-	{
-	cout << cyan;
-	}
-	else if (v == 6)
-	{
-	cout << white;
-	}
-	else
-	{
-	cout << white;
-	}*/
+	
 
 
 	//title
@@ -238,9 +196,6 @@ void intro(int &players)
 		Sleep(10);
 	}
 
-
-	//cout << endl << endl << endl; //part of the above color switch turned off the timer on endl;s
-
 	// very sensitive to spaces and tabs do not change.
 	cout << cyan;
 	cout << "          _/      _/                                  _/        _/_/_/    _/                _/  _/                " << endl;
@@ -249,7 +204,6 @@ void intro(int &players)
 	cout << "       _/    _/_/  _/    _/    _/  _/    _/    _/  _/            _/    _/      _/        _/  _/  _/    _/        " << endl;
 	cout << "      _/      _/    _/_/_/      _/        _/_/_/  _/      _/_/_/        _/_/  _/        _/  _/    _/    _/_/_/   " << endl;
 	//Made with the help of this ascii text to art generator SOURCE: http://www.kammerl.de/ascii/AsciiSignature.php
-
 
 	// very sensitive to spaces and tabs do not change.
 
@@ -276,11 +230,6 @@ void intro(int &players)
 	//Sleep(3500);  //if returning to the color switch change the timer to something less than 5.5seconds
 	system("cls");
 	// very sensitive to spaces and tabs do not change.
-
-	//both the v and the while is the end of the do while color change. again leaving for possible changes in options
-	//v++;
-	//} while (v != 6);
-
 
 	//authors
 	for (int i = 0; i < 30; i++)
@@ -340,8 +289,8 @@ int mainMenu()
 			cout << endl << setw(65) << "1. ONE PLAYER \n";
 			cout << setw(66) << "2. TWO PLAYERS \n"; //Only two player will work for the time being, 1 player will require an ai.
 			cout << setw(62) << "3. OPTIONS \n"; //If time allows, come back to try to edit colors.
-			cout << setw(59) << "4. EXIT \n"; 
-			cout << setw(62) << "5. CREDITS \n";
+			cout << setw(62) << "4. CREDITS \n"; 
+			cout << setw(59) << "5. EXIT \n";
 
 
 
@@ -358,8 +307,8 @@ int mainMenu()
 			// very sensitive to spaces and tabs do not change.
 
 			cout << endl << setw(62) << white << "Enter 1 - 5: ";
-
 			//keep running until the player gives an appropriate number
+
 			if (heardItonce == false)
 			{
 				startSound();
@@ -415,11 +364,11 @@ int mainMenu()
 		}
 		else if (players == 4)
 		{
-			exit();
+			credits();
 		}
 		else if (players == 5)
 		{
-			credits();
+			exit();
 		}
 		else
 		{
@@ -2669,10 +2618,10 @@ void credits()
 	Sleep(350);
 	cout << setw(75) << white << "Youtube for research  \n \n" << endl;
 	Sleep(350);
-	cout << setw(72) << white << "Family & Friends \n \n" << endl;
+	cout << setw(72) << white << "Friends & Family \n \n" << endl;
 	Sleep(350);
-	//cout << setw(75) << white << " \n \n" << endl;
-	//Sleep(350);
+	cout << setw(75) << white << "Beta Tester - Jake Pavuk \n \n" << endl;
+	Sleep(350);
 	//cout << setw(75) << white << " \n \n" << endl;
 	//Sleep(350);
 	//cout << setw(75) << white << " \n \n" << endl;
