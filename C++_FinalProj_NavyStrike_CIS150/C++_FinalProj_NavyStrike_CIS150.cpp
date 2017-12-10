@@ -2406,6 +2406,10 @@ void displayBlankTwoa(string board[][11], string shipsPlaced[][11], bool &happy)
 			{
 				cout << setw(5) << lightgreen << board[i][s] << setw(5) << darkgrey << "|"; // using lightgreen, magneta looked bright as well. I want something that is visible and seperate from the border text
 			}
+			else if (board[i][s] == "~")
+			{
+				cout << setw(5) << lightcyan << board[i][s] << setw(5) << darkgrey << "|";
+			}
 			else
 			{
 				cout << setw(5) << cyan << board[i][s] << setw(5) << darkgrey << "|";
@@ -4286,7 +4290,7 @@ void Options(int &difficulty, int& boardNum, bool& boardChoose)
 		cout << setw(72) << "-----------------------------" << endl;
 		cout << setw(67) << "1. Change Difficulty" << endl;
 		cout << setw(67) << "2. Set Board Number " << endl;
-		cout << setw(67) << "4. Back to main menu" << endl;
+		cout << setw(67) << "3. Back to main menu" << endl;
 
 		cout << "Please choose 1-4: ";
 		cin >> optionSelect;
@@ -4365,7 +4369,7 @@ void Options(int &difficulty, int& boardNum, bool& boardChoose)
 				}
 			}
 		}
-		else if (optionSelect == 4)
+		else if (optionSelect == 3)
 		{
 			exitInput = true;
 		}
