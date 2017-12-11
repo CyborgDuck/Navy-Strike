@@ -4292,7 +4292,7 @@ void Options(int &difficulty, int& boardNum, bool& boardChoose)
 		cout << setw(67) << "2. Set Board Number " << endl;
 		cout << setw(67) << "3. Back to main menu" << endl;
 
-		cout << "Please choose 1-4: ";
+		cout << "Please choose 1-3: ";
 		cin >> optionSelect;
 		if (optionSelect == 1)
 		{
