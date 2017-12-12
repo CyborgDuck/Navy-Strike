@@ -1,0 +1,56 @@
+Navy Strike CIS 150 Erik, Tristan and Chuck
+
+Features that we wanted to get to but didnt have the time to get around to 
+
+
+Let the player adjust the colors on the game board through options. 
+setting a boolean in options and sending that to our game board in an if else chain could of changed how the board looked for the user.
+
+
+Using the fstream that was demoed in class for a score board, we we're not sure what to base score off of though.
+Time doesn't really matter for a strategic game like this, but how many missiles you used up might.
+
+
+A way to disable / enable the intro from options and not let it play the next time it was opened up, right into the menu.
+
+I was considering using the background color code that was provided by Mr.Moore to highlight when a user selected a letter row
+and a number row, to show how far from the selected spot on the board a specific ship could go. This has complications with overlap,
+and going off the board.
+
+
+******************   Really far out their ideas   ******************
+
+
+Change the size of the board and amount of ships that could be placed
+
+
+Real back and forth of two player with swapping turns and placing ships for both players.
+
+
+Different modes of how to play the game
+like giving player one mines to place down along with their ships, lets say player one gets 5-7 mines.
+Player two will get a max hp modifier lets say 5 hearts and if player two hits too many mines theirs another way of losing the
+game instead of running out of missiles
+
+Clock runs out, if the clock runs out of time the ships leave and if any ship leaves before being destroyed then you lose the game
+if you kill the ships before the clock runs out add the remaining time to a modifier to the score.
+
+*******************  ABILITIES  ***************************
+A feature called Odins Eye which is a scanner 3x3 reveal of the board.
+
+Repair damaged ship mechanic (replenish or fully heal a ship)
+
+Move a ship on the fly
+
+Orbital Bombardment 3x3 missile launch
+
+These could be used once a game or x amount of turns
+
+****************  Ship Behaviour  *********************
+
+I was thinking of a (helicopter, row-boat or air ship) that would slowly move across the board.
+it would only take up one place so it would be possible to take out, and only move to places that have not been fired upon
+ or where another ship is at. So every x amount of turns it would move its place to another random blank spot.
+
+
+

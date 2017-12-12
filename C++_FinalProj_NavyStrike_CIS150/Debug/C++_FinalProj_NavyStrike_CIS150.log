@@ -1,5 +1,4 @@
-﻿  stdafx.cpp
-  C++_FinalProj_NavyStrike_CIS150.cpp
+﻿  C++_FinalProj_NavyStrike_CIS150.cpp
 c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(8): warning C4603: '_WIN32_WINNT': macro is not defined or definition is different after precompiled header use
   c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(8): note: Add macro to precompiled header instead of defining here
   c:\users\jacka\desktop\do not move\finalproj_cis150_navystrike\navy-strike\c++_finalproj_navystrike_cis150\c++_finalproj_navystrike_cis150.cpp(10): note: use of precompiled header
